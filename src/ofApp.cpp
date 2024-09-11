@@ -28,14 +28,7 @@ void ofApp::draw()
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
-	switch (key)
-	{
-	case 'p':
-		SpawnParticle();
-		break;
-	default:
-		break;
-	}
+	
 }
 
 //--------------------------------------------------------------
@@ -59,7 +52,15 @@ void ofApp::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
 {
-
+	printf("Button: %d\n", button);
+	switch (button)
+	{
+	case 0:
+		SpawnParticle();
+		break;
+	default:
+		break;
+	}
 }
 
 //--------------------------------------------------------------
