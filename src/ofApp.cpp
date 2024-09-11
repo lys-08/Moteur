@@ -19,6 +19,7 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+	
 	for (auto& particle : myParticles)
 	{
 		particle.draw();
@@ -52,7 +53,6 @@ void ofApp::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
 {
-	printf("Button: %d\n", button);
 	switch (button)
 	{
 	case 0:
