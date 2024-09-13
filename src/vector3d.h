@@ -56,6 +56,8 @@ public:
     bool operator!=(const Vector3d& v) const;
 
     // Other methods
+    float norm();
+    float norm2();
     void normalise();
     float dotProduct(const Vector3d& v) const;
     Vector3d crossProduct(const Vector3d& v) const;
@@ -70,6 +72,7 @@ public:
 };
 
 
+std::ostream& operator<<(std::ostream& flux, const Vector3d& v);
 Vector3d operator+(const Vector3d& v1, const Vector3d& v2);
 Vector3d operator-(const Vector3d& v1, const Vector3d& v2);
 Vector3d operator*(const Vector3d& v1, const Vector3d& v2);

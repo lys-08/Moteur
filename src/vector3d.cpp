@@ -196,13 +196,33 @@ bool Vector3d::operator!=(const Vector3d& v) const
 // ============================================================================
 
 /**
+ * @brief Return the norm of the current vector
+ *
+ * @return norm of the vector
+*/
+float Vector3d::norm()
+{
+    return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
+}
+
+/**
+ * @brief Return the squared norm of the current vector
+ *
+ * @return squared norm of the vector
+*/
+float Vector3d::norm2()
+{
+    return x_ * x_ + y_ * y_ + z_ * z_;
+}
+
+/**
  * @brief Normalise the current vector
  *
  * @return nothing
 */
 void Vector3d::normalise()
 {
-    float length = sqrt(x_ * x_ + y_ * y_ + z_ * z_);
+    float length = norm();
 
     if (length != 0)
     {
@@ -243,77 +263,42 @@ Vector3d Vector3d::crossProduct(const Vector3d& v) const
 // External operators =========================================================
 // ============================================================================
 
-/**
- * @brief Adds 2 vectors
- *
- * @param v1 first vector
- * @param v2 second vector
- * @return the addition of the vectors
-*/
+
+std::ostream& operator<<(std::ostream& flux, const Vector3d& v)
+{
+    flux << "(" << v.getX() << ", " << v.getY() << ", " << v.getZ() << ", " << v.getW() << ")" << std::endl;;
+    return flux;
+}
+
 Vector3d operator+(const Vector3d& v1, const Vector3d& v2)
 {
     Vector3d resu = Vector3d(v1);
     return resu += v2;
 }
 
-/**
- * @brief Subtracts 2 vectors
- *
- * @param v1 first vector
- * @param v2 second vector
- * @return the substraction of the vectors
-*/
 Vector3d operator-(const Vector3d& v1, const Vector3d& v2)
 {
     Vector3d resu = Vector3d(v1);
     return resu -= v2;
 }
 
-/**
- * @brief Multiplies 2 vectors
- *
- * @param v1 first vector
- * @param v2 second vector
- * @return the multiplication of the vectors
-*/
 Vector3d operator*(const Vector3d& v1, const Vector3d& v2)
 {
     Vector3d resu = Vector3d(v1);
     return resu *= v2;
 }
 
-/**
- * @brief Multiplies a vector and a float
- *
- * @param v the vector
- * @param f the float
- * @return the multiplication of the vector and the float
-*/
 Vector3d operator*(const Vector3d& v, const float f)
 {
     Vector3d resu = Vector3d(v);
     return resu *= f;
 }
 
-/**
- * @brief Multiplies a float and a vector
- *
- * @param f the float
- * @param v the vector
- * @return the multiplication of the vector and the float
-*/
 Vector3d operator*(const float f, const Vector3d& v)
 {
     return v * f;
 }
 
-/**
- * @brief Divides a vector by a float
- *
- * @param v the vector
- * @param f the float
- * @return the substraction of the vector by the float
-*/
 Vector3d operator/(const Vector3d& v, float& f)
 {
     Vector3d resu = v;
