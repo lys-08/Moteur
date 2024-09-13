@@ -294,11 +294,6 @@ Vector3d operator*(const Vector3d& v, const float f)
     return resu *= f;
 }
 
-Vector3d operator*(const float f, const Vector3d& v)
-{
-    return v * f;
-}
-
 Vector3d operator/(const Vector3d& v, float& f)
 {
     Vector3d resu = v;
