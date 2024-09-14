@@ -1,6 +1,6 @@
 #include "ofMain.h"
 #include "ofApp.h"
-#include "../apps/myApps/Moteur/testVector.h"
+#include "../testVector.h"
 
 //========================================================================
 int main( ){
