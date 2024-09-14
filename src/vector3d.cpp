@@ -288,15 +288,16 @@ Vector3d operator*(const Vector3d& v1, const Vector3d& v2)
     return resu *= v2;
 }
 
-Vector3d operator*(const Vector3d& v, const float f)
+Vector3d operator*(const Vector3d& v, float f)
 {
     Vector3d resu = Vector3d(v);
     return resu *= f;
 }
 
-Vector3d operator*(const float f, const Vector3d& v)
+Vector3d operator*(float f, const Vector3d& v)
 {
-    return v * f;
+    Vector3d resu = Vector3d(v);
+    return resu*=f;
 }
 
 Vector3d operator/(const Vector3d& v, float& f)
