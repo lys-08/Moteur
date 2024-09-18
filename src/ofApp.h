@@ -9,6 +9,7 @@ public:
 	// Attributes
 	ofBoxPrimitive box;
 	vector<Particle> myParticles;
+	float rotationAngle;
 
 	// Methods
 	void setup();
@@ -28,4 +29,5 @@ public:
 	void gotMessage(ofMessage msg);
 
 	void SpawnParticle();
+
 };

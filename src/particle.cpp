@@ -96,7 +96,7 @@ void Particle::setSpeed(float speed)
 // ============================================================================
 
 /**
- * @brief Move the particle according to it's position, directiona and speed
+ * @brief Move the particle according to it's position, directional and speed
  *
  * @return nothing
 */
