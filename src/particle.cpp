@@ -17,11 +17,13 @@
  * @param dir direction of the particle
  * @param speed the speed of the particle
  */
-Particle::Particle(Vector3d pos, Vector3d dir, float speed)
+Particle::Particle(Vector3d pos, Vector3d dir, float speed, float mass)
 {
 	pos_ = pos;
 	dir_ = dir;
 	speed_ = speed;
+	mass_ = mass;
+	setInvertMass(mass_);
 }
 
 /**
@@ -34,6 +36,8 @@ Particle::Particle(const Particle& other)
 	pos_ = other.pos_;
 	dir_ = other.dir_;
 	speed_ = other.speed_;
+	mass_ = other.mass_;
+	setInvertMass(mass_);
 }
 
 /**
@@ -67,11 +71,10 @@ float Particle::getSpeed() const
 	return speed_;
 }
 
-/*bool Particle::getInvertMass() const
+float Particle::getInvertMass() const
 {
 	return invertMass_;
-}*/
-
+}
 
 void Particle::setDir(Vector3d dir)
 {
@@ -84,10 +87,11 @@ void Particle::setSpeed(float speed)
 	speed_ = speed;
 }
 
-/*void setInvertMass(bool invertMass)
+void Particle::setInvertMass(float mass)
 {
-	invertMass_ = invertMass;
-}*/
+	invertMass_ = 1/mass;
+}
+
 
 
 
@@ -117,6 +121,6 @@ void Particle::draw()
 
 void Particle::integrate(float temps)
 {
-	dir_ += (0.8 * g * temps);
+	dir_ += (getInvertMass() * g * temps);
 	pos_ += (dir_ * temps);
 }

@@ -15,12 +15,13 @@ private:
     Vector3d pos_;
     Vector3d dir_;
     float speed_; // strength_ ?
+    float mass_;
     float invertMass_;
     Vector3d g = Vector3d(0, 10, 0);
 
 public:
     // Constructors
-    Particle(Vector3d pos = Vector3d(), Vector3d dir = Vector3d(), float speed = 0.0);
+    Particle(Vector3d pos = Vector3d(), Vector3d dir = Vector3d(), float speed = 0.0, float mass = 1.0);
     Particle(const Particle& other);
 
     // Destructor

@@ -135,7 +135,8 @@ void ofApp::SpawnParticle()
 	Particle newParticule(
 		Vector3d(0, ofGetHeight()),
 		Vector3d(50, -50, 0),
-		5
+		5,
+		3
 	);
 
 	myParticles.push_back(newParticule);
