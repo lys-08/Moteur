@@ -109,29 +109,11 @@ Vector3d& Vector3d::operator+=(const Vector3d& v)
     return *this;
 }
 
-Vector3d& Vector3d::operator+=(float& f)
-{
-    x_ += f;
-    y_ += f;
-    z_ += f;
-
-    return *this;
-}
-
 Vector3d& Vector3d::operator-=(const Vector3d& v)
 {
     x_ -= v.x_;
     y_ -= v.y_;
     z_ -= v.z_;
-
-    return *this;
-}
-
-Vector3d& Vector3d::operator-=(float& f)
-{
-    x_ -= f;
-    y_ -= f;
-    z_ -= f;
 
     return *this;
 }

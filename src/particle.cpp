@@ -5,7 +5,7 @@
 
 #include "particle.h"
 #include <of3dGraphics.h>
-
+#include <ctime>
 
 
 
@@ -113,4 +113,10 @@ void Particle::move()
 void Particle::draw()
 {
 	ofDrawIcoSphere(pos_.v3(), 10);
+}
+
+void Particle::integrate(float temps)
+{
+	dir_ += (0.8 * g * temps);
+	pos_ += (dir_ * temps);
 }

@@ -3,15 +3,23 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-	Particle p(Vector3d(500, -500), Vector3d(1, 1), 20);
+	box.set(500);
+	previousTime = std::clock();
+	//Particle p(Vector3d(500, 500), Vector3d(1, 1), 20);
 }
 
 //--------------------------------------------------------------
 void ofApp::update()
 {
-	for (auto& particle : myParticles)
+	std::clock_t currentTime = std::clock();
+	deltaTime = float(currentTime - previousTime) / CLOCKS_PER_SEC;
+	previousTime = currentTime;
+		
+	for (int i=0;i<myParticles.size();i++)
 	{
-		particle.move();
+		myParticles[i].integrate(deltaTime);
+		//myParticles[i].move();
+		myLines[i].addVertex(myParticles[i].getPos().getX(), myParticles[i].getPos().getY(), 0);
 	}
 
 
@@ -22,19 +30,19 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+	//ofTranslate(0, ofGetHeight(), 0);
+	//ofPushMatrix();
 
-	ofTranslate(0, ofGetHeight(), 0);
-	ofPushMatrix();
+	//ofRotateZDeg(rotationAngle);
+	//ofSetColor(255);
+	//ofDrawRectangle(0, -25, 75, 50);
 
-	ofRotateZDeg(rotationAngle);
-	ofSetColor(255);
-	ofDrawRectangle(0, -25, 75, 50);
+	//ofPopMatrix();
 
-	ofPopMatrix();
-
-	for (auto& particle : myParticles)
+	for (int i = 0; i < myParticles.size(); i++)
 	{
-		particle.draw();
+		myParticles[i].draw();
+		myLines[i].draw();
 	}
 }
 
@@ -72,6 +80,7 @@ void ofApp::mousePressed(int x, int y, int button)
 	{
 	case 0:
 		SpawnParticle();
+		printf("hey");
 		break;
 	default:
 		break;
@@ -124,10 +133,14 @@ void ofApp::dragEvent(ofDragInfo dragInfo)
 void ofApp::SpawnParticle()
 {
 	Particle newParticule(
-		Vector3d(0, 0),
-		Vector3d(ofGetMouseX(), ofGetMouseY(), 0),
+		Vector3d(0, ofGetHeight()),
+		Vector3d(50, -50, 0),
 		5
 	);
 
 	myParticles.push_back(newParticule);
+
+	ofPolyline b;
+	b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
+	myLines.push_back(b);
 }

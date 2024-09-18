@@ -45,9 +45,7 @@ public:
 
     // Operator overloading
     Vector3d& operator+=(const Vector3d& v);
-    Vector3d& operator+=(float& f);
     Vector3d& operator-=(const Vector3d& v);
-    Vector3d& operator-=(float& f);
     Vector3d& operator*=(const Vector3d& v);
     Vector3d& operator*=(float& f);
     Vector3d& operator/=(float& f);

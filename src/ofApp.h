@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "particle.h"
+#include <ofPolyline.h>
+#include <ctime>
 
 class ofApp : public ofBaseApp {
 
@@ -10,6 +12,9 @@ public:
 	ofBoxPrimitive box;
 	vector<Particle> myParticles;
 	float rotationAngle;
+	vector<ofPolyline> myLines;
+	std::clock_t previousTime;
+	float deltaTime;
 
 	// Methods
 	void setup();

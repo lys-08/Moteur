@@ -15,8 +15,8 @@ private:
     Vector3d pos_;
     Vector3d dir_;
     float speed_; // strength_ ?
-    // bool invertMass_;
-
+    float invertMass_;
+    Vector3d g = Vector3d(0, 10, 0);
 
 public:
     // Constructors
@@ -30,14 +30,15 @@ public:
     Vector3d getPos() const;
     Vector3d getDir() const;
     float getSpeed() const;
-    // bool getInvertMass() const; // TODO
+    float getInvertMass() const; //TODO
     void setDir(Vector3d dir);
     void setSpeed(float speed);
-    // void setInvertMass(bool invertMass); // TODO
+    void setInvertMass(float mass); // TODO
 
     // Other methods
     void move();
     void draw();
+    void integrate(float temps);
 };
 
 #endif
