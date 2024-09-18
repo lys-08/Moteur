@@ -25,7 +25,6 @@ public:
             float m_10 = 0, float m_11 = 0, float m_12 = 0, float m_13 = 0,  // second ligne
             float m_20 = 0, float m_21 = 0, float m_22 = 0, float m_23 = 0,  // third ligne
             float m_30 = 0, float m_31 = 0, float m_32 = 0, float m_33 = 0); // fourth ligne
-    Matrix4(const Matrix4& other);
 
     // Getters and Setters
     float& operator[](std::pair<int, int> index);

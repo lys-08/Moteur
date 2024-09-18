@@ -41,22 +41,6 @@ Matrix3::Matrix3(float m_00, float m_01, float m_02,
     mat_[2][2] = m_22;
 }
 
-/**
- * @brief Copy constructor
- *
- * @param other the matrix to copy
-*/
-Matrix3::Matrix3(const Matrix3& other)
-{
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            mat_[i][j] = other.mat_[i][j];
-        }
-    }
-}
-
 
 
 // ============================================================================
