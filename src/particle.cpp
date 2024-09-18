@@ -106,7 +106,7 @@ void Particle::setInvertMass(float mass)
 */
 void Particle::move()
 {
-	pos_ += (dir_ * speed_);
+	pos_ += dir_;
 }
 
 /**

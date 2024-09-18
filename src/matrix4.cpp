@@ -54,6 +54,22 @@ Matrix4::Matrix4(float m_00, float m_01, float m_02, float m_03,
     mat_[3][3] = m_33;
 }
 
+/**
+ * @brief Copy constructor
+ *
+ * @param other the matrix to copy
+*/
+Matrix4::Matrix4(const Matrix4& other)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            mat_[i][j] = other.mat_[i][j];
+        }
+    }
+}
+
 
 
 // ============================================================================

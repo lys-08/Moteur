@@ -15,9 +15,9 @@
  * @param x first element
  * @param y second element
  * @param z third element
- * @param w homogeneous coordinate = fourth element which indicates if the object is a point (w=1) or a vector (w=0)
+ * @param w homogeneous coordinate = fourth element which indicates if the object is a podouble (w=1) or a vector (w=0)
  */
-Vector3d::Vector3d(float x, float y, float z, float w)
+Vector3d::Vector3d(double x, double y, double z, double w)
 {
     x_ = x;
     y_ = y;
@@ -54,42 +54,42 @@ Vector3d::~Vector3d()
 // Getters / Setters ==========================================================
 // ============================================================================
 
-float Vector3d::getX() const
+double Vector3d::getX() const
 {
     return x_;
 }
 
-float Vector3d::getY() const
+double Vector3d::getY() const
 {
     return y_;
 }
 
-float Vector3d::getZ() const
+double Vector3d::getZ() const
 {
     return z_;
 }
 
-float Vector3d::getW() const
+double Vector3d::getW() const
 {
     return w_;
 }
 
-void Vector3d::setX(float x)
+void Vector3d::setX(double x)
 {
     x_ = x;
 }
 
-void Vector3d::setY(float y)
+void Vector3d::setY(double y)
 {
     y_ = y;
 }
 
-void Vector3d::setZ(float z)
+void Vector3d::setZ(double z)
 {
     z_ = z;
 }
 
-void Vector3d::setW(float w)
+void Vector3d::setW(double w)
 {
     w_ = w;
 }
@@ -127,16 +127,7 @@ Vector3d& Vector3d::operator*=(const Vector3d& v)
     return *this;
 }
 
-Vector3d& Vector3d::operator*=(float& f)
-{
-    x_ *= f;
-    y_ *= f;
-    z_ *= f;
-
-    return *this;
-}
-
-Vector3d& Vector3d::operator/=(float& f)
+Vector3d& Vector3d::operator/=(double f)
 {
     if (f == 0)
     {
@@ -182,7 +173,7 @@ bool Vector3d::operator!=(const Vector3d& v) const
  *
  * @return norm of the vector
 */
-float Vector3d::norm()
+double Vector3d::norm()
 {
     return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
 }
@@ -192,7 +183,7 @@ float Vector3d::norm()
  *
  * @return squared norm of the vector
 */
-float Vector3d::norm2()
+double Vector3d::norm2()
 {
     return x_ * x_ + y_ * y_ + z_ * z_;
 }
@@ -204,9 +195,9 @@ float Vector3d::norm2()
 */
 void Vector3d::normalise()
 {
-    float length = norm();
+    double length = norm();
 
-    if (length != 0)
+    if (length != 0.0)
     {
         x_ /= length;
         y_ /= length;
@@ -215,12 +206,25 @@ void Vector3d::normalise()
 }
 
 /**
+ * @brief Normalise the current vector
+ *
+ * @return the vector normalise
+*/
+Vector3d Vector3d::normalise2()
+{
+    Vector3d resu = *this;
+    resu.normalise();
+
+    return resu;
+}
+
+/**
  * @brief Performs the dot product between the current vector and the vector passed as parameter
  *
  * @param v the other vector
  * @return the dot product
 */
-float Vector3d::dotProduct(const Vector3d& v) const
+double Vector3d::dotProduct(const Vector3d& v) const
 {
     return x_ * v.x_ + y_ * v.y_ + z_ * v.z_;
 }
@@ -233,9 +237,9 @@ float Vector3d::dotProduct(const Vector3d& v) const
 */
 Vector3d Vector3d::crossProduct(const Vector3d& v) const
 {
-    float x = y_ * v.z_ - z_ * v.y_;
-    float y = z_ * v.x_ - x_ * v.z_;
-    float z = x_ * v.y_ - y_ * v.x_;
+    double x = y_ * v.z_ - z_ * v.y_;
+    double y = z_ * v.x_ - x_ * v.z_;
+    double z = x_ * v.y_ - y_ * v.x_;
 
     return Vector3d(x, y, z);
 }
@@ -270,19 +274,19 @@ Vector3d operator*(const Vector3d& v1, const Vector3d& v2)
     return resu *= v2;
 }
 
-Vector3d operator*(const Vector3d& v, float f)
+Vector3d operator*(const Vector3d& v, double f)
 {
     Vector3d resu = Vector3d(v);
     return resu *= f;
 }
 
-Vector3d operator*(float f, const Vector3d& v)
+Vector3d operator*(double f, const Vector3d& v)
 {
     Vector3d resu = Vector3d(v);
     return resu * f;
 }
 
-Vector3d operator/(const Vector3d& v, float& f)
+Vector3d operator/(const Vector3d& v, double& f)
 {
     Vector3d resu = v;
     return resu /= f;
