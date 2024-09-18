@@ -214,6 +214,14 @@ void Vector3d::normalise()
     }
 }
 
+Vector3d Vector3d::normalise2()
+{
+    Vector3d resu = *this;
+    resu.normalise();
+
+    return resu;
+}
+
 /**
  * @brief Performs the dot product between the current vector and the vector passed as parameter
  *

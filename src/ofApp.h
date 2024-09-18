@@ -16,6 +16,9 @@ public:
 	std::clock_t previousTime;
 	float deltaTime;
 
+	float mouseX;
+	float mouseY;
+
 	// Methods
 	void setup();
 	void update();

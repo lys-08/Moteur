@@ -121,6 +121,6 @@ void Particle::draw()
 
 void Particle::integrate(float temps)
 {
-	dir_ += (getInvertMass() * g * temps);
+	dir_ += (mass_ * g * temps);
 	pos_ += (dir_ * temps);
 }

@@ -17,7 +17,7 @@ private:
     float speed_; // strength_ ?
     float mass_;
     float invertMass_;
-    Vector3d g = Vector3d(0, 10, 0);
+    Vector3d g = Vector3d(0, -10, 0);
 
 public:
     // Constructors

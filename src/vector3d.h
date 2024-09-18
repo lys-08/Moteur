@@ -57,6 +57,7 @@ public:
     float norm();
     float norm2();
     void normalise();
+    Vector3d normalise2();
     float dotProduct(const Vector3d& v) const;
     Vector3d crossProduct(const Vector3d& v) const;
 

@@ -30,20 +30,23 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-	//ofTranslate(0, ofGetHeight(), 0);
-	//ofPushMatrix();
-
-	//ofRotateZDeg(rotationAngle);
-	//ofSetColor(255);
-	//ofDrawRectangle(0, -25, 75, 50);
-
-	//ofPopMatrix();
-
+	ofPushMatrix();
+	ofTranslate(0, ofGetHeight(), 0);
+	ofScale(1, -1);
+	mouseX = ofGetMouseX();
+	mouseY = ofGetHeight() - ofGetMouseY();
 	for (int i = 0; i < myParticles.size(); i++)
 	{
 		myParticles[i].draw();
 		myLines[i].draw();
 	}
+	ofRotateZDeg(-rotationAngle);
+	ofSetColor(255);
+	ofDrawRectangle(0, - 25, 75, 50);
+	ofPopMatrix();
+
+
+
 }
 
 //--------------------------------------------------------------
@@ -64,7 +67,6 @@ void ofApp::mouseMoved(int x, int y)
 	float angleZ = atan2(y - ofGetHeight(), x);
 
 	rotationAngle = ofRadToDeg(angleZ);
-
 }
 
 //--------------------------------------------------------------
@@ -80,7 +82,6 @@ void ofApp::mousePressed(int x, int y, int button)
 	{
 	case 0:
 		SpawnParticle();
-		printf("hey");
 		break;
 	default:
 		break;
@@ -132,9 +133,10 @@ void ofApp::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp::SpawnParticle()
 {
+	printf("mouseX: %f, mouseY: %f\n", mouseX, mouseY);
 	Particle newParticule(
-		Vector3d(0, ofGetHeight()),
-		Vector3d(50, -50, 0),
+		Vector3d(0, 0),
+		Vector3d(mouseX, mouseY, 0),
 		5,
 		3
 	);
