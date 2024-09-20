@@ -28,37 +28,142 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-    // Save the current transformation matrix
-    ofPushMatrix();
 
-    // Move the origin to the bottom-left corner of the window
-    ofTranslate(0, ofGetHeight(), 0);
+	if (!isHudDisplayed)
+	{
+		// Display the HUD
+		ofSetColor(255);
+		ofDrawRectangle(50, 50, 65, 65);
+		ofDrawRectangle(50, 125, 65, 65);
+		ofDrawRectangle(50, 200, 65, 65);
+		ofDrawRectangle(50, 275, 65, 65);
 
-    // Flip the Y axis to make positive Y go upwards
-    ofScale(1, -1);
+		ofSetColor(0);
+		ofDrawRectangle(60, 60, 45, 45);
+		ofDrawRectangle(60, 135, 45, 45);
+		ofDrawRectangle(60, 210, 45, 45);
+		ofDrawRectangle(60, 285, 45, 45);
 
-    // Get the mouse position in the transformed coordinate system
-    mouseX_ = ofGetMouseX();
-    mouseY_ = ofGetHeight() - ofGetMouseY();
+		ofSetColor(255);
 
-    for (int i = 0; i < myParticles_.size(); i++) 
-    {
-        myParticles_[i].draw();
-        myLines_[i].draw();
-    }
+		ofDrawBitmapString("1", 65, 100);
+		ofDrawBitmapString("2", 65, 175);
+		ofDrawBitmapString("3", 65, 250);
+		ofDrawBitmapString("4", 65, 325);
 
-    ofRotateZDeg(-theta_);
-    ofSetColor(255);
-    ofDrawRectangle(0, -25, 75, 50);
+		// Ping Pong Ball ---------------------------------------------------------
+		ofSetColor(255);  // White
+		ofDrawCircle(85, 85, 10); // 1
 
-    // Restore the transformation matrix to its original state
-    ofPopMatrix();
+		// Basketball -------------------------------------------------------------
+		float posX = 85;     // Position X de la balle
+		float posY = 155;    // Position Y de la balle
+		float ballRadius = 10;  // Rayon de la balle de basket
+
+		// Dessine le cercle orange pour la balle de basket
+		ofSetColor(255, 165, 0);  // Orange
+		ofDrawCircle(posX, posY, ballRadius);
+
+		// Dessine les lignes noires sur la balle
+		ofSetColor(0);  // Noir
+
+		// Ligne verticale
+		ofDrawLine(posX, posY - ballRadius, posX, posY + ballRadius);
+
+		// Ligne horizontale
+		ofDrawLine(posX - ballRadius, posY, posX + ballRadius, posY);
+
+		// Deux courbes pour les arcs latéraux
+		ofDrawBezier(posX - ballRadius, posY,  // Point de départ
+			posX - ballRadius / 2, posY - ballRadius / 2,  // Premier point de contrôle
+			posX + ballRadius / 2, posY - ballRadius / 2,  // Deuxième point de contrôle
+			posX + ballRadius, posY);  // Point d'arrivée
+
+		ofDrawBezier(posX - ballRadius, posY,  // Point de départ
+			posX - ballRadius / 2, posY + ballRadius / 2,  // Premier point de contrôle
+			posX + ballRadius / 2, posY + ballRadius / 2,  // Deuxième point de contrôle
+			posX + ballRadius, posY);  // Point d'arrivée
+
+		// Fireball ---------------------------------------------------------------
+		float maxRadius = 12;  // Rayon maximal de la boule de feu
+		float centerX = 85;    // Position X fixe
+		float centerY = 230;   // Position Y fixe
+
+		// Dessin des cercles concentriques pour la boule de feu
+
+		// Couche centrale jaune
+		ofSetColor(255, 255, 0);  // Jaune
+		ofDrawCircle(centerX, centerY, maxRadius * 0.3);
+
+		// Couche intermédiaire orange
+		ofSetColor(255, 165, 0);  // Orange
+		ofDrawCircle(centerX, centerY, maxRadius * 0.6);
+
+		// Couche extérieure rouge
+		ofSetColor(255, 69, 0);  // Rouge
+		ofDrawCircle(centerX, centerY, maxRadius);
+
+		// Optionnel : ajout de quelques flammes
+		ofSetColor(255, 140, 0);  // Flammes orange
+		for (int i = 0; i < 8; i++) {
+			float randomAngle = ofRandom(TWO_PI);
+			float flameLength = ofRandom(5, 10);  // Longueur aléatoire des flammes
+			ofDrawLine(centerX, centerY,
+				centerX + cos(randomAngle) * (maxRadius + flameLength),
+				centerY + sin(randomAngle) * (maxRadius + flameLength));
+		}
+		
+		
+
+		// Canonball --------------------------------------------------------------
+		ofSetColor(200);  // Gris foncé pour le boulet de canon
+		ofDrawCircle(85, 305, 15);
+
+		// Optionnel : ajouter des détails comme une légère ombre
+		ofSetColor(235);  // Ombre plus foncée
+		ofDrawCircle(87 - 15 * 0.3, 300 + 15 * 0.3, 15 * 0.8);
+
+		
+	}
+
+	ofPushMatrix();
+	ofTranslate(0, ofGetHeight(), 0);
+	ofScale(1, -1);
+	mouseX = ofGetMouseX();
+	mouseY = ofGetHeight() - ofGetMouseY();
+	for (int i = 0; i < myParticles.size(); i++)
+	{
+		myParticles[i].draw(type);
+		myLines[i].draw();
+	}
+	ofRotateZDeg(-rotationAngle);
+	ofSetColor(255);
+	ofDrawRectangle(0, - 25, 75, 50);
+	ofPopMatrix();
+
+
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
-    // No action on key press
+	// On le réécrit sous forme d'un swicth case
+	switch (key)
+	{
+	case '1':
+		type = 1;
+		break;
+	case '2':
+		type = 2;
+		break;
+	case '3':
+		type = 3;
+		break;
+	case '4':
+		type = 4;
+		break;
+	}
 }
 
 //--------------------------------------------------------------
@@ -84,14 +189,14 @@ void ofApp::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
 {
-    switch (button)
-    {
-    case 0:
-        SpawnParticle();
-        break;
-    default:
-        break;
-    }
+	switch (button)
+	{
+	case 0:
+		SpawnParticle(type);
+		break;
+	default:
+		break;
+	}
 }
 
 //--------------------------------------------------------------
@@ -135,20 +240,73 @@ void ofApp::dragEvent(ofDragInfo dragInfo)
  * @brief Spawns a particle
  *
  * @return nothing
- */
-void ofApp::SpawnParticle()
+*/
+void ofApp::SpawnParticle(int type)
 {
-    Particle newParticule(
-        Vector3d(0, 0),                   
-        Vector3d(mouseX_, mouseY_, 0),      
-        50                                                        
-    );
 
-    myParticles_.push_back(newParticule);
-    ofPolyline b;
+	printf("Spawning a particle of type : %d\n", type);
 
-    // Add the current particle position as the first vertex of the line
-    b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
+	if (type == 1)
+	{
+		printf("mouseX: %f, mouseY: %f\n", mouseX, mouseY);
+		Particle newParticule(
+			Vector3d(0, 0),
+			Vector3d(mouseX, mouseY, 0),
+			5,
+			3
+		);
 
-    myLines_.push_back(b);
+		myParticles.push_back(newParticule);
+
+		ofPolyline b;
+		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
+		myLines.push_back(b);
+	}
+	else if (type == 2)
+	{
+		Particle newParticule(
+			Vector3d(0, 0),
+			Vector3d(mouseX, mouseY, 0),
+			5,
+			10
+		);
+
+		myParticles.push_back(newParticule);
+
+		ofPolyline b;
+		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
+		myLines.push_back(b);
+	}
+	else if (type == 3)
+	{
+		Particle newParticule(
+			Vector3d(0, 0),
+			Vector3d(mouseX, mouseY, 0),
+			5,
+			30
+		);
+
+		myParticles.push_back(newParticule);
+
+		ofPolyline b;
+		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
+		myLines.push_back(b);
+	}
+	else if (type == 4)
+	{
+		Particle newParticule(
+			Vector3d(0, 0),
+			Vector3d(mouseX, mouseY, 0),
+			5,
+			100
+		);
+
+		myParticles.push_back(newParticule);
+
+		ofPolyline b;
+		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
+		myLines.push_back(b);
+	}
+
+	
 }

@@ -34,8 +34,14 @@ public:
     void setInvertMass(double mass);
 
     // Other methods
+
     void draw();
     void integrate(double time);
+
+    void move();
+    void draw(int type);
+    void integrate(float temps);
+
 };
 
 #endif

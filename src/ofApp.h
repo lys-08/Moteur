@@ -9,11 +9,14 @@ class ofApp : public ofBaseApp {
 
 public:
 	// Attributes
-	vector<Particle> myParticles_;
-	double theta_;
-	vector<ofPolyline> myLines_;
-	std::clock_t previousTime_;
-	float deltaTime_;
+	ofBoxPrimitive box;
+	vector<Particle> myParticles;
+	float rotationAngle;
+	vector<ofPolyline> myLines;
+	std::clock_t previousTime;
+	float deltaTime;
+	bool isHudDisplayed = false;
+	int type = 1;
 
 	float mouseX_;
 	float mouseY_;
@@ -35,6 +38,6 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
-	void SpawnParticle();
+	void SpawnParticle(int type);
 
 };
