@@ -10,9 +10,6 @@
 #include "vector3d.h"
 
 
-
-
-
 class Matrix4
 {
 private:

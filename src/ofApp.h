@@ -9,15 +9,14 @@ class ofApp : public ofBaseApp {
 
 public:
 	// Attributes
-	ofBoxPrimitive box;
-	vector<Particle> myParticles;
-	float rotationAngle;
-	vector<ofPolyline> myLines;
-	std::clock_t previousTime;
-	float deltaTime;
+	vector<Particle> myParticles_;
+	double theta_;
+	vector<ofPolyline> myLines_;
+	std::clock_t previousTime_;
+	float deltaTime_;
 
-	float mouseX;
-	float mouseY;
+	float mouseX_;
+	float mouseY_;
 
 	// Methods
 	void setup();

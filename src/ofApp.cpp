@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-    previousTime = std::clock();
+    previousTime_ = std::clock();
 }
 
 //--------------------------------------------------------------
@@ -12,16 +12,16 @@ void ofApp::update() {
     std::clock_t currentTime = std::clock();
 
     // Calculate the elapsed time between the last update() call and the current one
-    deltaTime = float(currentTime - previousTime) / CLOCKS_PER_SEC;
+    deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
 
-    previousTime = currentTime;
+    previousTime_ = currentTime;
 
-    for (int i = 0; i < myParticles.size(); i++) {
+    for (int i = 0; i < myParticles_.size(); i++) {
         // Update each particle by integrating its movement based on the elapsed time
-        myParticles[i].integrate(deltaTime);
+        myParticles_[i].integrate(deltaTime_);
 
         // Add a new vertex to the polyline based on the particle's current position
-        myLines[i].addVertex(myParticles[i].getPos().getX(), myParticles[i].getPos().getY(), 0);
+        myLines_[i].addVertex(myParticles_[i].getPos().getX(), myParticles_[i].getPos().getY(), 0);
     }
 }
 
@@ -38,16 +38,16 @@ void ofApp::draw()
     ofScale(1, -1);
 
     // Get the mouse position in the transformed coordinate system
-    mouseX = ofGetMouseX();
-    mouseY = ofGetHeight() - ofGetMouseY();
+    mouseX_ = ofGetMouseX();
+    mouseY_ = ofGetHeight() - ofGetMouseY();
 
-    for (int i = 0; i < myParticles.size(); i++) {
-        myParticles[i].draw();
-
-        myLines[i].draw();
+    for (int i = 0; i < myParticles_.size(); i++) 
+    {
+        myParticles_[i].draw();
+        myLines_[i].draw();
     }
 
-    ofRotateZDeg(-rotationAngle);
+    ofRotateZDeg(-theta_);
     ofSetColor(255);
     ofDrawRectangle(0, -25, 75, 50);
 
@@ -71,9 +71,8 @@ void ofApp::keyReleased(int key)
 void ofApp::mouseMoved(int x, int y)
 {
     // Calculate the rotation angle in the XY plane based on the mouse's current position
-    float angleZ = atan2(y - ofGetHeight(), x);
-
-    rotationAngle = ofRadToDeg(angleZ);
+    double theta = atan2(y - ofGetHeight(), x);
+    theta_ = ofRadToDeg(theta);
 }
 
 //--------------------------------------------------------------
@@ -141,16 +140,15 @@ void ofApp::SpawnParticle()
 {
     Particle newParticule(
         Vector3d(0, 0),                   
-        Vector3d(mouseX, mouseY, 0),      
-        5,                                
-        3                                 
+        Vector3d(mouseX_, mouseY_, 0),      
+        50                                                        
     );
 
-    myParticles.push_back(newParticule);
+    myParticles_.push_back(newParticule);
     ofPolyline b;
 
     // Add the current particle position as the first vertex of the line
     b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
 
-    myLines.push_back(b);
+    myLines_.push_back(b);
 }

@@ -1,6 +1,6 @@
 /**
 * \file matrix4.cpp
-* This file contains the definition of all methods and attributes of the Matrix4 class
+* This file contains the implementation of all methods and attributes of the Matrix4 class
 */
 
 #include "matrix4.h"

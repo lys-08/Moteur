@@ -1,6 +1,6 @@
 /**
 * \file matrix3.h
-* This file contains the declaration of all methods and attributes of the Matrix3 class
+* This file contains the implementation of all methods and attributes of the Matrix3 class
 */
 
 #ifndef MATRIX3_H
@@ -8,9 +8,6 @@
 
 #include <iostream>
 #include "vector3d.h"
-
-
-
 
 
 class Matrix3
