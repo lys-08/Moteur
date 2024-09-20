@@ -131,10 +131,10 @@ void ofApp::draw()
 	ofScale(1, -1);
 	mouseX = ofGetMouseX();
 	mouseY = ofGetHeight() - ofGetMouseY();
-	for (int i = 0; i < myParticles.size(); i++)
+	for (int i = 0; i < myParticles_.size(); i++)
 	{
-		myParticles[i].draw(type);
-		myLines[i].draw();
+		myParticles_[i].draw(type);
+		myLines_[i].draw();
 	}
 	ofRotateZDeg(-rotationAngle);
 	ofSetColor(255);
@@ -176,8 +176,8 @@ void ofApp::keyReleased(int key)
 void ofApp::mouseMoved(int x, int y)
 {
     // Calculate the rotation angle in the XY plane based on the mouse's current position
-    double theta = atan2(y - ofGetHeight(), x);
-    theta_ = ofRadToDeg(theta);
+    double theta_ = atan2(y - ofGetHeight(), x);
+    theta_ = ofRadToDeg(theta_);
 }
 
 //--------------------------------------------------------------
@@ -252,60 +252,56 @@ void ofApp::SpawnParticle(int type)
 		Particle newParticule(
 			Vector3d(0, 0),
 			Vector3d(mouseX, mouseY, 0),
-			5,
 			3
 		);
 
-		myParticles.push_back(newParticule);
+		myParticles_.push_back(newParticule);
 
 		ofPolyline b;
 		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
-		myLines.push_back(b);
+		myLines_.push_back(b);
 	}
 	else if (type == 2)
 	{
 		Particle newParticule(
 			Vector3d(0, 0),
 			Vector3d(mouseX, mouseY, 0),
-			5,
 			10
 		);
 
-		myParticles.push_back(newParticule);
+		myParticles_.push_back(newParticule);
 
 		ofPolyline b;
 		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
-		myLines.push_back(b);
+		myLines_.push_back(b);
 	}
 	else if (type == 3)
 	{
 		Particle newParticule(
 			Vector3d(0, 0),
 			Vector3d(mouseX, mouseY, 0),
-			5,
 			30
 		);
 
-		myParticles.push_back(newParticule);
+		myParticles_.push_back(newParticule);
 
 		ofPolyline b;
 		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
-		myLines.push_back(b);
+		myLines_.push_back(b);
 	}
 	else if (type == 4)
 	{
 		Particle newParticule(
 			Vector3d(0, 0),
 			Vector3d(mouseX, mouseY, 0),
-			5,
 			100
 		);
 
-		myParticles.push_back(newParticule);
+		myParticles_.push_back(newParticule);
 
 		ofPolyline b;
 		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
-		myLines.push_back(b);
+		myLines_.push_back(b);
 	}
 
 	

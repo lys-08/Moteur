@@ -10,11 +10,11 @@ class ofApp : public ofBaseApp {
 public:
 	// Attributes
 	ofBoxPrimitive box;
-	vector<Particle> myParticles;
+	vector<Particle> myParticles_;
 	float rotationAngle;
-	vector<ofPolyline> myLines;
-	std::clock_t previousTime;
-	float deltaTime;
+	vector<ofPolyline> myLines_;
+	std::clock_t previousTime_;
+	float deltaTime_;
 	bool isHudDisplayed = false;
 	int type = 1;
 
