@@ -148,6 +148,9 @@ void ofApp::draw()
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
+	myLines_.clear();
+	myParticles_.clear();
+
 	// On le réécrit sous forme d'un swicth case
 	switch (key)
 	{
@@ -243,12 +246,8 @@ void ofApp::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp::SpawnParticle(int type)
 {
-
-	printf("Spawning a particle of type : %d\n", type);
-
 	if (type == 1)
 	{
-		printf("mouseX: %f, mouseY: %f\n", mouseX, mouseY);
 		Particle newParticule(
 			Vector3d(0, 0),
 			Vector3d(mouseX_, mouseY_, 0),
