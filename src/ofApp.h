@@ -18,6 +18,7 @@ public:
 	bool isHudDisplayed = false;
 	int type = 1;
 
+
 	float mouseX_;
 	float mouseY_;
 

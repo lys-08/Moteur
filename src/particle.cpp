@@ -170,7 +170,7 @@ void Particle::draw(int type)
  * @param time
  * @return nothing
 */
-void Particle::integrate(double time)
+void Particle::integrate(float time)
 {
 	speed_ += (mass_ * g * time);
 	pos_ += (speed_ * time);

@@ -129,8 +129,8 @@ void ofApp::draw()
 	ofPushMatrix();
 	ofTranslate(0, ofGetHeight(), 0);
 	ofScale(1, -1);
-	mouseX = ofGetMouseX();
-	mouseY = ofGetHeight() - ofGetMouseY();
+	mouseX_ = ofGetMouseX();
+	mouseY_ = ofGetHeight() - ofGetMouseY();
 	for (int i = 0; i < myParticles_.size(); i++)
 	{
 		myParticles_[i].draw(type);
@@ -177,7 +177,7 @@ void ofApp::mouseMoved(int x, int y)
 {
     // Calculate the rotation angle in the XY plane based on the mouse's current position
     double theta_ = atan2(y - ofGetHeight(), x);
-    theta_ = ofRadToDeg(theta_);
+    rotationAngle = ofRadToDeg(theta_);
 }
 
 //--------------------------------------------------------------
@@ -251,7 +251,7 @@ void ofApp::SpawnParticle(int type)
 		printf("mouseX: %f, mouseY: %f\n", mouseX, mouseY);
 		Particle newParticule(
 			Vector3d(0, 0),
-			Vector3d(mouseX, mouseY, 0),
+			Vector3d(mouseX_, mouseY_, 0),
 			3
 		);
 
@@ -265,7 +265,7 @@ void ofApp::SpawnParticle(int type)
 	{
 		Particle newParticule(
 			Vector3d(0, 0),
-			Vector3d(mouseX, mouseY, 0),
+			Vector3d(mouseX_, mouseY_, 0),
 			10
 		);
 
@@ -279,7 +279,7 @@ void ofApp::SpawnParticle(int type)
 	{
 		Particle newParticule(
 			Vector3d(0, 0),
-			Vector3d(mouseX, mouseY, 0),
+			Vector3d(mouseX_, mouseY_, 0),
 			30
 		);
 
@@ -293,7 +293,7 @@ void ofApp::SpawnParticle(int type)
 	{
 		Particle newParticule(
 			Vector3d(0, 0),
-			Vector3d(mouseX, mouseY, 0),
+			Vector3d(mouseX_, mouseY_, 0),
 			100
 		);
 
