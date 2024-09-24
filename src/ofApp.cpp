@@ -3,26 +3,26 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-    previousTime_ = std::clock();
+	previousTime_ = std::clock();
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    // Get the current time in clock ticks
-    std::clock_t currentTime = std::clock();
+	// Get the current time in clock ticks
+	std::clock_t currentTime = std::clock();
 
-    // Calculate the elapsed time between the last update() call and the current one
-    deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
+	// Calculate the elapsed time between the last update() call and the current one
+	deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
 
-    previousTime_ = currentTime;
+	previousTime_ = currentTime;
 
-    for (int i = 0; i < myParticles_.size(); i++) {
-        // Update each particle by integrating its movement based on the elapsed time
-        myParticles_[i].integrate(deltaTime_);
+	for (int i = 0; i < myParticles_.size(); i++) {
+		// Update each particle by integrating its movement based on the elapsed time
+		myParticles_[i].integrate(deltaTime_);
 
-        // Add a new vertex to the polyline based on the particle's current position
-        myLines_[i].addVertex(myParticles_[i].getPos().getX(), myParticles_[i].getPos().getY(), 0);
-    }
+		// Add a new vertex to the polyline based on the particle's current position
+		myLines_[i].addVertex(myParticles_[i].getPos().getX(), myParticles_[i].getPos().getY(), 0);
+	}
 }
 
 //--------------------------------------------------------------
@@ -73,16 +73,16 @@ void ofApp::draw()
 		// Ligne horizontale
 		ofDrawLine(posX - ballRadius, posY, posX + ballRadius, posY);
 
-		// Deux courbes pour les arcs latéraux
-		ofDrawBezier(posX - ballRadius, posY,  // Point de départ
-			posX - ballRadius / 2, posY - ballRadius / 2,  // Premier point de contrôle
-			posX + ballRadius / 2, posY - ballRadius / 2,  // Deuxième point de contrôle
-			posX + ballRadius, posY);  // Point d'arrivée
+		// Deux courbes pour les arcs lat?raux
+		ofDrawBezier(posX - ballRadius, posY,  // Point de d?part
+			posX - ballRadius / 2, posY - ballRadius / 2,  // Premier point de contr?le
+			posX + ballRadius / 2, posY - ballRadius / 2,  // Deuxi?me point de contr?le
+			posX + ballRadius, posY);  // Point d'arriv?e
 
-		ofDrawBezier(posX - ballRadius, posY,  // Point de départ
-			posX - ballRadius / 2, posY + ballRadius / 2,  // Premier point de contrôle
-			posX + ballRadius / 2, posY + ballRadius / 2,  // Deuxième point de contrôle
-			posX + ballRadius, posY);  // Point d'arrivée
+		ofDrawBezier(posX - ballRadius, posY,  // Point de d?part
+			posX - ballRadius / 2, posY + ballRadius / 2,  // Premier point de contr?le
+			posX + ballRadius / 2, posY + ballRadius / 2,  // Deuxi?me point de contr?le
+			posX + ballRadius, posY);  // Point d'arriv?e
 
 		// Fireball ---------------------------------------------------------------
 		float maxRadius = 12;  // Rayon maximal de la boule de feu
@@ -95,11 +95,11 @@ void ofApp::draw()
 		ofSetColor(255, 255, 0);  // Jaune
 		ofDrawCircle(centerX, centerY, maxRadius * 0.3);
 
-		// Couche intermédiaire orange
+		// Couche interm?diaire orange
 		ofSetColor(255, 165, 0);  // Orange
 		ofDrawCircle(centerX, centerY, maxRadius * 0.6);
 
-		// Couche extérieure rouge
+		// Couche ext?rieure rouge
 		ofSetColor(255, 69, 0);  // Rouge
 		ofDrawCircle(centerX, centerY, maxRadius);
 
@@ -107,23 +107,23 @@ void ofApp::draw()
 		ofSetColor(255, 140, 0);  // Flammes orange
 		for (int i = 0; i < 8; i++) {
 			float randomAngle = ofRandom(TWO_PI);
-			float flameLength = ofRandom(5, 10);  // Longueur aléatoire des flammes
+			float flameLength = ofRandom(5, 10);  // Longueur al?atoire des flammes
 			ofDrawLine(centerX, centerY,
 				centerX + cos(randomAngle) * (maxRadius + flameLength),
 				centerY + sin(randomAngle) * (maxRadius + flameLength));
 		}
-		
-		
+
+
 
 		// Canonball --------------------------------------------------------------
-		ofSetColor(200);  // Gris foncé pour le boulet de canon
+		ofSetColor(200);  // Gris fonc? pour le boulet de canon
 		ofDrawCircle(85, 305, 15);
 
-		// Optionnel : ajouter des détails comme une légère ombre
-		ofSetColor(235);  // Ombre plus foncée
+		// Optionnel : ajouter des d?tails comme une l?g?re ombre
+		ofSetColor(235);  // Ombre plus fonc?e
 		ofDrawCircle(87 - 15 * 0.3, 300 + 15 * 0.3, 15 * 0.8);
 
-		
+
 	}
 
 	ofPushMatrix();
@@ -138,7 +138,7 @@ void ofApp::draw()
 	}
 	ofRotateZDeg(-rotationAngle);
 	ofSetColor(255);
-	ofDrawRectangle(0, - 25, 75, 50);
+	ofDrawRectangle(0, -25, 75, 50);
 	ofPopMatrix();
 
 
@@ -151,7 +151,7 @@ void ofApp::keyPressed(int key)
 	myLines_.clear();
 	myParticles_.clear();
 
-	// On le réécrit sous forme d'un swicth case
+	// On le r??crit sous forme d'un swicth case
 	switch (key)
 	{
 	case '1':
@@ -172,21 +172,21 @@ void ofApp::keyPressed(int key)
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key)
 {
-    // No action on key release
+	// No action on key release
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y)
 {
-    // Calculate the rotation angle in the XY plane based on the mouse's current position
-    double theta_ = atan2(y - ofGetHeight(), x);
-    rotationAngle = ofRadToDeg(theta_);
+	// Calculate the rotation angle in the XY plane based on the mouse's current position
+	double theta_ = atan2(y - ofGetHeight(), x);
+	rotationAngle = ofRadToDeg(theta_);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button)
 {
-    // No action on mouse drag
+	// No action on mouse drag
 }
 
 //--------------------------------------------------------------
@@ -205,37 +205,37 @@ void ofApp::mousePressed(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button)
 {
-    // No action on mouse release
+	// No action on mouse release
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y)
 {
-    // No action when mouse enters the window
+	// No action when mouse enters the window
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y)
 {
-    // No action when mouse exits the window
+	// No action when mouse exits the window
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h)
 {
-    // No action on window resize
+	// No action on window resize
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg)
 {
-    // No action when a message is received
+	// No action when a message is received
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo)
 {
-    // No action on drag event
+	// No action on drag event
 }
 
 //--------------------------------------------------------------
@@ -303,5 +303,5 @@ void ofApp::SpawnParticle(int type)
 		myLines_.push_back(b);
 	}
 
-	
+
 }
