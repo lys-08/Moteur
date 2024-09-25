@@ -16,6 +16,8 @@ private:
     Vector3d speed_;
     double mass_;
     double invertMass_;
+
+    // constant
     Vector3d g = Vector3d(0, -10, 0);
 
 public:
@@ -34,11 +36,6 @@ public:
     void setInvertMass(double mass);
 
     // Other methods
-
-    void draw();
-    void integrate(double time);
-
-    void move();
     void draw(int type);
     void integrate(float temps);
 

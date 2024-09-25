@@ -64,7 +64,7 @@ public:
     /**
      * @brief Transform the current vector into a glm vector
      *
-     * @return nothing
+     * @return a glm vector with the coordinates of the vector
     */
     glm::vec3 v3() { return glm::vec3(x_, y_, z_); };
 };

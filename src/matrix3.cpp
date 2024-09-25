@@ -238,7 +238,7 @@ Vector3d VectorXmatrix3(const Vector3d& vect, const Matrix3& mat)
 
 
 /**
- * TODO : chosse line vector x matrix OR matrix x col vector
+ * TODO : choose line vector x matrix OR matrix x col vector
  * -> this is the matrix x col vector
 */
 Vector3d Matrix3xVector(const Vector3d& vect, const Matrix3& mat)

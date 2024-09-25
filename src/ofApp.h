@@ -9,18 +9,17 @@ class ofApp : public ofBaseApp {
 
 public:
 	// Attributes
-	ofBoxPrimitive box;
 	vector<Particle> myParticles_;
-	float rotationAngle;
+	float theta_;
 	vector<ofPolyline> myLines_;
 	std::clock_t previousTime_;
 	float deltaTime_;
-	bool isHudDisplayed = false;
-	int type = 1;
-
+	bool isHudDisplayed_ = false;
+	int type_ = 1;
 
 	float mouseX_;
 	float mouseY_;
+
 
 	// Methods
 	void setup();

@@ -157,12 +157,13 @@ void Vector3d::operator=(const Vector3d& v)
         x_ = v.x_;
         y_ = v.y_;
         z_ = v.z_;
+        w_ = v.w_;
     }
 }
 
 bool Vector3d::operator==(const Vector3d& v) const
 {
-    return (x_ == v.x_ && y_ == v.y_ && z_ == v.z_);
+    return (x_ == v.x_ && y_ == v.y_ && z_ == v.z_ && w_ == v.w_);
 }
 
 
@@ -214,6 +215,11 @@ void Vector3d::normalise()
     }
 }
 
+/**
+ * @brief Normalise the current vector
+ *
+ * @return the normalised vector
+*/
 Vector3d Vector3d::normalise2()
 {
     Vector3d resu = *this;

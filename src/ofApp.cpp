@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "../tests/test_vector3d.h"
 
 //--------------------------------------------------------------
 void ofApp::setup()
@@ -8,15 +9,14 @@ void ofApp::setup()
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	// Get the current time in clock ticks
 	std::clock_t currentTime = std::clock();
 
 	// Calculate the elapsed time between the last update() call and the current one
 	deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
-
 	previousTime_ = currentTime;
 
-	for (int i = 0; i < myParticles_.size(); i++) {
+	for (int i = 0; i < myParticles_.size(); i++) 
+	{
 		// Update each particle by integrating its movement based on the elapsed time
 		myParticles_[i].integrate(deltaTime_);
 
@@ -29,7 +29,7 @@ void ofApp::update() {
 void ofApp::draw()
 {
 
-	if (!isHudDisplayed)
+	if (!isHudDisplayed_)
 	{
 		// Display the HUD
 		ofSetColor(255);
@@ -53,61 +53,56 @@ void ofApp::draw()
 
 		// Ping Pong Ball ---------------------------------------------------------
 		ofSetColor(255);  // White
-		ofDrawCircle(85, 85, 10); // 1
+		ofDrawCircle(85, 85, 10);
 
 		// Basketball -------------------------------------------------------------
-		float posX = 85;     // Position X de la balle
-		float posY = 155;    // Position Y de la balle
-		float ballRadius = 10;  // Rayon de la balle de basket
+		float posX = 85;
+		float posY = 155;
+		float ballRadius = 10;
 
-		// Dessine le cercle orange pour la balle de basket
-		ofSetColor(255, 165, 0);  // Orange
+		// Orange circle
+		ofSetColor(255, 165, 0); 
 		ofDrawCircle(posX, posY, ballRadius);
 
-		// Dessine les lignes noires sur la balle
-		ofSetColor(0);  // Noir
+		// Black lines
+		ofSetColor(0); 
+		ofDrawLine(posX, posY - ballRadius, posX, posY + ballRadius); // vertical line
+		ofDrawLine(posX - ballRadius, posY, posX + ballRadius, posY); // horizontal line
 
-		// Ligne verticale
-		ofDrawLine(posX, posY - ballRadius, posX, posY + ballRadius);
-
-		// Ligne horizontale
-		ofDrawLine(posX - ballRadius, posY, posX + ballRadius, posY);
-
-		// Deux courbes pour les arcs lat?raux
-		ofDrawBezier(posX - ballRadius, posY,  // Point de d?part
-			posX - ballRadius / 2, posY - ballRadius / 2,  // Premier point de contr?le
-			posX + ballRadius / 2, posY - ballRadius / 2,  // Deuxi?me point de contr?le
-			posX + ballRadius, posY);  // Point d'arriv?e
-
-		ofDrawBezier(posX - ballRadius, posY,  // Point de d?part
-			posX - ballRadius / 2, posY + ballRadius / 2,  // Premier point de contr?le
-			posX + ballRadius / 2, posY + ballRadius / 2,  // Deuxi?me point de contr?le
-			posX + ballRadius, posY);  // Point d'arriv?e
+		// lateral arches
+		ofDrawBezier(posX - ballRadius, posY,  // start
+			posX - ballRadius / 2, posY - ballRadius / 2,  // first checkpoint
+			posX + ballRadius / 2, posY - ballRadius / 2,  // second checkpoint
+			posX + ballRadius, posY);  // end point
+		ofDrawBezier(posX - ballRadius, posY, 
+			posX - ballRadius / 2, posY + ballRadius / 2, 
+			posX + ballRadius / 2, posY + ballRadius / 2,
+			posX + ballRadius, posY);
 
 		// Fireball ---------------------------------------------------------------
-		float maxRadius = 12;  // Rayon maximal de la boule de feu
-		float centerX = 85;    // Position X fixe
-		float centerY = 230;   // Position Y fixe
+		float maxRadius = 12; 
+		float centerX = 85;
+		float centerY = 230;
 
-		// Dessin des cercles concentriques pour la boule de feu
+		// Concentric circles for the fireball :
+		//	- Central yellow circle
+		//	- Middle orange circle
+		//	- External red circle
 
-		// Couche centrale jaune
-		ofSetColor(255, 255, 0);  // Jaune
+		ofSetColor(255, 255, 0);
 		ofDrawCircle(centerX, centerY, maxRadius * 0.3);
 
-		// Couche interm?diaire orange
-		ofSetColor(255, 165, 0);  // Orange
+		ofSetColor(255, 165, 0);  
 		ofDrawCircle(centerX, centerY, maxRadius * 0.6);
 
-		// Couche ext?rieure rouge
-		ofSetColor(255, 69, 0);  // Rouge
+		ofSetColor(255, 69, 0); 
 		ofDrawCircle(centerX, centerY, maxRadius);
 
-		// Optionnel : ajout de quelques flammes
-		ofSetColor(255, 140, 0);  // Flammes orange
+		// Flames
+		ofSetColor(255, 140, 0);
 		for (int i = 0; i < 8; i++) {
 			float randomAngle = ofRandom(TWO_PI);
-			float flameLength = ofRandom(5, 10);  // Longueur al?atoire des flammes
+			float flameLength = ofRandom(5, 10);
 			ofDrawLine(centerX, centerY,
 				centerX + cos(randomAngle) * (maxRadius + flameLength),
 				centerY + sin(randomAngle) * (maxRadius + flameLength));
@@ -116,32 +111,38 @@ void ofApp::draw()
 
 
 		// Canonball --------------------------------------------------------------
-		ofSetColor(200);  // Gris fonc? pour le boulet de canon
+		ofSetColor(200);  
 		ofDrawCircle(85, 305, 15);
 
-		// Optionnel : ajouter des d?tails comme une l?g?re ombre
-		ofSetColor(235);  // Ombre plus fonc?e
+		// Shadow
+		ofSetColor(235);
 		ofDrawCircle(87 - 15 * 0.3, 300 + 15 * 0.3, 15 * 0.8);
-
-
 	}
 
+
+	// Save the current transformation matrix
 	ofPushMatrix();
-	ofTranslate(0, ofGetHeight(), 0);
-	ofScale(1, -1);
+	ofTranslate(0, ofGetHeight(), 0); // Origine at the botton left
+	ofScale(1, -1); // Positive x axis to the right and y axis to the top
+
+	// Get the mouse position in our transformed coordinate system
 	mouseX_ = ofGetMouseX();
 	mouseY_ = ofGetHeight() - ofGetMouseY();
+
+	// Drawing our particles
 	for (int i = 0; i < myParticles_.size(); i++)
 	{
-		myParticles_[i].draw(type);
+		myParticles_[i].draw(type_);
 		myLines_[i].draw();
 	}
-	ofRotateZDeg(-rotationAngle);
+	ofRotateZDeg(-theta_);
+
+	// Canon
 	ofSetColor(255);
 	ofDrawRectangle(0, -25, 75, 50);
+	
+	// Restore the transformation matrix to it's original state
 	ofPopMatrix();
-
-
 
 }
 
@@ -151,20 +152,23 @@ void ofApp::keyPressed(int key)
 	myLines_.clear();
 	myParticles_.clear();
 
-	// On le r??crit sous forme d'un swicth case
 	switch (key)
 	{
 	case '1':
-		type = 1;
+		type_ = 1;
 		break;
 	case '2':
-		type = 2;
+		type_ = 2;
 		break;
 	case '3':
-		type = 3;
+		type_ = 3;
 		break;
 	case '4':
-		type = 4;
+		type_ = 4;
+		break;
+	case 't':
+		Test_vector3d testVector3d;
+		testVector3d.tests_all();
 		break;
 	}
 }
@@ -179,8 +183,8 @@ void ofApp::keyReleased(int key)
 void ofApp::mouseMoved(int x, int y)
 {
 	// Calculate the rotation angle in the XY plane based on the mouse's current position
-	double theta_ = atan2(y - ofGetHeight(), x);
-	rotationAngle = ofRadToDeg(theta_);
+	double theta = atan2(y - ofGetHeight(), x);
+	theta_ = ofRadToDeg(theta);
 }
 
 //--------------------------------------------------------------
@@ -195,7 +199,7 @@ void ofApp::mousePressed(int x, int y, int button)
 	switch (button)
 	{
 	case 0:
-		SpawnParticle(type);
+		SpawnParticle(type_);
 		break;
 	default:
 		break;
@@ -302,6 +306,5 @@ void ofApp::SpawnParticle(int type)
 		b.addVertex(newParticule.getPos().getX(), newParticule.getPos().getY(), 0);
 		myLines_.push_back(b);
 	}
-
 
 }
