@@ -137,13 +137,13 @@ void Test_vector3d::tests_operatorDividedEquals()
 	assert(v.getZ() == 3);
 
 	std::cout << "[operator/=]" << std::endl;
-	std::cout << "An error must be print after this message (division by zero)" << std::endl;
+	std::cout << "An error must be printed after this message (division by zero)" << std::endl;
 	try {
 		v /= 0;
 	}
 	catch (const std::invalid_argument& e) 
 	{
-		std::cerr << "Erreur : " << e.what() << std::endl;
+		std::cerr << "Error : " << e.what() << std::endl;
 	}
 }
 
@@ -315,12 +315,12 @@ void Test_vector3d::tests_operatorDivided()
 	assert(v2.getZ() == 3);
 
 	std::cout << "[operator/]" << std::endl;
-	std::cout << "An error must be print after this message (division by zero)" << std::endl;
+	std::cout << "An error must be printed after this message (division by zero)" << std::endl;
 	try {
 		v1 /= 0;
 	}
 	catch (const std::invalid_argument& e)
 	{
-		std::cerr << "Erreur : " << e.what() << std::endl;
+		std::cerr << "Error : " << e.what() << std::endl;
 	}
 }

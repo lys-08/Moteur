@@ -28,6 +28,17 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+	//Display difference between frames
+	ofSetColor(0, 255, 0);
+
+	std::string deltaTimeText = "Delta Time: " + ofToString(deltaTime_, 5);
+
+	int x = ofGetWidth() - 200;
+	int y = 20;
+
+	ofDrawBitmapString(deltaTimeText, x, y);
+
+	ofSetColor(0, 0, 0);
 
 	if (!isHudDisplayed_)
 	{
