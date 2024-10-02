@@ -13,9 +13,9 @@
  * @param registry the registry
  * @return nothing
 */
-void ParticleForceRegistry::add(const Particle& particle, ParticleForceGenerator& registry)
+void ParticleForceRegistry::add(Particle *particle, ParticleForceGenerator * forceGenerator)
 {
-	// TODO
+	registry_.push_back({ particle, forceGenerator });
 }
 
 /**
@@ -25,9 +25,19 @@ void ParticleForceRegistry::add(const Particle& particle, ParticleForceGenerator
  * @param registry the registry
  * @return nothing
 */
-void ParticleForceRegistry::remove(const Particle& particle, ParticleForceGenerator& registry)
+void ParticleForceRegistry::remove(Particle *particle, ParticleForceGenerator *forceGenerator)
 {
-	// TODO
+    for (auto it = registry_.begin(); it != registry_.end(); ) 
+    {
+        if (it->particle == particle && it->forceGenerator == forceGenerator) 
+        {
+            it = registry_.erase(it);
+        }
+        else 
+        {
+            ++it;
+        }
+    }
 }
 
 /**
@@ -37,7 +47,7 @@ void ParticleForceRegistry::remove(const Particle& particle, ParticleForceGenera
 */
 void ParticleForceRegistry::clear()
 {
-	// TODO
+    registry_.clear();
 }
 
 /**
@@ -48,5 +58,8 @@ void ParticleForceRegistry::clear()
 */
 void ParticleForceRegistry::updateForce(float duration)
 {
-	// TODO
+    for (const auto& registration : registry_) 
+    {
+        registration.forceGenerator->updateForce(registration.particle, duration);
+    }
 }

@@ -3,8 +3,7 @@
 * This file contains the implementation of all methods and attributes of the Matrix3 class
 */
 
-#ifndef MATRIX3_H
-#define MATRIX3_H
+#pragma once
 
 #include <iostream>
 #include "vector3d.h"
@@ -43,7 +42,3 @@ Matrix3 operator*(const Matrix3& m, float f);
 Matrix3 operator/(const Matrix3& m, float f);
 Vector3d VectorXmatrix3(const Vector3d& vect, const Matrix3& mat);
 Vector3d Matrix3xVector(const Vector3d& vect, const Matrix3& mat);
-
-
-
-#endif
