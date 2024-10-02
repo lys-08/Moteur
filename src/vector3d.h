@@ -3,8 +3,7 @@
 * This file contains the declaration of all methods and attributes of the Vector3d class
 */
 
-#ifndef VECTOR3D_H
-#define VECTOR3D_H
+#pragma once
 
 #include <iostream>
 #include <ofEvents.h>
@@ -77,5 +76,3 @@ Vector3d operator*(const Vector3d& v1, const Vector3d& v2);
 Vector3d operator*(const Vector3d& v, double d);
 Vector3d operator*(double d, const Vector3d& v);
 Vector3d operator/(const Vector3d& v, double d);
-
-#endif

@@ -1,3 +1,8 @@
+/**
+* \file gravity.h
+* This file contains the declaration of all methods and attributes of the Gravity class
+*/
+
 #pragma once
 
 #include "particleForceGenerator.h"
@@ -8,9 +13,9 @@ class Gravity :
 {
     Vector3d gravity;
 
-    Gravity();
-    Gravity(const Vector3d& g = Vector3d());
+    Gravity();                                              // TODO
+    Gravity(const Vector3d& g = Vector3d());                // TODO
     
-    void updateForce(Particle* particle, float duration);
+    void updateForce(Particle* particle, float duration);   // TODO
 };
 

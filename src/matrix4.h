@@ -3,8 +3,7 @@
 * This file contains the declaration of all methods and attributes of the Matrix4 class
 */
 
-#ifndef MATRIX4_H
-#define MATRIX4_H
+#pragma once
 
 #include <iostream>
 #include "vector3d.h"
@@ -47,7 +46,3 @@ Matrix4 operator*(const Matrix4& m, float f);
 Matrix4 operator/(const Matrix4& m, float f);
 Vector3d VectorXmatrix4(const Vector3d& vect, const Matrix4& mat);
 Vector3d Matrix4xVector(const Vector3d& vect, const Matrix4& mat);
-
-
-
-#endif

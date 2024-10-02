@@ -172,3 +172,24 @@ void Particle::integrate(float time)
 	speed_ += (mass_ * g * time);
 	pos_ += (speed_ * time);
 }
+
+/**
+ * @brief add a strength to the accumulator
+ *
+ * @param strength the strength to add to accumForce
+ * @return nothing
+*/
+void Particle::addForce(const Vector3d& strength)
+{
+	accumForce_ += strength;
+}
+
+/**
+ * @brief Clear accumForce
+ *
+ * @return nothing
+*/
+void Particle::clearAccumForce()
+{
+	accumForce_ = Vector3d(0, 0, 0, 0);
+}

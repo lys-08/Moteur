@@ -3,8 +3,7 @@
 * This file contains the declaration of all methods and attributes of the Particle class
 */
 
-#ifndef PARTICLE_H
-#define PARTICLE_H
+#pragma once
 
 #include "vector3d.h"
 
@@ -16,6 +15,7 @@ private:
     Vector3d speed_;
     double mass_;
     double invertMass_;
+    Vector3d accumForce_;
 
     // constant
     Vector3d g = Vector3d(0, -10, 0);
@@ -38,7 +38,6 @@ public:
     // Other methods
     void draw(int type);
     void integrate(float temps);
-
+    void addForce(const Vector3d &strength);
+    void clearAccumForce();
 };
-
-#endif
