@@ -1,5 +1,5 @@
 # Moteur
-Ce projet de Moteur de jeu a été réalisé dans le cadre du cours de mathématiques et physique pour le jeu vidéo à l'UQAC (Université du Québec à Chicoutimi). Il est actuellement en cours de développement. La durée totale du projet sera de 4 mois.
+Ce projet de Moteur Physique a été réalisé dans le cadre du cours de mathématiques et physique pour le jeu vidéo à l'UQAC (Université du Québec à Chicoutimi). Il est actuellement en cours de développement. La durée totale du projet sera de 4 mois.
 
 ## Arborescence
 Le projet présente l'arborescence suivante :
