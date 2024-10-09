@@ -14,7 +14,7 @@ ParticleSpring::ParticleSpring(Particle* other, double k, double l0)
 {
     other_ = other;
     k_ = k;
-    l0 = l0;
+    l0_ = l0;
 }
 
 

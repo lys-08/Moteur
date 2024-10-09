@@ -32,6 +32,7 @@ public:
     Vector3d getPos() const;
     Vector3d getSpeed() const;
     double getInvertMass() const;
+	Vector3d getForceAccum() const;
     void setSpeed(Vector3d dir);
     void setInvertMass(double mass);
 

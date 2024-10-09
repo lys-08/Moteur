@@ -69,6 +69,11 @@ double Particle::getInvertMass() const
 	return invertMass_;
 }
 
+Vector3d Particle::getForceAccum() const
+{
+	return accumForce_;
+}
+
 void Particle::setSpeed(Vector3d speed)
 {
 	speed_ = speed;
