@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include "src/particle.h"
-#include "src/particleForceGenerator.h"
+#include "particle.h"
+#include "particleForceGenerator.h"
 
 class particleStaticFriction :
     public ParticleForceGenerator
