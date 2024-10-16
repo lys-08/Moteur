@@ -74,6 +74,11 @@ Vector3d Particle::getForceAccum() const
 	return accumForce_;
 }
 
+double Particle::getRadius() const
+{
+	return radius_;
+}
+
 void Particle::setSpeed(Vector3d speed)
 {
 	speed_ = speed;

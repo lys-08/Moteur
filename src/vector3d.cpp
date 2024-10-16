@@ -254,6 +254,11 @@ Vector3d Vector3d::crossProduct(const Vector3d& v) const
     return Vector3d(x, y, z);
 }
 
+double Vector3d::distance(const Vector3d& v) const
+{
+    return sqrt(pow(x_ - v.getX(), 2) + pow(y_ - v.getY(), 2) + pow(z_ - v.getZ(), 2));
+}
+
 
 // ============================================================================
 // External operators =========================================================

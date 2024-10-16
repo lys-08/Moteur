@@ -6,9 +6,10 @@
 #pragma once
 
 #include "particle.h"
+#include "particleContact.h"
 
 class ParticleContactGenerator
 {
 public:
-	virtual void addContact() const = 0; //todo
+	virtual void addContact(std::vector<ParticleContact> &contacts) = 0;
 };

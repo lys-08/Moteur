@@ -3,5 +3,11 @@
 class ParticleSphericalCollisionGenerator :
     public ParticleContactGenerator
 {
+
+public:
+    ParticleSphericalCollisionGenerator();
+
+    std::vector<Particle> particles;
+    void addContact(std::vector<ParticleContact>& contacts);
 };
 

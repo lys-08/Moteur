@@ -16,6 +16,7 @@ private:
     double mass_;
     double invertMass_;
     Vector3d accumForce_;
+    double radius_;
 
     // constant
     Vector3d g = Vector3d(0, -10, 0);
@@ -33,6 +34,7 @@ public:
     Vector3d getSpeed() const;
     double getInvertMass() const;
 	Vector3d getForceAccum() const;
+    double getRadius() const;
     void setSpeed(Vector3d dir);
     void setInvertMass(double mass);
 
