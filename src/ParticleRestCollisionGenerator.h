@@ -1,11 +1,9 @@
 #pragma once
 #include "ParticleContactGenerator.h"
-class ParticleSphericalCollisionGenerator :
+class ParticleRestCollisionGenerator :
     public ParticleContactGenerator
 {
-
-public:
-    ParticleSphericalCollisionGenerator();
+    ParticleRestCollisionGenerator();
 
     std::vector<Particle> particles;
     void addContact(std::vector<ParticleContact>& contacts, double time);

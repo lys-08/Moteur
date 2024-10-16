@@ -4,17 +4,23 @@
 //--------------------------------------------------------------
 void ofApp2::setup()
 {
-	
+	previousTime_ = std::clock();
 }
 
 //--------------------------------------------------------------
 void ofApp2::update() 
 {
+	std::clock_t currentTime = std::clock();
+
+	// Calculate the elapsed time between the last update() call and the current one
+	deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
+	previousTime_ = currentTime;
+
 	collision.particles = myParticles_;
 
 	for (int i = 0; i < myParticles_.size() ;i++)
 	{
-		collision.addContact(contacts);
+		collision.addContact(contacts,deltaTime_);
 		//for contacts: solve
 		if (contacts.size() == 1)
 		{

@@ -5,7 +5,7 @@ ParticleSphericalCollisionGenerator::ParticleSphericalCollisionGenerator()
 
 }
 
-void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact>& contacts)
+void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact>& contacts, double time)
 {
 	int size = particles.size();
 	for (int i = 0; i < size - 1; i++)
@@ -23,7 +23,7 @@ void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact
 				contact.interpenetration = distance - sumRadius;
 
 				contacts.push_back(contact);
-				//todo
+				//todo normal + other
 			}
 		}
 	}

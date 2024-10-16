@@ -11,5 +11,5 @@
 class ParticleContactGenerator
 {
 public:
-	virtual void addContact(std::vector<ParticleContact> &contacts) = 0;
+	virtual void addContact(std::vector<ParticleContact> &contacts, double time) = 0;
 };

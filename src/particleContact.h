@@ -14,6 +14,7 @@ public:
 
 	float elasticity;
 	float interpenetration;
+	Vector3d normal;
 
 	void solve();
 };
