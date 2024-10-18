@@ -23,6 +23,7 @@ Particle::Particle(Vector3d pos, Vector3d speed, double mass)
 	pos_ = pos;
 	speed_ = speed;
 	mass_ = mass;
+	radius_ = 50;
 	setInvertMass(mass_);
 }
 
@@ -57,6 +58,8 @@ Vector3d Particle::getPos() const
 {
 	return pos_;
 }
+
+
 
 
 Vector3d Particle::getSpeed() const
@@ -94,6 +97,11 @@ void Particle::setInvertMass(double mass)
 	invertMass_ = 1/mass;
 }
 
+void Particle::setPos(Vector3d pos)
+{
+	pos_ = pos;
+}
+
 
 
 
@@ -110,7 +118,7 @@ void Particle::draw(int type)
 {
 	if (type == 1) 
 	{
-		ofDrawIcoSphere(pos_.v3(), 10);
+		ofDrawIcoSphere(pos_.v3(), 50);
 	}
 	else if (type == 2) // Basket Ball
 	{ 

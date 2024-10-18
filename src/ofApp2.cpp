@@ -21,6 +21,8 @@ void ofApp2::update()
 	for (int i = 0; i < myParticles_.size() ;i++)
 	{
 		collision.addContact(contacts,deltaTime_);
+		// display contacts
+		std::cout << contacts.size() <<std::endl;
 		//for contacts: solve
 		if (contacts.size() == 1)
 		{
@@ -71,6 +73,9 @@ void ofApp2::mousePressed(int x, int y, int button)
 	case 0:
 		SpawnParticle(1);
 		break;
+	case 2:
+		SpawnParticle(2);
+		break;
 	default:
 		break;
 	}
@@ -120,11 +125,24 @@ void ofApp2::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp2::SpawnParticle(int type)
 {
+	if (type == 1)
+	{
+
 	Particle* newParticule = new Particle(
-		Vector3d(600, 500),
+		Vector3d(ofGetMouseX(), ofGetMouseY()),
 		Vector3d(0, 0, 0),
 		3
 	);
-
 	myParticles_.push_back(newParticule);
+	}
+	else if (type == 2)
+	{
+	Particle* newParticule = new Particle(
+		Vector3d(ofGetMouseX(), ofGetMouseY()),
+		Vector3d(0, 0, 0),
+		3
+	);
+	myParticles_.push_back(newParticule);
+	}
+
 }

@@ -37,6 +37,7 @@ public:
     double getRadius() const;
     void setSpeed(Vector3d dir);
     void setInvertMass(double mass);
+	void setPos(Vector3d pos);
 
     // Other methods
     void draw(int type);
