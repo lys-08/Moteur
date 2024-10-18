@@ -20,10 +20,11 @@ void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact
 				contact.particles[0] = particles[i];
 				contact.particles[1] = particles[j];
 
+				contact.elasticity = 1;
 				contact.interpenetration = distance - sumRadius;
+				contact.normal = (particles[i]->getPos() - particles[j]->getPos()).normalise2();
 
 				contacts.push_back(contact);
-				//todo normal + other
 			}
 		}
 	}

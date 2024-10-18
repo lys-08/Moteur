@@ -11,6 +11,7 @@ void ParticleRestCollisionGenerator::addContact(std::vector<ParticleContact>& co
 	for (int i = 0; i < size; i++)
 	{
 		//projeter sur la normale avant de comparer
+		//faire un sol ?
 		if ((particles[i]->getForceAccum() * time).norm() > particles[i]->getSpeed().norm())
 		{
 			ParticleContact contact;

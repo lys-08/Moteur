@@ -10,18 +10,21 @@ ParticleStraightCable::ParticleStraightCable(Particle* particles[2], double leng
 
 void ParticleStraightCable::addContact(std::vector<ParticleContact>& contacts, double time)
 {
-	ParticleContact contact;
-	contact.particles[0] = particles_[0];
-	contact.particles[1] = particles_[1];
-	Vector3d normal = particles_[1]->getPos() - particles_[0]->getPos();
-	normal.normalise();
+	if (getActualLength() > length_)
+	{
+		ParticleContact contact;
+		contact.particles[0] = particles_[0];
+		contact.particles[1] = particles_[1];
+		Vector3d normal = particles_[1]->getPos() - particles_[0]->getPos();
+		normal.normalise();
 
-	//nomale et penetration ??
-	contact.elasticity = 0;
-	contacts.push_back(contact);
+		//normale et penetration ??
+		contact.elasticity = 0;
+		contacts.push_back(contact);
+	}
 }
 
-double ParticleStraightCable::getLength() const
+double ParticleStraightCable::getActualLength() const
 {
-	return length_;
+	return (particles_[0]->getPos() - particles_[1]->getPos()).norm();
 }
