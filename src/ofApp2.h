@@ -11,7 +11,7 @@ class ofApp2 : public ofBaseApp {
 
 public:
 	// Attributes
-	vector<Particle> myParticles_;
+	vector<Particle*> myParticles_;
 	float theta_;
 	vector<ofPolyline> myLines_;
 	std::clock_t previousTime_;

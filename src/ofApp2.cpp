@@ -35,7 +35,7 @@ void ofApp2::draw()
 {
 	for (int i = 0; i < myParticles_.size(); i++)
 	{
-		myParticles_[i].draw(1);
+		myParticles_[i]->draw(1);
 	}
 }
 
@@ -120,8 +120,8 @@ void ofApp2::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp2::SpawnParticle(int type)
 {
-	Particle newParticule(
-		Vector3d(500, 500),
+	Particle* newParticule = new Particle(
+		Vector3d(600, 500),
 		Vector3d(0, 0, 0),
 		3
 	);

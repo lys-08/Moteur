@@ -1,13 +1,16 @@
 #pragma once
 #include "ParticleContactGenerator.h"
-class ParticleSphericalCollisionGenerator :
+class ParticleStraightCable :
     public ParticleContactGenerator
 {
 
 public:
-    ParticleSphericalCollisionGenerator();
+    ParticleStraightCable(Particle* particles[2], double length);
 
-    std::vector<Particle*> particles;
+    Particle* particles_[2];
+    double length_; 
+
     void addContact(std::vector<ParticleContact>& contacts, double time);
+    double getLength() const;
 };
 

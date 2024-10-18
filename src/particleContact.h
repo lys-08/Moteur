@@ -10,7 +10,7 @@
 class ParticleContact
 {
 public:
-	Particle particles[2];
+	Particle* particles[2];
 
 	float elasticity;
 	float interpenetration;

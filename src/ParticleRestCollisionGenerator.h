@@ -5,7 +5,7 @@ class ParticleRestCollisionGenerator :
 {
     ParticleRestCollisionGenerator();
 
-    std::vector<Particle> particles;
+    std::vector<Particle*> particles;
     void addContact(std::vector<ParticleContact>& contacts, double time);
 };
 

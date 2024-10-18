@@ -12,8 +12,8 @@ void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact
 	{
 		for (int j = i + 1; j < size; j++)
 		{
-			double distance = particles[i].getPos().distance(particles[j].getPos());
-			double sumRadius = particles[i].getRadius() + particles[j].getRadius();
+			double distance = particles[i]->getPos().distance(particles[j]->getPos());
+			double sumRadius = particles[i]->getRadius() + particles[j]->getRadius();
 			if (distance < sumRadius)
 			{
 				ParticleContact contact;
