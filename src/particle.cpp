@@ -187,7 +187,7 @@ void Particle::draw(int type)
 */
 void Particle::integrate(float time)
 {
-	speed_ += (mass_ * g * time);
+	speed_ += (accumForce_ * time);
 	pos_ += (speed_ * time);
 }
 
