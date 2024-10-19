@@ -15,11 +15,13 @@ void ParticleStraightCable::addContact(std::vector<ParticleContact>& contacts, d
 		ParticleContact contact;
 		contact.particles[0] = particles_[0];
 		contact.particles[1] = particles_[1];
-		Vector3d normal = particles_[1]->getPos() - particles_[0]->getPos();
-		normal.normalise();
 
-		//normale et penetration ??
+		contact.normal = (particles_[1]->getPos() - particles_[0]->getPos()).normalise2();
+		int direction = getActualLength() > length_ ? 1 : -1;
+		contact.normal *= direction;
+		contact.interpenetration = direction * (getActualLength() - length_);
 		contact.elasticity = 0;
+
 		contacts.push_back(contact);
 	}
 }

@@ -14,10 +14,11 @@ void ParticleCable::addContact(std::vector<ParticleContact>& contacts, double ti
 		ParticleContact contact;
 		contact.particles[0] = particles_[0];
 		contact.particles[1] = particles_[1];
-		contact.normal = (particles_[1]->getPos() - particles_[0]->getPos()).normalise2();
 
-		//interpenetration?
+		contact.normal = (particles_[1]->getPos() - particles_[0]->getPos()).normalise2();
+		contact.interpenetration = getActualLength() - maxLength_;
 		contact.elasticity = elasticity_;
+
 		contacts.push_back(contact);
 	}
 }
