@@ -25,7 +25,7 @@ void particleStaticFriction::updateForce(Particle* particle, float duration)
 
     // Calculate the normal force (reaction force to gravity)
     double mass = 1.0 / particle->getInvertMass();
-    Vector3d gravityForce = Vector3d(0.0f, mass * 9.81f, 0.0f); // N = m * g // ONLY IN Y ?? // ONLY PLANE SURFACES ? OR INCLINED ?
+    Vector3d gravityForce = Vector3d(0.0f, mass * 9.81f, 0.0f); // N = m * g 
 
     Vector3d normalForce = surfaceNormal * (gravityForce.dotProduct(surfaceNormal));
 

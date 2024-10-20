@@ -22,8 +22,8 @@ public:
 	registry registry_;
 
 public:
-	void add(Particle *particle, ParticleForceGenerator * forceGenerator);
-	void remove(Particle *particle, ParticleForceGenerator *forceGenerator);
-	void clear();															
-	void updateForce(float duration);										
+	void add(Particle* particle, ParticleForceGenerator* forceGenerator); // add a particle to the registry
+	void remove(Particle* particle, ParticleForceGenerator* forceGenerator); // remove a particle from the registry
+	void clear();															 // clear the registry
+	void updateForce(float duration);										 // update the force according to the time
 };
