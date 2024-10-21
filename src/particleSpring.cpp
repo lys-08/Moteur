@@ -27,9 +27,9 @@ ParticleSpring::ParticleSpring(Particle* other, double k, double l0)
 */
 void ParticleSpring::updateForce(Particle* particle, float duration)
 {
-    Vector3d dist = other_->getPos() - particle->getPos();
-    double norm = dist.norm();
+	Vector3d dist = other_->getPos() - particle->getPos(); // distance between the two particles (vector pos of the particle)
+	double norm = dist.norm(); // norm of the distance (length of the spring)
 
-    Vector3d force = k_ * (l0_ - norm) * dist.normalise2();
-    particle->addForce(force);
+	Vector3d force = k_ * (l0_ - norm) * dist.normalise2(); // Hooke's law : F = k * (l0 - l) * u
+	particle->addForce(force); // add the force to the particle (Accumulated force)
 }

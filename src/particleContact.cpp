@@ -1,9 +1,9 @@
 #include "particleContact.h"
 
-void ParticleContact::solve()
+void ParticleContact::solve() // solve the contact, i.e. apply the forces to the particles
 {
-	Vector3d relativeVelocity = particles[0]->getSpeed() - particles[1]->getSpeed();
-	float relativeVelocityNormal = relativeVelocity.dotProduct(normal);
+	Vector3d relativeVelocity = particles[0]->getSpeed() - particles[1]->getSpeed(); // get the relative velocity between the two particles
+	float relativeVelocityNormal = relativeVelocity.dotProduct(normal); // get the relative velocity normal to the contact normal
 
 	if (relativeVelocityNormal > 0)
 	{

@@ -3,7 +3,7 @@
 #include "particleForceGenerator.h"
 #include "vector3d.h"
 
-class ParticleSetSpring :
+class ParticleSetSpring : // SetSpring is the spring between a particle and a point in space (not another particle)
     public ParticleForceGenerator
 {
     Vector3d point_;

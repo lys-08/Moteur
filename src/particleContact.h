@@ -12,9 +12,9 @@ class ParticleContact
 public:
 	Particle* particles[2];
 
-	float elasticity;
-	float interpenetration;
-	Vector3d normal;
+	float elasticity; // the elasticity of the contact (0 = no elasticity, 1 = perfect elasticity)
+	float interpenetration; // the amount of interpenetration between the two particles 
+	Vector3d normal; // the normal of the contact
 
 	void solve();
 };

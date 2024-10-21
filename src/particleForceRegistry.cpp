@@ -25,7 +25,7 @@ void ParticleForceRegistry::add(Particle *particle, ParticleForceGenerator * for
  * @param registry the registry
  * @return nothing
 */
-void ParticleForceRegistry::remove(Particle *particle, ParticleForceGenerator *forceGenerator)
+void ParticleForceRegistry::remove(Particle* particle, ParticleForceGenerator* forceGenerator) // We travel the registry and remove the particle
 {
     for (auto it = registry_.begin(); it != registry_.end(); ) 
     {
@@ -58,7 +58,7 @@ void ParticleForceRegistry::clear()
 */
 void ParticleForceRegistry::updateForce(float duration)
 {
-    for (const auto& registration : registry_) 
+	for (const auto& registration : registry_)  // We travel the registry and update the force of all the particles
     {
         registration.forceGenerator->updateForce(registration.particle, duration);
     }
