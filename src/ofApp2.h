@@ -4,6 +4,7 @@
 #include "particle.h"
 #include "ParticleSphericalCollisionGenerator.h"
 #include "particleContact.h"
+#include "World.h"
 #include <ofPolyline.h>
 #include <ctime>
 
@@ -20,6 +21,8 @@ public:
 
 	ParticleSphericalCollisionGenerator collision;
 	vector<ParticleContact> contacts;
+
+	World world;
 
 	float mouseX_;
 	float mouseY_;

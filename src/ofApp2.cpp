@@ -12,31 +12,33 @@ void ofApp2::update()
 {
 	std::clock_t currentTime = std::clock();
 
-	// Calculate the elapsed time between the last update() call and the current one
 	deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
 	previousTime_ = currentTime;
-	collision.particles = myParticles_;
+
+	world.update(deltaTime_);
+
+	/*collision.particles = myParticles_;*/
 
 	//std::cout << collision.particles.size() << std::endl;
 
-	for (int i = 0; i < myParticles_.size(); i++)
+	/*for (int i = 0; i < myParticles_.size(); i++)
 	{
 		myParticles_[i]->integrate(deltaTime_);
-	}
-	collision.addContact(contacts, deltaTime_);
+	}*/
+	/*collision.addContact(contacts, deltaTime_);
 	for (int j = 0; j < contacts.size(); j++)
 	{
 		contacts[j].solve();
 	}
-	contacts.clear();
+	contacts.clear();*/
 }
 
 //--------------------------------------------------------------
 void ofApp2::draw()
 {
-	for (int i = 0; i < myParticles_.size(); i++)
+	for (int i = 0; i < world.particles_.size(); i++)
 	{
-		myParticles_[i]->draw(1);
+		world.particles_[i]->draw(1);
 	}
 }
 
@@ -71,9 +73,6 @@ void ofApp2::mousePressed(int x, int y, int button)
 	{
 	case 0:
 		SpawnParticle(1);
-		break;
-	case 2:
-		SpawnParticle(2);
 		break;
 	default:
 		break;
@@ -133,15 +132,7 @@ void ofApp2::SpawnParticle(int type)
 			3
 		);
 		myParticles_.push_back(newParticule);
-	}
-	else if (type == 2)
-	{
-		Particle* newParticule = new Particle(
-			Vector3d(ofGetMouseX(), ofGetMouseY()),
-			Vector3d(0, 0, 0),
-			3
-		);
-		myParticles_.push_back(newParticule);
+		world.addParticle(newParticule);
 	}
 
 }

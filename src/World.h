@@ -2,21 +2,31 @@
 
 #include "particle.h"
 #include "ParticleContactGenerator.h"
+#include "ParticleSphericalCollisionGenerator.h"
 #include "ParticleForceRegistry.h"
+#include "particleGravity.h"
 
 class World
 {
 private:
-	std::vector<Particle*> particles_;
+
+	std::vector<ParticleContact> contacts_;
 	std::vector<ParticleContactGenerator*> contactGenerators_;
-	std::vector<ParticleForceRegistry*> forces_;
+	ParticleSphericalCollisionGenerator* collisionSphere;
+
+	ParticleForceRegistry forcesRegistry_;
+	ParticleGravity g_;
 
 public:
+	std::vector<Particle*> particles_;
+
+	World();
+	void start();
 	void update(double time);
 	void addParticle(Particle* particle);
 	void updateForces(double time);
-	std::vector<ParticleContact>& generateContacts();
-	void solveContacts(std::vector<ParticleContact>& contacts, double duration);
+	void generateContacts();
+	void solveContacts(double duration);
 	void integrate(double time);
 	void resetAcc();
 };

@@ -17,6 +17,7 @@ public:
 		Particle* particle;
 		ParticleForceGenerator* forceGenerator;
 	};
+
 	typedef std::vector<ParticleForceRegistration> registry;
 
 	registry registry_;
