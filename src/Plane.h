@@ -6,6 +6,7 @@ private:
 	Vector3d normal_;
 	Vector3d point_;
 public:
+	Plane();
 	Plane(Vector3d normal, Vector3d point);
 	const Vector3d getNormal() const;
 };

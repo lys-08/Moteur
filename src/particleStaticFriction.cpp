@@ -32,7 +32,7 @@ void particleStaticFriction::updateForce(Particle* particle, float duration)
     // Calculate the maximum static friction force
     Vector3d maxStaticFriction = normalForce * mu_s;
 
-    Vector3d tangentialForce = appliedForce - surfaceNormal * appliedForce.dot(surfaceNormal);
+    Vector3d tangentialForce = appliedForce - surfaceNormal * appliedForce.dotProduct(surfaceNormal);
 
     // If the applied force is less than or equal to the static friction force
     if (tangentialForce.norm() <= maxStaticFriction.norm())

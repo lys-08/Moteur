@@ -1,5 +1,10 @@
 #include "Plane.h"
 
+Plane::Plane()
+{
+	Plane(Vector3d(), Vector3d());
+}
+
 Plane::Plane(Vector3d normal, Vector3d point)
 {
 	normal_ = normal;
