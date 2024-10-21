@@ -15,21 +15,20 @@ void ofApp2::update()
 	// Calculate the elapsed time between the last update() call and the current one
 	deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
 	previousTime_ = currentTime;
-
 	collision.particles = myParticles_;
+
+	//std::cout << collision.particles.size() << std::endl;
 
 	for (int i = 0; i < myParticles_.size(); i++)
 	{
-		collision.addContact(contacts, deltaTime_);
-		// display contacts
-		std::cout << contacts.size() << std::endl;
-		//for contacts: solve
-		if (contacts.size() == 1)
-		{
-			std::cout << "exactly one contact" << std::endl;
-		}
-		contacts.clear();
+		myParticles_[i]->integrate(deltaTime_);
 	}
+	collision.addContact(contacts, deltaTime_);
+	for (int j = 0; j < contacts.size(); j++)
+	{
+		contacts[j].solve();
+	}
+	contacts.clear();
 }
 
 //--------------------------------------------------------------

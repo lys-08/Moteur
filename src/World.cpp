@@ -15,6 +15,7 @@ void World::addParticle(Particle* particle)
 
 void World::updateForces(double time)
 {
+
 }
 
 std::vector<ParticleContact>& World::generateContacts()
