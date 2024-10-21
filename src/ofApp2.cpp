@@ -5,6 +5,8 @@
 void ofApp2::setup()
 {
 	previousTime_ = std::clock();
+
+	// world.start();
 }
 
 //--------------------------------------------------------------

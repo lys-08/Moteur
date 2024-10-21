@@ -1,7 +1,7 @@
 #pragma once
 
-#include "src/ParticleForceGenerator.h"
-#include "src/Particle.h"
+#include "ParticleForceGenerator.h"
+#include "Particle.h"
 
 class particleKineticFriction
 	: public ParticleForceGenerator

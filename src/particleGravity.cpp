@@ -8,12 +8,7 @@
 
 
 /**
- * @brief Default constructor
- */
-ParticleGravity::ParticleGravity() : gravity_(0.0, -9.81, 0.0, 0.0) {}
-
-/**
- * @brief Evaluated constructor
+ * @brief DEfault and evaluated constructor
  */
 ParticleGravity::ParticleGravity(const Vector3d& g) : gravity_(g) {}
 

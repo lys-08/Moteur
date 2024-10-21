@@ -3,7 +3,7 @@
 
 World::World()
 {
-
+	collisionSphere = &ParticleSphericalCollisionGenerator();
 }
 
 void World::start()
