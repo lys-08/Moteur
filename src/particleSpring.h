@@ -8,7 +8,7 @@
 #include "particleForceGenerator.h"
 #include "particle.h"
 
-class ParticleSpring :
+class ParticleSpring : // Spring between two particle
     public ParticleForceGenerator
 {
 	Particle* other_;
