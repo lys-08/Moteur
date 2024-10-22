@@ -1,15 +1,15 @@
 #pragma once
 
 #include "particle.h"
-#include "ParticleContactGenerator.h"
-#include "ParticleSphericalCollisionGenerator.h"
-#include "ParticleRestCollisionGenerator.h"
-#include "ParticleStraightCable.h"
-#include "ParticleForceRegistry.h"
+#include "particleContactGenerator.h"
+#include "particleSphericalCollisionGenerator.h"
+#include "particleRestCollisionGenerator.h"
+#include "particleStraightCable.h"
+#include "particleForceRegistry.h"
 #include "particleGravity.h"
 #include "particleKineticFriction.h"
 #include "particleStaticFriction.h"
-#include "ParticleSetSpring.h"
+#include "particleSetSpring.h"
 
 class World
 {
@@ -18,7 +18,7 @@ private:
 	std::vector<ParticleContactGenerator*> contactGenerators_;
 	ParticleSphericalCollisionGenerator* collisionSphere;
 	ParticleRestCollisionGenerator* collisionRest;
-	Plane ground_ = Plane(Vector3d(0,-1,0),Vector3d(950,950,0));
+	Plane ground_ = Plane(Vector3d(0,-1,0,0),Vector3d(950,950,0,1));
 
 	ParticleForceRegistry forcesRegistry_;
 	ParticleGravity g_;

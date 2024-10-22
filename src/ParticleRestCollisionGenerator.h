@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include "ParticleContactGenerator.h"
-#include "Plane.h"
+#include "particleContactGenerator.h"
+#include "plane.h"
 
 
 class ParticleRestCollisionGenerator :
@@ -16,10 +16,13 @@ class ParticleRestCollisionGenerator :
     Plane ground_;
 
 public:
+    // Constructor
     ParticleRestCollisionGenerator(Plane ground);
 
-    void addContact(std::vector<ParticleContact>& contacts, double time);
-
+    // Getters & Setters
     void setParticles(std::vector<Particle*> particles);
+
+    // Other Methods
+    void addContact(std::vector<ParticleContact>& contacts, double time);
 };
 

@@ -3,7 +3,7 @@
 * This file contains the implementation of all methods and attributes of the ParticleRestCollisionGenerator class
 */
 
-#include "ParticleRestCollisionGenerator.h"
+#include "particleRestCollisionGenerator.h"
 
 
 /**
@@ -13,6 +13,12 @@ ParticleRestCollisionGenerator::ParticleRestCollisionGenerator(Plane ground)
 {
 	ground_ = ground;
 }
+
+
+
+// ============================================================================
+// Getters / Setters ==========================================================
+// ============================================================================
 
 void ParticleRestCollisionGenerator::setParticles(std::vector<Particle*> particles)
 {

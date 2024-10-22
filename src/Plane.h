@@ -19,7 +19,6 @@ public:
 
 	// Getters & Setters
 	const Vector3d getNormal() const;
-
 	const Vector3d getPoint() const;
 };
 

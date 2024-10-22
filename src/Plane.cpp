@@ -3,7 +3,7 @@
 * This file contains the implementation of all methods and attributes of the Plane class
 */
 
-#include "Plane.h"
+#include "plane.h"
 
 
 /**

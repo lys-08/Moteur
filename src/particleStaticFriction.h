@@ -7,7 +7,7 @@
 
 #include "particle.h"
 #include "particleForceGenerator.h"
-#include "Plane.h"
+#include "plane.h"
 
 class ParticleStaticFriction :
     public ParticleForceGenerator

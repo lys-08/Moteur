@@ -139,7 +139,7 @@ void ofApp2::SpawnParticle(int type)
 {
 
 	Particle* newParticule = new Particle(
-		Vector3d(ofGetMouseX(), ofGetMouseY()),
+		Vector3d(ofGetMouseX(), ofGetMouseY(),0,1),
 		Vector3d(0, 0, 0),
 		3
 	);
@@ -178,7 +178,7 @@ void ofApp2::SpawnParticle(int type)
 	if (type == 3)
 	{
 		Particle* newParticule2 = new Particle(
-			Vector3d(900, 900),
+			Vector3d(900, 900, 0, 1),
 			Vector3d(0, 0, 0),
 			3
 		);

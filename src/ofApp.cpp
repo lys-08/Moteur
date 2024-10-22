@@ -264,8 +264,8 @@ void ofApp::SpawnParticle(int type)
 	if (type == 1)
 	{
 		Particle newParticule(
-			Vector3d(0, 0),
-			Vector3d(mouseX_, mouseY_, 0),
+			Vector3d(0, 0, 0, 1),
+			Vector3d(mouseX_, mouseY_, 0, 0),
 			3
 		);
 
@@ -278,8 +278,8 @@ void ofApp::SpawnParticle(int type)
 	else if (type == 2)
 	{
 		Particle newParticule(
-			Vector3d(0, 0),
-			Vector3d(mouseX_, mouseY_, 0),
+			Vector3d(0, 0, 0, 1),
+			Vector3d(mouseX_, mouseY_, 0, 1),
 			10
 		);
 
@@ -292,8 +292,8 @@ void ofApp::SpawnParticle(int type)
 	else if (type == 3)
 	{
 		Particle newParticule(
-			Vector3d(0, 0),
-			Vector3d(mouseX_, mouseY_, 0),
+			Vector3d(0, 0, 0, 1),
+			Vector3d(mouseX_, mouseY_, 0, 0),
 			30
 		);
 
@@ -306,8 +306,8 @@ void ofApp::SpawnParticle(int type)
 	else if (type == 4)
 	{
 		Particle newParticule(
-			Vector3d(0, 0),
-			Vector3d(mouseX_, mouseY_, 0),
+			Vector3d(0, 0, 0, 1),
+			Vector3d(mouseX_, mouseY_, 0, 0),
 			100
 		);
 

@@ -1,5 +1,11 @@
-#include "World.h"
+/**
+* \file world.cpp
+* This file contains the implementation of all methods and attributes of the World class
+*/
+
+#include "world.h"
 #include "particleGravity.h"
+
 
 /**
  * Dummy constructor
@@ -14,6 +20,7 @@ World::World()
 
 	setSpringForce = new ParticleSetSpring(Vector3d(200, 900, 0, 1), 100, 200);
 }
+
 
 
 // ============================================================================

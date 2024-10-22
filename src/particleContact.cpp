@@ -1,6 +1,14 @@
+/**
+* \file particleContact.cpp
+* This file contains the implementation of all methods and attributes of the ParticleContact class
+*/
+
 #include "particleContact.h"
 
 
+/**
+ * @brief Evaluated constructor
+ */
 ParticleContact::ParticleContact(Particle* particles[2], float elasticity, float interpenetration, Vector3d normal)
 {
 	particles_[0] = particles[0];
@@ -11,6 +19,18 @@ ParticleContact::ParticleContact(Particle* particles[2], float elasticity, float
 	normal_ = normal;
 }
 
+
+
+// ============================================================================
+// Other methods ==============================================================
+// ============================================================================
+
+// TODO
+/**
+ * @brief 
+ *
+ * @return nothing
+*/
 void ParticleContact::solve()
 {
 	double m_v0 = particles_[0]->getInvertMass();

@@ -9,7 +9,7 @@
 
 class ParticleContact
 {
-	Particle* particles_[2]; // TODO : vector or array ?
+	Particle* particles_[2];
 
 	float elasticity_; // elasticity of the contact (0 = no elasticity, 1 = perfect elasticity)
 	float interpenetration_; // the amount of interpenetration between the two particles 
@@ -17,5 +17,6 @@ class ParticleContact
 
 public:
 	ParticleContact(Particle* particles[2], float elasticity, float interpenetration, Vector3d normal);
+
 	void solve();
 };

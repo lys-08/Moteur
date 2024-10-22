@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "ParticleContactGenerator.h"
+#include "particleContactGenerator.h"
 
 
 class ParticleCable :

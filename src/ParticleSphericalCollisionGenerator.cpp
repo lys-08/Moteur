@@ -1,15 +1,43 @@
-#include "ParticleSphericalCollisionGenerator.h"
+/**
+* \file particleSphericalCollisionGenerator.cpp
+* This file contains the implementation of all methods and attributes of the ParticleSphericalCollisionGenerator class
+*/
 
+#include "particleSphericalCollisionGenerator.h"
+
+/**
+ * @brief Dummy constructor
+ */
 ParticleSphericalCollisionGenerator::ParticleSphericalCollisionGenerator()
 {
 
 }
+
+
+
+// ============================================================================
+// Getters / Setters ==========================================================
+// ============================================================================
 
 void ParticleSphericalCollisionGenerator::setParticles(std::vector<Particle*> particles)
 {
 	particles_ = particles;
 }
 
+
+
+// ============================================================================
+// Other methods ==============================================================
+// ============================================================================
+
+// TODO
+/**
+ * @brief
+ *
+ * @param contacts
+ * @param time
+ * @return nothing
+*/
 void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact>& contacts, double time)
 {
 	int size = particles_.size();

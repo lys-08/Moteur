@@ -5,9 +5,9 @@
 
 #pragma once
 
-#include "ParticleForceGenerator.h"
-#include "Particle.h"
-#include "Plane.h"
+#include "particleForceGenerator.h"
+#include "particle.h"
+#include "plane.h"
 
 class ParticleKineticFriction
 	: public ParticleForceGenerator

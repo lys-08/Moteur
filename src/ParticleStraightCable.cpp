@@ -3,7 +3,7 @@
 * This file contains the implementation of all methods and attributes of the ParticleStraightCable class
 */
 
-#include "ParticleStraightCable.h"
+#include "particleStraightCable.h"
 
 
 /**

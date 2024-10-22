@@ -3,14 +3,11 @@
 * This file contains the implementation of all methods and attributes of the ParticleCable class
 */
 
-#include "ParticleCable.h"
+#include "particleCable.h"
 
-// TODO
+
 /**
  * @brief Evaluated constructor
- *
- * @param particles 
- * @param maxLength
  */
 ParticleCable::ParticleCable(Particle* particles[2], double maxLength, double elasticity)
 {
@@ -36,7 +33,7 @@ ParticleCable::ParticleCable(Particle* particles[2], double maxLength, double el
 */
 void ParticleCable::addContact(std::vector<ParticleContact>& contacts, double time)
 {
-	//std::cout << "Actual Length: " << getActualLength() << " | Target Length: " << maxLength_ << std::endl;
+	//std::cout << "Actual Length: " << getActualLength() << " | Target Length: " << maxLength_ << std::endl; // TODO : remove
 	if (getActualLength() > maxLength_)
 	{
 
@@ -45,11 +42,11 @@ void ParticleCable::addContact(std::vector<ParticleContact>& contacts, double ti
 		particles[1] = particles_[1];
 
 		Vector3d normal = (particles[1]->getPos() - particles[0]->getPos()).normalise2();
-		float interpretation = getActualLength() - maxLength_; //todo
+		float interpretation = getActualLength() - maxLength_; // TODO
 
 		ParticleContact contact = ParticleContact(particles, elasticity_,0, normal);
 		contacts.push_back(contact);
-		//std::cout << "added contact" << std::endl;
+		//std::cout << "added contact" << std::endl; // TODO : remove
 	}
 }
 
