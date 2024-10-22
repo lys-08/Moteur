@@ -7,6 +7,7 @@
 #include "ParticleCable.h"
 #include "particleContact.h"
 #include "World.h"
+#include "particleSetSpring.h"
 #include <ofPolyline.h>
 #include <ctime>
 
@@ -27,6 +28,7 @@ public:
 
 	ParticleStraightCable* collisionRod;
 	ParticleCable* collisionCable;
+	ParticleSetSpring* setSpringForce;
 
 	World world;
 

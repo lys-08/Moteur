@@ -9,6 +9,7 @@
 #include "particleGravity.h"
 #include "particleKineticFriction.h"
 #include "particleStaticFriction.h"
+#include "ParticleSetSpring.h"
 
 class World
 {
@@ -23,6 +24,7 @@ private:
 	ParticleGravity g_;
 	ParticleKineticFriction fk_;
 	ParticleStaticFriction fs_;
+	ParticleSetSpring* setSpringForce;
 
 public:
 	std::vector<Particle*> particles_;
@@ -32,6 +34,7 @@ public:
 	void update(double time);
 	void addParticle(Particle* particle);
 	void addContactGenerator(ParticleContactGenerator* generator);
+	void addSpringForce(ParticleForceGenerator* forceGenerator, Particle* particle);
 	void updateForces(double time);
 	void generateContacts();
 	void solveContacts(double duration);

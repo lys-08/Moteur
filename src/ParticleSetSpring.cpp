@@ -35,6 +35,7 @@ void ParticleSetSpring::updateForce(Particle* particle, float duration)
     Vector3d dist = point_ - particle->getPos();
     double norm = dist.norm();
 
-    Vector3d force = k_ * (l0_ - norm) * dist.normalise2();
+    std::cout << norm << std::endl;
+    Vector3d force = - k_ * (l0_ - norm) * dist.normalise2();
     particle->addForce(force);
 }

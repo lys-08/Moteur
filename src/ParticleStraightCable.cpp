@@ -63,7 +63,7 @@ void ParticleStraightCable::addContact(std::vector<ParticleContact>& contacts, d
 		normal = -1 * normal;
 	}
 
-	ParticleContact contact = ParticleContact(particles, 0, interpenetration, normal);
+	ParticleContact contact = ParticleContact(particles, 0, 0, normal);
 	contacts.push_back(contact);
 }
 

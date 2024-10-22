@@ -11,6 +11,8 @@ World::World()
 
 	fk_ = ParticleKineticFriction(0.3, ground_);
 	fs_ = ParticleStaticFriction(0.3,ground_);
+
+	setSpringForce = new ParticleSetSpring(Vector3d(200, 900, 0, 1), 100, 200);
 }
 
 
@@ -63,6 +65,11 @@ void World::addContactGenerator(ParticleContactGenerator* generator)
 	contactGenerators_.push_back(generator);
 }
 
+void World::addSpringForce(ParticleForceGenerator* forceGenerator, Particle* particle)
+{
+	forcesRegistry_.add(particle, forceGenerator);
+}
+
 // TODO
 /**
  * @brief
@@ -76,7 +83,8 @@ void World::updateForces(double time)
 	{
 		forcesRegistry_.add(particles_[i], &g_);
 		//forcesRegistry_.add(particles_[i], &fk_);
-		forcesRegistry_.add(particles_[i], &fs_);
+		//forcesRegistry_.add(particles_[i], &fs_);
+		forcesRegistry_.add(particles_[i], setSpringForce);
 	}
 	forcesRegistry_.updateForce(time);
 	forcesRegistry_.clear();

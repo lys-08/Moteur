@@ -55,6 +55,9 @@ void ofApp2::keyPressed(int key)
 	case '2':
 		type_ = 2;
 		break;
+	case '3':
+		type_ = 3;
+		break;
 	}
 
 }
@@ -167,6 +170,18 @@ void ofApp2::SpawnParticle(int type)
 		world.addParticle(newParticule1);
 		world.addParticle(newParticule2);
 		newParticule2->setSpeed(Vector3d(-100, 0, 0));
+	}
+	if (type == 3)
+	{
+		Particle* newParticule2 = new Particle(
+			Vector3d(900, 900),
+			Vector3d(0, 0, 0),
+			3
+		);
+
+		setSpringForce = new ParticleSetSpring(Vector3d(200, 900, 0, 1), 5, 2);
+		world.addSpringForce(setSpringForce, newParticule2);
+		world.addParticle(newParticule2);
 	}
 
 }

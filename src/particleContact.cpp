@@ -26,13 +26,13 @@ void ParticleContact::solve()
 
 		if (relativeVelocityNormal > 0)
 		{
-			particles_[0]->setPos(particles_[0]->getPos() + m1 / (m1 + m0) * interpenetration_ * normal_);
-			particles_[1]->setPos(particles_[1]->getPos() + -m0 / (m1 + m0) * interpenetration_ * normal_);
+			particles_[0]->setPos(particles_[0]->getPos() + (m1 / (m1 + m0)) * interpenetration_ * normal_);
+			particles_[1]->setPos(particles_[1]->getPos() + (- m0 / (m1 + m0)) * interpenetration_ * normal_);
 		}
 		else
 		{
-			particles_[0]->setPos(particles_[0]->getPos()  + -m1 / (m1 + m0) * interpenetration_ * normal_);
-			particles_[1]->setPos(particles_[1]->getPos() + m0 / (m1 + m0) * interpenetration_ * normal_);
+			particles_[0]->setPos(particles_[0]->getPos()  + (- m1 / (m1 + m0)) * interpenetration_ * normal_);
+			particles_[1]->setPos(particles_[1]->getPos() + (m0 / (m1 + m0)) * interpenetration_ * normal_);
 		}
 
 		float impulse = (1 + elasticity_) * relativeVelocityNormal;
