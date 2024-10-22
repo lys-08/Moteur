@@ -8,17 +8,24 @@
 
 
 /**
- * @brief DEfault and evaluated constructor
+ * @brief Default and evaluated constructor
  */
-ParticleGravity::ParticleGravity(const Vector3d& g) : gravity_(g) {}
+ParticleGravity::ParticleGravity(const Vector3d& g) 
+{
+    gravity_ = g;
+}
 
+
+
+// ============================================================================
+// Other methods ==============================================================
+// ============================================================================
 
 /**
  * @brief Update the force for a particle according to the duration
  *
- * @param particle the particle we need to update the force
+ * @param particle the particle whose force is to be updated
  * @param duration
- * @return the force of the particle
 */
 void ParticleGravity::updateForce(Particle* particle, float duration)
 {

@@ -11,9 +11,9 @@
 class ParticleSpring :
     public ParticleForceGenerator
 {
-	Particle* other_; // the other particle to which the spring is attached
+	Particle* other_;
     double k_; // elasticity coef
-	double l0_; // rest length (length at which the spring is not stretched)
+	double l0_; // rest length
 
 public:
     ParticleSpring(Particle* other, double k, double l0);

@@ -9,21 +9,16 @@
 #include "particleForceGenerator.h"
 #include "Plane.h"
 
-class particleStaticFriction :
+class ParticleStaticFriction :
     public ParticleForceGenerator
 {
 private:
-    float mu_s;  // Static friction coefficient
-    Plane surfacePlane;
+    float mu_s_;  // Static friction coefficient
+    Plane surfacePlane_;
 
 public:
-    // Default constructor with a standard friction coefficient
-    particleStaticFriction();
+    ParticleStaticFriction(float coefficient = 0.5f, const Plane& plane = Plane(Vector3d(), Vector3d()));
 
-    // Constructor with a custom friction coefficient
-    particleStaticFriction(float coefficient, const Plane& plane);
-
-    // Method to apply static friction force
     virtual void updateForce(Particle* particle, float duration) override;
 };
 

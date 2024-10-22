@@ -9,7 +9,6 @@
 class World
 {
 private:
-
 	std::vector<ParticleContact> contacts_;
 	std::vector<ParticleContactGenerator*> contactGenerators_;
 	ParticleSphericalCollisionGenerator* collisionSphere;

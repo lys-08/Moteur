@@ -58,7 +58,7 @@ void ParticleForceRegistry::clear()
 */
 void ParticleForceRegistry::updateForce(float duration)
 {
-	for (const auto& registration : registry_)  // We travel the registry and update the force of all the particles
+	for (const auto& registration : registry_)
     {
         registration.forceGenerator->updateForce(registration.particle, duration);
     }

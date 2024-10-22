@@ -1,3 +1,8 @@
+/**
+* \file particleSetSpring.h
+* This file contains the declaration of all methods and attributes of the ParticleSetSpring class
+*/
+
 #pragma once
 
 #include "particleForceGenerator.h"

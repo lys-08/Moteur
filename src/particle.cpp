@@ -1,5 +1,5 @@
 /**
-* \file Particle.cpp
+* \file particle.cpp
 * This file contains the implementation of all methods and attributes of the Particle class
 */
 

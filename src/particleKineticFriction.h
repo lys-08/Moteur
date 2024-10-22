@@ -1,23 +1,22 @@
+/**
+* \file particleKineticFriction.h
+* This file contains the declaration of all methods and attributes of the ParticleKineticFriction class
+*/
+
 #pragma once
 
 #include "ParticleForceGenerator.h"
 #include "Particle.h"
 
-class particleKineticFriction
+class ParticleKineticFriction
 	: public ParticleForceGenerator
 {
 private:
-	float mu_k;  // Cinetic friction coefficient
+	float mu_k; // Cinetic friction coefficient
 
 public:
-	// Default constructor with a standard friction coefficient
-	particleKineticFriction();
+	ParticleKineticFriction(float coefficient = 0.3f);
 
-	// Constructor with a custom friction coefficient
-	particleKineticFriction(float coefficient);
-
-	// Method to apply cinetic friction force
 	virtual void updateForce(Particle* particle, float duration) override;
-
 };
 

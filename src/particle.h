@@ -18,9 +18,6 @@ private:
     Vector3d accumForce_;
     double radius_;
 
-    // constant
-    Vector3d g = Vector3d(0, -10, 0);
-
 public:
     // Constructors
     Particle(Vector3d pos = Vector3d(), Vector3d speed = Vector3d(), double mass = 1.0);

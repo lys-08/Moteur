@@ -1,6 +1,6 @@
 /**
 * \file particleContact.h
-* This file contains the declaration of all methods and attributes of the ParticleContacts class
+* This file contains the declaration of all methods and attributes of the ParticleContact class
 */
 
 #pragma once
@@ -9,12 +9,13 @@
 
 class ParticleContact
 {
+	Particle* particles_[2]; // TODO : vector or array ?
+
+	float elasticity_; // elasticity of the contact (0 = no elasticity, 1 = perfect elasticity)
+	float interpenetration_; // the amount of interpenetration between the two particles 
+	Vector3d normal_;
+
 public:
-	Particle* particles[2];
-
-	float elasticity; // the elasticity of the contact (0 = no elasticity, 1 = perfect elasticity)
-	float interpenetration; // the amount of interpenetration between the two particles 
-	Vector3d normal; // the normal of the contact
-
+	ParticleContact(Particle* particles[2], float elasticity, float interpenetration, Vector3d normal);
 	void solve();
 };
