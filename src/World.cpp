@@ -82,9 +82,8 @@ void World::updateForces(double time)
 	for (int i = 0; i < particles_.size(); i++)
 	{
 		forcesRegistry_.add(particles_[i], &g_);
-		//forcesRegistry_.add(particles_[i], &fk_);
+		forcesRegistry_.add(particles_[i], &fk_);
 		//forcesRegistry_.add(particles_[i], &fs_);
-		forcesRegistry_.add(particles_[i], setSpringForce);
 	}
 	forcesRegistry_.updateForce(time);
 	forcesRegistry_.clear();

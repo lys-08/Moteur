@@ -38,7 +38,7 @@ void ParticleKineticFriction::updateForce(Particle* particle, float duration)
     if (velocity.norm() == 0.0f) return;
 
     double mass = 1.0 / particle->getInvertMass();
-    Vector3d normalForce = Vector3d(0, -1, 0);
+	Vector3d normalForce = Vector3d(0, -45, 0); // We chose a normal force of 20N
 
     float frictionMagnitude = normalForce.norm() * mu_k;
     Vector3d frictionForce = velocity.normalise2() * -frictionMagnitude;

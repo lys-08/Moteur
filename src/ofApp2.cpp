@@ -137,20 +137,23 @@ void ofApp2::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp2::SpawnParticle(int type)
 {
+
+	Particle* newParticule = new Particle(
+		Vector3d(ofGetMouseX(), ofGetMouseY()),
+		Vector3d(0, 0, 0),
+		3
+	);
+
 	if (type == 1)
 	{
 
-		Particle* newParticule = new Particle(
-			Vector3d(ofGetMouseX(), ofGetMouseY()),
-			Vector3d(0, 0, 0),
-			3
-		);
 		myParticles_.push_back(newParticule);
 		world.addParticle(newParticule);
+		newParticule->setSpeed(Vector3d(150, 0, 0));
 	}
 	if (type == 2)
 	{
-		Particle* newParticule1 = new Particle(
+		/*Particle* newParticule1 = new Particle(
 			Vector3d(500, 500),
 			Vector3d(0, 0, 0),
 			3
@@ -169,7 +172,8 @@ void ofApp2::SpawnParticle(int type)
 		//world.addContactGenerator(collisionCable);
 		world.addParticle(newParticule1);
 		world.addParticle(newParticule2);
-		newParticule2->setSpeed(Vector3d(-100, 0, 0));
+		newParticule2->setSpeed(Vector3d(-100, 0, 0));*/
+
 	}
 	if (type == 3)
 	{
