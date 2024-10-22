@@ -7,15 +7,17 @@
 
 #include "ParticleForceGenerator.h"
 #include "Particle.h"
+#include "Plane.h"
 
 class ParticleKineticFriction
 	: public ParticleForceGenerator
 {
 private:
 	float mu_k; // Cinetic friction coefficient
+	Plane surfacePlane_;
 
 public:
-	ParticleKineticFriction(float coefficient = 0.3f);
+	ParticleKineticFriction(float coefficient = 0.3f, Plane surface = Plane());
 
 	virtual void updateForce(Particle* particle, float duration) override;
 };

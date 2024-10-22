@@ -9,7 +9,7 @@
 /**
  * @brief Default and evaluated constructor
  */
-ParticleStaticFriction::ParticleStaticFriction(float coefficient, const Plane& plane)
+ParticleStaticFriction::ParticleStaticFriction(float coefficient, Plane plane)
 {
 	mu_s_ = coefficient;
     surfacePlane_ = plane;
@@ -37,12 +37,12 @@ void ParticleStaticFriction::updateForce(Particle* particle, float duration)
     // Get the accumulated force applied to the particle
     Vector3d appliedForce = particle->getForceAccum(); 
     
-    Vector3d surfaceNormal = surfacePlane_.getNormal();
+    Vector3d surfaceNormal = Vector3d(0, -1, 0);
     surfaceNormal.normalise();
 
     double mass = 1.0 / particle->getInvertMass();
     Vector3d gravityForce = Vector3d(0.0f, mass * 9.81f, 0.0f); // N = m * g 
-    Vector3d normalForce = surfaceNormal * (gravityForce.dotProduct(surfaceNormal));
+    Vector3d normalForce =  surfaceNormal * (gravityForce.dotProduct(surfaceNormal));
 
     Vector3d maxStaticFriction = normalForce * mu_s_;
 

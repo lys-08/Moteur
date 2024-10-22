@@ -8,6 +8,9 @@ World::World()
 {
 	collisionSphere = new ParticleSphericalCollisionGenerator();
 	collisionRest = new ParticleRestCollisionGenerator(ground_);
+
+	fk_ = ParticleKineticFriction(0.3, ground_);
+	fs_ = ParticleStaticFriction(0.3,ground_);
 }
 
 
@@ -38,6 +41,7 @@ void World::update(double time)
 	updateForces(time);
 	integrate(time);
 	generateContacts();
+	//std::cout << contacts_.size() << std::endl;
 	solveContacts(time);
 	resetAcc();
 }
@@ -54,6 +58,11 @@ void World::addParticle(Particle* particle)
 	particles_.push_back(particle);
 }
 
+void World::addContactGenerator(ParticleContactGenerator* generator)
+{
+	contactGenerators_.push_back(generator);
+}
+
 // TODO
 /**
  * @brief
@@ -66,6 +75,8 @@ void World::updateForces(double time)
 	for (int i = 0; i < particles_.size(); i++)
 	{
 		forcesRegistry_.add(particles_[i], &g_);
+		//forcesRegistry_.add(particles_[i], &fk_);
+		forcesRegistry_.add(particles_[i], &fs_);
 	}
 	forcesRegistry_.updateForce(time);
 	forcesRegistry_.clear();

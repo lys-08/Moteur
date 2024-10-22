@@ -47,6 +47,15 @@ void ofApp2::draw()
 //--------------------------------------------------------------
 void ofApp2::keyPressed(int key)
 {
+	switch (key)
+	{
+	case '1':
+		type_ = 1;
+		break;
+	case '2':
+		type_ = 2;
+		break;
+	}
 
 }
 
@@ -74,7 +83,7 @@ void ofApp2::mousePressed(int x, int y, int button)
 	switch (button)
 	{
 	case 0:
-		SpawnParticle(1);
+		SpawnParticle(type_);
 		break;
 	default:
 		break;
@@ -135,6 +144,29 @@ void ofApp2::SpawnParticle(int type)
 		);
 		myParticles_.push_back(newParticule);
 		world.addParticle(newParticule);
+	}
+	if (type == 2)
+	{
+		Particle* newParticule1 = new Particle(
+			Vector3d(500, 500),
+			Vector3d(0, 0, 0),
+			3
+		);
+
+		Particle* newParticule2 = new Particle(
+			Vector3d(200, 500),
+			Vector3d(0, 0, 0),
+			3
+		);
+
+		Particle* particles[2] = { newParticule1, newParticule2 };
+		collisionRod = new ParticleStraightCable(particles, 300);
+		world.addContactGenerator(collisionRod);
+		collisionCable = new ParticleCable(particles, 200, 0.7);
+		//world.addContactGenerator(collisionCable);
+		world.addParticle(newParticule1);
+		world.addParticle(newParticule2);
+		newParticule2->setSpeed(Vector3d(-100, 0, 0));
 	}
 
 }

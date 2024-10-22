@@ -38,25 +38,20 @@ void ParticleRestCollisionGenerator::addContact(std::vector<ParticleContact>& co
     int size = particles_.size();
     for (int i = 0; i < size; i++)
     {
-        // Distance de la particule au plan
         double distanceToPlane = (particles_[i]->getPos() - ground_.getPoint()).dotProduct(ground_.getNormal());
 
-        // Vérifiez si la particule est suffisamment proche du plan
         if (distanceToPlane < particles_[i]->getRadius() && distanceToPlane > -particles_[i]->getRadius())
         {
-            // Calculer la vitesse projetée sur la normale du plan
             double projectedSpeed = particles_[i]->getSpeed().dotProduct(ground_.getNormal());
             Vector3d acceleration = particles_[i]->getForceAccum() * particles_[i]->getInvertMass();
             double projectedAcceleration = acceleration.dotProduct(ground_.getNormal());
 
-            // Si la particule est proche du plan et va le toucher
             if (projectedAcceleration * time > projectedSpeed)
             {
                 Particle* particles[2];
                 particles[0] = particles_[i];
                 particles[1] = nullptr;
 
-                // Créer un contact avec le plan
                 ParticleContact contact = ParticleContact(particles, 0, distanceToPlane, ground_.getNormal());
                 contacts.push_back(contact);
             }

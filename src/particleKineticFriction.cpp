@@ -10,9 +10,10 @@
 /**
  * @brief Default and evaluated constructor
  */
-ParticleKineticFriction::ParticleKineticFriction(float coefficient)
+ParticleKineticFriction::ParticleKineticFriction(float coefficient, Plane surface)
 {
 	mu_k = 0.3f;
+    surfacePlane_ = surface;
 }
 
 
@@ -37,7 +38,7 @@ void ParticleKineticFriction::updateForce(Particle* particle, float duration)
     if (velocity.norm() == 0.0f) return;
 
     double mass = 1.0 / particle->getInvertMass();
-	Vector3d normalForce = Vector3d(0.0f, mass * 9.81f, 0.0f);
+    Vector3d normalForce = Vector3d(0, -1, 0);
 
     float frictionMagnitude = normalForce.norm() * mu_k;
     Vector3d frictionForce = velocity.normalise2() * -frictionMagnitude;

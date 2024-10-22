@@ -43,19 +43,29 @@ double ParticleStraightCable::getActualLength() const
 */
 void ParticleStraightCable::addContact(std::vector<ParticleContact>& contacts, double time)
 {
-	if (getActualLength() > length_)
+	double actualLength = getActualLength();
+	std::cout << "Actual Length: " << actualLength << " | Target Length: " << length_ << std::endl;
+
+	if (abs(actualLength - length_) < 1e-6)
 	{
-		Particle* particles[2];
-		particles[0] = particles_[0];
-		particles[1] = particles_[1];
-
-		int direction = getActualLength() > length_ ? 1 : -1;
-		float interpenetration = direction * (getActualLength() - length_);
-		Vector3d normal = ((particles_[1]->getPos() - particles_[0]->getPos()).normalise2() * direction);
-
-		ParticleContact contact = ParticleContact(particles, 0, interpenetration, normal);
-		contacts.push_back(contact);
+		return;
 	}
+
+	Particle* particles[2];
+	particles[0] = particles_[0];
+	particles[1] = particles_[1];
+
+	double interpenetration = abs(actualLength - length_); //todo
+	Vector3d normal = (particles_[1]->getPos() - particles_[0]->getPos()).normalise2();
+
+	if (actualLength > length_)
+	{
+		normal = -1 * normal;
+	}
+
+	ParticleContact contact = ParticleContact(particles, 0, interpenetration, normal);
+	contacts.push_back(contact);
 }
+
 
 

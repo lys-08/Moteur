@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "particle.h"
 #include "ParticleSphericalCollisionGenerator.h"
+#include "ParticleStraightCable.h"
+#include "ParticleCable.h"
 #include "particleContact.h"
 #include "World.h"
 #include <ofPolyline.h>
@@ -18,9 +20,13 @@ public:
 	std::clock_t previousTime_;
 	float deltaTime_;
 	bool isHudDisplayed_ = false;
+	int type_ = 1;
 
 	ParticleSphericalCollisionGenerator collision;
 	vector<ParticleContact> contacts;
+
+	ParticleStraightCable* collisionRod;
+	ParticleCable* collisionCable;
 
 	World world;
 

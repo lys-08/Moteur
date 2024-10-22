@@ -4,8 +4,11 @@
 #include "ParticleContactGenerator.h"
 #include "ParticleSphericalCollisionGenerator.h"
 #include "ParticleRestCollisionGenerator.h"
+#include "ParticleStraightCable.h"
 #include "ParticleForceRegistry.h"
 #include "particleGravity.h"
+#include "particleKineticFriction.h"
+#include "particleStaticFriction.h"
 
 class World
 {
@@ -18,6 +21,8 @@ private:
 
 	ParticleForceRegistry forcesRegistry_;
 	ParticleGravity g_;
+	ParticleKineticFriction fk_;
+	ParticleStaticFriction fs_;
 
 public:
 	std::vector<Particle*> particles_;
@@ -26,6 +31,7 @@ public:
 	void start();
 	void update(double time);
 	void addParticle(Particle* particle);
+	void addContactGenerator(ParticleContactGenerator* generator);
 	void updateForces(double time);
 	void generateContacts();
 	void solveContacts(double duration);
