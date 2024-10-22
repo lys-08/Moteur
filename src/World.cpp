@@ -7,6 +7,7 @@
 World::World()
 {
 	collisionSphere = new ParticleSphericalCollisionGenerator();
+	collisionRest = new ParticleRestCollisionGenerator(ground_);
 }
 
 
@@ -23,6 +24,7 @@ World::World()
 void World::start()
 {
 	contactGenerators_.push_back(collisionSphere);
+	contactGenerators_.push_back(collisionRest);
 }
 
 // TODO
@@ -78,6 +80,7 @@ void World::updateForces(double time)
 void World::generateContacts()
 {
 	collisionSphere->setParticles(particles_);
+	collisionRest->setParticles(particles_);
 	for (int i = 0; i < contactGenerators_.size(); i++)
 	{
 		contactGenerators_[i]->addContact(contacts_, 0);

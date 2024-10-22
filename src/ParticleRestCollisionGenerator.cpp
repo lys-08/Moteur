@@ -14,6 +14,11 @@ ParticleRestCollisionGenerator::ParticleRestCollisionGenerator(Plane ground)
 	ground_ = ground;
 }
 
+void ParticleRestCollisionGenerator::setParticles(std::vector<Particle*> particles)
+{
+	particles_ = particles;
+}
+
 
 
 // ============================================================================
@@ -30,22 +35,32 @@ ParticleRestCollisionGenerator::ParticleRestCollisionGenerator(Plane ground)
 */
 void ParticleRestCollisionGenerator::addContact(std::vector<ParticleContact>& contacts, double time)
 {
-	int size = particles_.size();
-	for (int i = 0; i < size; i++)
-	{
-		double projectedSpeed = particles_[i]->getSpeed().dotProduct(ground_.getNormal());
-		Vector3d acceleration = particles_[i]->getForceAccum() * particles_[i]->getInvertMass();
-		double projectedAcceleration = acceleration.dotProduct(ground_.getNormal());
+    int size = particles_.size();
+    for (int i = 0; i < size; i++)
+    {
+        // Distance de la particule au plan
+        double distanceToPlane = (particles_[i]->getPos() - ground_.getPoint()).dotProduct(ground_.getNormal());
 
+        // Vérifiez si la particule est suffisamment proche du plan
+        if (distanceToPlane < particles_[i]->getRadius() && distanceToPlane > -particles_[i]->getRadius())
+        {
+            // Calculer la vitesse projetée sur la normale du plan
+            double projectedSpeed = particles_[i]->getSpeed().dotProduct(ground_.getNormal());
+            Vector3d acceleration = particles_[i]->getForceAccum() * particles_[i]->getInvertMass();
+            double projectedAcceleration = acceleration.dotProduct(ground_.getNormal());
 
-		if (projectedAcceleration * time > projectedSpeed)
-		{
-			Particle* particles[2];
-			particles[0] = particles_[i];
-			particles[1] = nullptr;
+            // Si la particule est proche du plan et va le toucher
+            if (projectedAcceleration * time > projectedSpeed)
+            {
+                Particle* particles[2];
+                particles[0] = particles_[i];
+                particles[1] = nullptr;
 
-			ParticleContact contact = ParticleContact(particles, 0, 0, ground_.getNormal());
-			contacts.push_back(contact);
-		}
-	}
+                // Créer un contact avec le plan
+                ParticleContact contact = ParticleContact(particles, 0, distanceToPlane, ground_.getNormal());
+                contacts.push_back(contact);
+            }
+        }
+    }
 }
+

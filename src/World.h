@@ -3,6 +3,7 @@
 #include "particle.h"
 #include "ParticleContactGenerator.h"
 #include "ParticleSphericalCollisionGenerator.h"
+#include "ParticleRestCollisionGenerator.h"
 #include "ParticleForceRegistry.h"
 #include "particleGravity.h"
 
@@ -12,6 +13,8 @@ private:
 	std::vector<ParticleContact> contacts_;
 	std::vector<ParticleContactGenerator*> contactGenerators_;
 	ParticleSphericalCollisionGenerator* collisionSphere;
+	ParticleRestCollisionGenerator* collisionRest;
+	Plane ground_ = Plane(Vector3d(0,-1,0),Vector3d(700,700,0));
 
 	ParticleForceRegistry forcesRegistry_;
 	ParticleGravity g_;

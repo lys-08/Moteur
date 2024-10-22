@@ -24,3 +24,8 @@ const Vector3d Plane::getNormal() const
 {
 	return normal_;
 }
+
+const Vector3d Plane::getPoint() const
+{
+	return point_;
+}

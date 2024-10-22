@@ -19,5 +19,7 @@ public:
     ParticleRestCollisionGenerator(Plane ground);
 
     void addContact(std::vector<ParticleContact>& contacts, double time);
+
+    void setParticles(std::vector<Particle*> particles);
 };
 
