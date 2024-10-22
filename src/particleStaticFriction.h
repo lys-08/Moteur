@@ -17,7 +17,7 @@ private:
     Plane surfacePlane_;
 
 public:
-    ParticleStaticFriction(float coefficient = 0.5f,Plane plane = Plane(Vector3d(), Vector3d()));
+    ParticleStaticFriction(float coefficient = 0.5f, Plane plane = Plane());
 
     virtual void updateForce(Particle* particle, float duration) override;
 };
