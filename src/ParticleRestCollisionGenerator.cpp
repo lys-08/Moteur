@@ -52,7 +52,7 @@ void ParticleRestCollisionGenerator::addContact(std::vector<ParticleContact>& co
                 particles[0] = particles_[i];
                 particles[1] = nullptr;
 
-                ParticleContact contact = ParticleContact(particles, 0, distanceToPlane, ground_.getNormal());
+                ParticleContact contact = ParticleContact(particles, 0.5, distanceToPlane - particles[0]->getRadius(), ground_.getNormal());
                 contacts.push_back(contact);
             }
         }

@@ -17,7 +17,7 @@ private:
 	std::vector<ParticleContactGenerator*> contactGenerators_;
 	ParticleSphericalCollisionGenerator* collisionSphere;
 	ParticleRestCollisionGenerator* collisionRest;
-	Plane ground_ = Plane(Vector3d(0,-1,0),Vector3d(700,700,0));
+	Plane ground_ = Plane(Vector3d(0,-1,0),Vector3d(950,950,0));
 
 	ParticleForceRegistry forcesRegistry_;
 	ParticleGravity g_;

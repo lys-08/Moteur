@@ -43,7 +43,7 @@ void ParticleContact::solve()
 	}
 	else
 	{
-		//particles_[0]->setPos(particles_[0]->getPos() + interpenetration_ * normal_);
+		particles_[0]->setPos(particles_[0]->getPos() - interpenetration_ * normal_);
 		double impulse = particles_[0]->getSpeed().dotProduct(normal_) / (m_v0 * normal_.dotProduct(normal_));
 		particles_[0]->setSpeed(particles_[0]->getSpeed() - impulse * m_v0 * normal_);
 	}

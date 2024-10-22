@@ -37,7 +37,7 @@ void ofApp2::update()
 //--------------------------------------------------------------
 void ofApp2::draw()
 {
-	ofDrawLine(glm::vec2(2000, 700), glm::vec2(0, 700));
+	ofDrawLine(glm::vec2(2000, 950), glm::vec2(0, 950));
 	for (int i = 0; i < world.particles_.size(); i++)
 	{
 		world.particles_[i]->draw(1);
