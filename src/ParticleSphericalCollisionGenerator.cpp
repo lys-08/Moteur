@@ -27,7 +27,7 @@ void ParticleSphericalCollisionGenerator::addContact(std::vector<ParticleContact
 				particles[1] = particles_[j];
 
 				float interpenetration = distance - sumRadius;
-				Vector3d normal = (particles[i]->getPos() - particles[j]->getPos()).normalise2();
+				Vector3d normal = (particles_[i]->getPos() - particles_[j]->getPos()).normalise2();
 				std::cout << "added" << std::endl;
 
 				ParticleContact contact = ParticleContact(particles, 1, interpenetration, normal);

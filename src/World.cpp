@@ -6,7 +6,7 @@
  */
 World::World()
 {
-	collisionSphere = &ParticleSphericalCollisionGenerator();
+	collisionSphere = new ParticleSphericalCollisionGenerator();
 }
 
 
