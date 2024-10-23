@@ -137,15 +137,13 @@ void ofApp2::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp2::SpawnParticle(int type)
 {
-
-	Particle* newParticule = new Particle(
-		Vector3d(ofGetMouseX(), ofGetMouseY(),0,1),
-		Vector3d(0, 0, 0),
-		3
-	);
-
 	if (type == 1)
 	{
+		Particle* newParticule = new Particle(
+			Vector3d(ofGetMouseX(), ofGetMouseY(), 0, 1),
+			Vector3d(200, 0, 0),
+			3
+		);
 
 		myParticles_.push_back(newParticule);
 		world.addParticle(newParticule);

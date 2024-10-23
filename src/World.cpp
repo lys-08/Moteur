@@ -15,8 +15,7 @@ World::World()
 	collisionSphere = new ParticleSphericalCollisionGenerator();
 	collisionRest = new ParticleRestCollisionGenerator(ground_);
 
-	fk_ = ParticleKineticFriction(0.3, ground_);
-	fs_ = ParticleStaticFriction(0.3,ground_);
+	friction_ = ParticleFriction(0.1, 0.01);
 
 	setSpringForce = new ParticleSetSpring(Vector3d(200, 900, 0, 1), 100, 200);
 }
@@ -89,7 +88,7 @@ void World::updateForces(double time)
 	for (int i = 0; i < particles_.size(); i++)
 	{
 		forcesRegistry_.add(particles_[i], &g_);
-		forcesRegistry_.add(particles_[i], &fk_);
+		forcesRegistry_.add(particles_[i], &friction_);
 		//forcesRegistry_.add(particles_[i], &fs_);
 	}
 	forcesRegistry_.updateForce(time);
@@ -140,6 +139,7 @@ void World::integrate(double time)
 	for (int i = 0; i < particles_.size(); i++)
 	{
 		particles_[i]->integrate(time);
+		std::cout << particles_[i]->getSpeed() << std::endl; // TODO : remove
 	}
 }
 

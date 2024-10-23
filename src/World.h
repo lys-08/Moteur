@@ -7,8 +7,7 @@
 #include "particleStraightCable.h"
 #include "particleForceRegistry.h"
 #include "particleGravity.h"
-#include "particleKineticFriction.h"
-#include "particleStaticFriction.h"
+#include "particleFriction.h"
 #include "particleSetSpring.h"
 
 class World
@@ -22,8 +21,7 @@ private:
 
 	ParticleForceRegistry forcesRegistry_;
 	ParticleGravity g_;
-	ParticleKineticFriction fk_;
-	ParticleStaticFriction fs_;
+	ParticleFriction friction_;
 	ParticleSetSpring* setSpringForce;
 
 public:
