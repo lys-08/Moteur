@@ -8,7 +8,7 @@
 
 
 /**
- * Dummy constructor
+ * Constructor
  */
 World::World()
 {
@@ -26,10 +26,10 @@ World::World()
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
- * @brief
+ * @brief initialize the first particle and the global contact generators
  *
+ * @param x,y coordinates of mouse cursor
  * @return nothing
 */
 void World::start(int x,int y)
@@ -49,6 +49,11 @@ void World::start(int x,int y)
 
 }
 
+/**
+ * @brief attach a new particle to the center of the blob with a spring
+ *
+ * @return nothing
+*/
 void World::attachNewParticle()
 {
 	springForce = new ParticleSpring(originalBlob[0], 100, 200);
@@ -65,10 +70,10 @@ void World::attachNewParticle()
 	originalBlob.push_back(particleBlob);
 }
 
-// TODO
 /**
- * @brief
+ * @brief update loop of the physic body
  *
+ * @param time
  * @return nothing
 */
 void World::update(double time)
@@ -81,9 +86,8 @@ void World::update(double time)
 	resetAcc();
 }
 
-// TODO
 /**
- * @brief
+ * @brief add a particle to the list of particles
  *
  * @param particle
  * @return nothing
@@ -93,16 +97,22 @@ void World::addParticle(Particle* particle)
 	particles_.push_back(particle);
 }
 
+/**
+ * @brief add a contact generator to the list
+ *
+ * @param generator 
+ * @return nothing
+*/
 void World::addContactGenerator(ParticleContactGenerator* generator)
 {
 	contactGenerators_.push_back(generator);
 }
 
-void World::addSpringForce(ParticleForceGenerator* forceGenerator, Particle* particle)
-{
-	forcesRegistry_.add(particle, forceGenerator);
-}
-
+/**
+ * @brief check on either of the blob if any of the spring are broken (distance > 3*l0)
+ *
+ * @return nothing
+*/
 void World::checkForRupture()
 {
 	for (int i = 0; i < originalBlob.size(); i++)
@@ -129,6 +139,11 @@ void World::checkForRupture()
 	}
 }
 
+/**
+ * @brief separate the original blob into a second blob, with a center
+ *
+ * @return nothing
+*/
 void World::separateBlob()
 {
 	if (secondBlob.size() != 0)
@@ -151,6 +166,11 @@ void World::separateBlob()
 	}
 }
 
+/**
+ * @brief delete 
+ *
+ * @return nothing
+*/
 void World::reformBlob()
 {
 	if (secondBlob.empty()) {
@@ -173,11 +193,8 @@ void World::reformBlob()
 	secondBlob.clear();
 }
 
-
-
-// TODO
 /**
- * @brief
+ * @brief add forces to the registry, apply the forces to the particles and clear the registry
  *
  * @param time
  * @return nothing
@@ -202,9 +219,8 @@ void World::updateForces(double time)
 	forcesRegistry_.clear();
 }
 
-// TODO
 /**
- * @brief
+ * @brief generates contact for all the particles
  *
  * @return nothing
 */
@@ -218,9 +234,8 @@ void World::generateContacts()
 	}
 }
 
-// TODO
 /**
- * @brief
+ * @brief solve contacts using the impulse method
  *
  * @param duration
  * @return nothing
@@ -234,28 +249,22 @@ void World::solveContacts(double duration)
 	contacts_.clear();
 }
 
-// TODO
 /**
- * @brief
+ * @brief integrate the particles using the euler method
  *
  * @param time
  * @return nothing
 */
 void World::integrate(double time)
 {
-	/*if (particles_.size() != 0)
-	{
-		particles_[0]->setPos(Vector3d(500,500,0));
-	}*/
 	for (int i = 0; i < particles_.size(); i++)
 	{
 		particles_[i]->integrate(time);
 	}
 }
 
-// TODO
 /**
- * @brief
+ * @brief reset accumulator for the particles
  *
  * @return nothing
 */

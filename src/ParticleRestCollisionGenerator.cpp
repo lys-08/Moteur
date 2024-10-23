@@ -31,11 +31,10 @@ void ParticleRestCollisionGenerator::setParticles(std::vector<Particle*> particl
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
- * @brief 
+ * @brief generate a contact if a particle is on the plane
  *
- * @param contacts
+ * @param contacts list of all the contacts at a frame
  * @param time
  * @return nothing
 */

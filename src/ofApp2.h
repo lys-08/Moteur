@@ -15,25 +15,14 @@ class ofApp2 : public ofBaseApp {
 
 public:
 	// Attributes
-	vector<Particle*> myParticles_;
-	float theta_;
-	vector<ofPolyline> myLines_;
 	std::clock_t previousTime_;
 	float deltaTime_;
-	bool isHudDisplayed_ = false;
-	int type_ = 1;
-
-	ParticleSphericalCollisionGenerator collision;
-	vector<ParticleContact> contacts;
-
-	ParticleStraightCable* collisionRod;
-	ParticleCable* collisionCable;
-	ParticleSetSpring* setSpringForce;
 
 	World world;
 
 	float mouseX_;
 	float mouseY_;
+	bool hasStarted = false;
 
 
 	// Methods
@@ -52,7 +41,5 @@ public:
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
-
-	void SpawnParticle(int type);
 
 };

@@ -6,21 +6,19 @@ Le projet présente l'arborescence suivante :
     * Moteur/
       * src/
       * tests/
+      * bin/
 
 Dans le dossier source se trouvent tous les headers et les fichiers sources qui constituent le projet. Dans le dossier tests se trouvent tous les fichiers de tests du projet.
 
 ## Comment lancer ce projet ?
-Pour lancer le projet, il faut créer un projet vide dans Visual Studio depuis le project creator d'OpenFrameworks, et ajouter les fichiers de code à l'intérieur de votre nouveau projet. Pour cela, il suffit de faire un clic droit sur le dossier src de votre projet, puis, dans "Nouveau", cliquer sur "ajouter un élément existant", et ajouter les fichiers sources et tests qui se trouvent dans les dossiers *src* et *test*.
+Un executable est inclu dans le dossier bin.
 
-Ensuite, il faut générer le projet en release dans la barre d'outils de Visual Studio.
+## Principe de la démonstration
+Pour lancer la simulation, il faut appuyer sur 1. Une particule violette apparaît, ce qui symbolise le centre du blob. Attention à ne pas déplacer trop vite la souris, dû à la méthode de calcul, cela peut provoquer des évènements non voulus.
 
-## Comment fonctionne le projet ?
-Lorsque vous avez lancé l'executable, une fenêtre s'ouvre. Une interface présente les différentes particules pouvant être tirées :
-    - **Ping Pong Ball (touche 1) :** masse de 3kg
-    - **Basket Ball (touche 2) :** masse de 10kg
-    - **Fire Ball (touche 3) :** masse de 30kg
-    - **Canon Simple Ball (touche 4) :** masse de 100kg
+En appuyant à nouveau sur 1, une particule sera attaché au blob par un ressort. Si on se déplace assez loin d'une particule, le ressort se brise.
+Le lien entre la particule et le centre devient alors un cable.
 
-En appuyant sur la touche correspondante, on peut choisir la particule à tirer. Pour tirer, il suffit de faire un **clic gauche** avec la souris. **Plus le curseur est loin du canon, plus la vitesse de la particule augmente**.
+En appuyant sur 2, le blob se séparera en 2 (une seule partie reste contrôlable).
 
-Pour lancer les tests, il faut cliquer sur la touche **t**. Les tests se lance et le résultat d'affichera dans le terminal qui s'est ouvert avec la fenêtre.
+En appuyant sur 3, le blob se regroupera à nouveau mais ses liens seront brisés (les ressorts deviendront des cables).

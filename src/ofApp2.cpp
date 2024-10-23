@@ -21,22 +21,6 @@ void ofApp2::update()
 	}
 	world.particles_[0]->setSpeed((Vector3d(mouseX,mouseY,0) - world.particles_[0]->getPos())/deltaTime_);
 	world.update(deltaTime_);
-	world.particles_[0]->clearAccumForce();
-
-	/*collision.particles = myParticles_;*/
-
-	//std::cout << collision.particles.size() << std::endl;
-
-	/*for (int i = 0; i < myParticles_.size(); i++)
-	{
-		myParticles_[i]->integrate(deltaTime_);
-	}*/
-	/*collision.addContact(contacts, deltaTime_);
-	for (int j = 0; j < contacts.size(); j++)
-	{
-		contacts[j].solve();
-	}
-	contacts.clear();*/
 }
 
 //--------------------------------------------------------------
@@ -48,6 +32,13 @@ void ofApp2::draw()
 	{
 		world.particles_[i]->draw();
 	}
+
+	if (hasStarted)
+	{
+		int originalBlobSize = world.originalBlob.size();
+		ofSetColor(255, 0, 0);
+		ofDrawBitmapString("Taille du blob original : " + ofToString(originalBlobSize-1), ofGetWidth() - 300, 20);
+	}
 }
 
 //--------------------------------------------------------------
@@ -56,17 +47,20 @@ void ofApp2::keyPressed(int key)
 	switch (key)
 	{
 	case '1':
-		world.start(mouseX, mouseY);
+		if (hasStarted)
+		{
+			world.attachNewParticle();
+		}
+		else
+		{
+			world.start(mouseX, mouseY);
+			hasStarted = true;
+		}
 		break;
 	case '2':
-		type_ = 2;
-		//SpawnParticle(2);
-		break;
-	case '3':
-		//type_ = 3;
 		world.separateBlob();
 		break;
-	case '4':
+	case '3':
 		world.reformBlob();
 		break;
 	}
@@ -95,7 +89,7 @@ void ofApp2::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp2::mousePressed(int x, int y, int button)
 {
-	world.attachNewParticle();
+
 }
 
 //--------------------------------------------------------------
@@ -132,56 +126,4 @@ void ofApp2::gotMessage(ofMessage msg)
 void ofApp2::dragEvent(ofDragInfo dragInfo)
 {
 	// No action on drag event
-}
-
-//--------------------------------------------------------------
-/**
- * @brief Spawns a particle
- *
- * @return nothing
-*/
-void ofApp2::SpawnParticle(int type)
-{
-	if (type == 1)
-	{
-		Particle* newParticule = new Particle(
-			Vector3d(ofGetMouseX(), ofGetMouseY(), 0, 1),
-			Vector3d(200, 0, 0),
-			1,
-			10
-		);
-
-
-		
-		//world.addParticle(newParticule);
-		//newParticule->setSpeed(Vector3d(150, 0, 0));
-	}
-	if (type == 2)
-	{
-		world.particles_[0]->setPos(Vector3d(300, 300, 0));
-
-	}
-	if (type == 3)
-	{
-		Particle* newParticule1 = new Particle(
-			Vector3d(500, 500),
-			Vector3d(0, 0, 0),
-			0,
-			3
-		);
-
-		Particle* newParticule2 = new Particle(
-			Vector3d(200, 500),
-			Vector3d(10, 0, 0),
-			1,
-			3
-		);
-
-		Particle* particles[2] = { newParticule1, newParticule2 };
-		collisionCable = new ParticleCable(particles, 300, 0.7);
-		world.addContactGenerator(collisionCable);
-		world.addParticle(newParticule1);
-		world.addParticle(newParticule2);
-	}
-
 }

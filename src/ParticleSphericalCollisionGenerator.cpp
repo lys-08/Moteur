@@ -30,11 +30,10 @@ void ParticleSphericalCollisionGenerator::setParticles(std::vector<Particle*> pa
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
- * @brief
+ * @brief generate a contact if two spheres are overlaped
  *
- * @param contacts
+ * @param contacts list of all the contacts
  * @param time
  * @return nothing
 */

@@ -33,19 +33,17 @@ double ParticleStraightCable::getActualLength() const
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
- * @brief
+ * @brief generate a contact to make sure the two spheres are seperated by the same length
  *
- * @param contacts
+ * @param contacts list of all the contacts
  * @param time
  * @return nothing
 */
 void ParticleStraightCable::addContact(std::vector<ParticleContact>& contacts, double time)
 {
 	double actualLength = getActualLength();
-	std::cout << "Actual Length: " << actualLength << " | Target Length: " << length_ << std::endl;
-
+	
 	if (abs(actualLength - length_) < 1e-6)
 	{
 		return;
@@ -55,7 +53,6 @@ void ParticleStraightCable::addContact(std::vector<ParticleContact>& contacts, d
 	particles[0] = particles_[0];
 	particles[1] = particles_[1];
 
-	double interpenetration = abs(actualLength - length_); //todo
 	Vector3d normal = (particles_[1]->getPos() - particles_[0]->getPos()).normalise2();
 
 	if (actualLength > length_)

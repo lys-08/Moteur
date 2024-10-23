@@ -38,5 +38,4 @@ void ParticleSpring::updateForce(Particle* particle, float duration)
 	Vector3d force = - k_ * (l0_ - norm) * dist.normalise2(); // Hooke's law : F = k * (l0 - l) * u
 	
 	particle->addForce(force);
-	//other_->addForce(force);
 }

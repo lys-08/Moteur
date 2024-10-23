@@ -25,9 +25,8 @@ ParticleContact::ParticleContact(Particle* particles[2], float elasticity, float
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
- * @brief 
+ * @brief resolve collisions based on impulsion and interpenetration method
  *
  * @return nothing
 */

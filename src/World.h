@@ -37,7 +37,6 @@ public:
 	void update(double time);
 	void addParticle(Particle* particle);
 	void addContactGenerator(ParticleContactGenerator* generator);
-	void addSpringForce(ParticleForceGenerator* forceGenerator, Particle* particle);
 	void checkForRupture();
 	void separateBlob();
 	void reformBlob();

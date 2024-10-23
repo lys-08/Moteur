@@ -27,9 +27,8 @@ ParticleSetSpring::ParticleSetSpring(Vector3d point, double k, double l0)
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
- * @brief
+ * @brief add the force "spring anchored to a point" in the particle
  *
  * @param particle
  * @param duration

@@ -54,13 +54,10 @@ void ParticleCable::addContact(std::vector<ParticleContact>& contacts, double ti
     }
 }
 
-
-
-// TODO
 /**
  * @brief 
  *
- * @return 
+ * @return calculated length between the two particles
 */
 double ParticleCable::getActualLength() const
 {
