@@ -16,7 +16,7 @@ class ParticleCable :
     double elasticity_;
 
 public:
-    ParticleCable(Particle* particles[2], double maxLength, double elasticity_); // TODO : elasticity ?
+    ParticleCable(Particle* particles[2], double maxLength, double elasticity_);
 
     void addContact(std::vector<ParticleContact>& contacts, double time);
     double getActualLength() const;

@@ -2,11 +2,14 @@
 * \file particle.h
 * This file contains the declaration of all methods and attributes of the Particle class
 */
-
 #pragma once
 
 #include "vector3d.h"
+#include "particleSpring.h"
+#include "particleSetSpring.h"
 
+class ParticleSpring;
+class ParticleSetSpring;
 
 class Particle
 {
@@ -17,10 +20,17 @@ private:
     double invertMass_;
     Vector3d accumForce_;
     double radius_;
+    
+    bool hasSpring = false;
+    bool hasSetSpring = false;
+    ParticleSpring* spring;
+    ParticleSetSpring* setSpring;
+
+    int particleTypeDraw;
 
 public:
     // Constructors
-    Particle(Vector3d pos = Vector3d(), Vector3d speed = Vector3d(), double mass = 1.0);
+    Particle(Vector3d pos = Vector3d(), Vector3d speed = Vector3d(), int typeDraw = 0, double mass = 1.0);
     Particle(const Particle& other);
 
     // Destructor
@@ -32,12 +42,21 @@ public:
     double getInvertMass() const;
 	Vector3d getForceAccum() const;
     double getRadius() const;
+    bool getHasSpring();
+    bool getHasSetSpring();
+    ParticleSpring getSpring();
+    ParticleSetSpring getSetSpring();
+
     void setSpeed(Vector3d dir);
     void setInvertMass(double mass);
 	void setPos(Vector3d pos);
+    void setSpringForce(Particle* other, double k, double l0);
+    void setSetSpringForce(Vector3d point, double k, double l0);
+    void removeSpringForce();
+    void removeSetSpringForce();
 
     // Other methods
-    void draw(int type);
+    void draw();
     void integrate(float temps);
     void addForce(const Vector3d &strength);
     void clearAccumForce();

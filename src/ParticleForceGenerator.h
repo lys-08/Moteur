@@ -5,7 +5,9 @@
 
 #pragma once
 
-#include "particle.h"
+#include "vector3d.h"
+
+class Particle;
 
 class ParticleForceGenerator
 {

@@ -4,9 +4,9 @@
 */
 
 #pragma once
-
 #include "particleForceGenerator.h"
-#include "vector3d.h"
+
+class Particle;
 
 class ParticleSetSpring : // Spring between a particle and a point
     public ParticleForceGenerator
@@ -16,8 +16,8 @@ class ParticleSetSpring : // Spring between a particle and a point
     double l0_; // rest length
 
 public:
+    ParticleSetSpring();
     ParticleSetSpring(Vector3d point, double k, double l0);
 
     void updateForce(Particle* particle, float duration);
 };
-

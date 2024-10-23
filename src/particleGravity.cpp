@@ -4,6 +4,7 @@
 */
 
 #include "particleGravity.h"
+#include "particle.h"
 
 
 

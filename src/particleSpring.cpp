@@ -4,12 +4,17 @@
 */
 
 #include "particleSpring.h"
+#include "particle.h"
 
 
 
 /**
  * @brief Evaluated constructor
  */
+ParticleSpring::ParticleSpring()
+{
+}
+
 ParticleSpring::ParticleSpring(Particle* other, double k, double l0)
 {
     other_ = other;
@@ -33,5 +38,5 @@ void ParticleSpring::updateForce(Particle* particle, float duration)
 	Vector3d force = - k_ * (l0_ - norm) * dist.normalise2(); // Hooke's law : F = k * (l0 - l) * u
 	
 	particle->addForce(force);
-	other_->addForce(force);
+	//other_->addForce(force);
 }

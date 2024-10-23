@@ -9,6 +9,8 @@
 #include "particleGravity.h"
 #include "particleFriction.h"
 #include "particleSetSpring.h"
+#include "particleStraightCable.h"
+#include "particleCable.h"
 
 class World
 {
@@ -22,17 +24,23 @@ private:
 	ParticleForceRegistry forcesRegistry_;
 	ParticleGravity g_;
 	ParticleFriction friction_;
-	ParticleSetSpring* setSpringForce;
+	ParticleSpring* springForce;
 
 public:
 	std::vector<Particle*> particles_;
+	std::vector<Particle*> originalBlob;
+	std::vector<Particle*> secondBlob;
 
 	World();
-	void start();
+	void start(int x,int y);
+	void attachNewParticle();
 	void update(double time);
 	void addParticle(Particle* particle);
 	void addContactGenerator(ParticleContactGenerator* generator);
 	void addSpringForce(ParticleForceGenerator* forceGenerator, Particle* particle);
+	void checkForRupture();
+	void separateBlob();
+	void reformBlob();
 	void updateForces(double time);
 	void generateContacts();
 	void solveContacts(double duration);

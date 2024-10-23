@@ -5,7 +5,6 @@
 void ofApp2::setup()
 {
 	previousTime_ = std::clock();
-	world.start();
 }
 
 //--------------------------------------------------------------
@@ -16,7 +15,13 @@ void ofApp2::update()
 	deltaTime_ = float(currentTime - previousTime_) / CLOCKS_PER_SEC;
 	previousTime_ = currentTime;
 
+	if (world.particles_.size() == 0)
+	{
+		return;
+	}
+	world.particles_[0]->setSpeed((Vector3d(mouseX,mouseY,0) - world.particles_[0]->getPos())/deltaTime_);
 	world.update(deltaTime_);
+	world.particles_[0]->clearAccumForce();
 
 	/*collision.particles = myParticles_;*/
 
@@ -37,10 +42,11 @@ void ofApp2::update()
 //--------------------------------------------------------------
 void ofApp2::draw()
 {
+	ofSetColor(255, 255, 255);
 	ofDrawLine(glm::vec2(2000, 950), glm::vec2(0, 950));
 	for (int i = 0; i < world.particles_.size(); i++)
 	{
-		world.particles_[i]->draw(1);
+		world.particles_[i]->draw();
 	}
 }
 
@@ -50,13 +56,18 @@ void ofApp2::keyPressed(int key)
 	switch (key)
 	{
 	case '1':
-		type_ = 1;
+		world.start(mouseX, mouseY);
 		break;
 	case '2':
 		type_ = 2;
+		//SpawnParticle(2);
 		break;
 	case '3':
-		type_ = 3;
+		//type_ = 3;
+		world.separateBlob();
+		break;
+	case '4':
+		world.reformBlob();
 		break;
 	}
 
@@ -71,7 +82,8 @@ void ofApp2::keyReleased(int key)
 //--------------------------------------------------------------
 void ofApp2::mouseMoved(int x, int y)
 {
-
+	mouseX = x;
+	mouseY = y;
 }
 
 //--------------------------------------------------------------
@@ -83,14 +95,7 @@ void ofApp2::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp2::mousePressed(int x, int y, int button)
 {
-	switch (button)
-	{
-	case 0:
-		SpawnParticle(type_);
-		break;
-	default:
-		break;
-	}
+	world.attachNewParticle();
 }
 
 //--------------------------------------------------------------
@@ -142,47 +147,40 @@ void ofApp2::SpawnParticle(int type)
 		Particle* newParticule = new Particle(
 			Vector3d(ofGetMouseX(), ofGetMouseY(), 0, 1),
 			Vector3d(200, 0, 0),
-			3
+			1,
+			10
 		);
 
-		myParticles_.push_back(newParticule);
-		world.addParticle(newParticule);
-		newParticule->setSpeed(Vector3d(150, 0, 0));
+
+		
+		//world.addParticle(newParticule);
+		//newParticule->setSpeed(Vector3d(150, 0, 0));
 	}
 	if (type == 2)
 	{
-		/*Particle* newParticule1 = new Particle(
+		world.particles_[0]->setPos(Vector3d(300, 300, 0));
+
+	}
+	if (type == 3)
+	{
+		Particle* newParticule1 = new Particle(
 			Vector3d(500, 500),
 			Vector3d(0, 0, 0),
+			0,
 			3
 		);
 
 		Particle* newParticule2 = new Particle(
 			Vector3d(200, 500),
-			Vector3d(0, 0, 0),
+			Vector3d(10, 0, 0),
+			1,
 			3
 		);
 
 		Particle* particles[2] = { newParticule1, newParticule2 };
-		collisionRod = new ParticleStraightCable(particles, 300);
-		world.addContactGenerator(collisionRod);
-		collisionCable = new ParticleCable(particles, 200, 0.7);
-		//world.addContactGenerator(collisionCable);
+		collisionCable = new ParticleCable(particles, 300, 0.7);
+		world.addContactGenerator(collisionCable);
 		world.addParticle(newParticule1);
-		world.addParticle(newParticule2);
-		newParticule2->setSpeed(Vector3d(-100, 0, 0));*/
-
-	}
-	if (type == 3)
-	{
-		Particle* newParticule2 = new Particle(
-			Vector3d(900, 900, 0, 1),
-			Vector3d(0, 0, 0),
-			3
-		);
-
-		setSpringForce = new ParticleSetSpring(Vector3d(200, 900, 0, 1), 5, 2);
-		world.addSpringForce(setSpringForce, newParticule2);
 		world.addParticle(newParticule2);
 	}
 

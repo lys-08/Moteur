@@ -143,7 +143,7 @@ void ofApp::draw()
 	// Drawing our particles
 	for (int i = 0; i < myParticles_.size(); i++)
 	{
-		myParticles_[i].draw(type_);
+		myParticles_[i].draw();
 		myLines_[i].draw();
 	}
 	ofRotateZDeg(-theta_);
