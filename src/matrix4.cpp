@@ -86,6 +86,19 @@ const float& Matrix4::operator[](std::pair<int, int> index) const
 // Operator overloading =======================================================
 // ============================================================================
 
+Matrix4 Matrix4::operator+=(const Matrix4& m)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            mat_[i][j] += m[{i, j}];
+        }
+    }
+
+    return *this;
+}
+
 Matrix4 Matrix4::operator*=(const Matrix4& m)
 {
     Matrix4 resu;
@@ -315,6 +328,12 @@ void Matrix4::initMatRotZ(float theta)
 // External operators =========================================================
 // ============================================================================
 
+Matrix4 operator+(const Matrix4& m1, const Matrix4& m2)
+{
+    Matrix4 resu = m1;
+    return resu += m2;
+}
+
 Matrix4 operator*(const Matrix4& m1, const Matrix4& m2)
 {
     Matrix4 resu = m1;
@@ -335,7 +354,7 @@ Matrix4 operator/(const Matrix4& m, float f)
 
 
 /**
- * TODO : chosse line vector x matrix OR matrix x col vector
+ * TODO : choose line vector x matrix OR matrix x col vector
  * -> this is the line vector x matrix
 */
 Vector3d VectorXmatrix4(const Vector3d& vect, const Matrix4& mat)
@@ -346,7 +365,7 @@ Vector3d VectorXmatrix4(const Vector3d& vect, const Matrix4& mat)
     float y = vect.getX() * mat[{0, 1}] + vect.getY() * mat[{1, 1}] + vect.getZ() * mat[{2, 1}] + vect.getW() * mat[{3, 1}];
     float z = vect.getX() * mat[{0, 2}] + vect.getY() * mat[{1, 2}] + vect.getZ() * mat[{2, 2}] + vect.getW() * mat[{3, 2}];
 
-    float w = vect.getX() * mat[{0, 3}] + vect.getY() * mat[{1, 3}] + vect.getZ() * mat[{2, 3}] + vect.getW() * mat[{3, 3}];
+    /*float w = vect.getX() * mat[{0, 3}] + vect.getY() * mat[{1, 3}] + vect.getZ() * mat[{2, 3}] + vect.getW() * mat[{3, 3}];
 
     if (w != 0.0f)
     {
@@ -354,18 +373,18 @@ Vector3d VectorXmatrix4(const Vector3d& vect, const Matrix4& mat)
         y /= w;
         z /= w;
         w /= w;
-    }
+    }*/
 
     resu.setX(x);
     resu.setY(y);
     resu.setZ(z);
-    resu.setW(w);
+    //resu.setW(w);
 
     return resu;
 }
 
 /**
- * TODO : chosse line vector x matrix OR matrix x col vector
+ * TODO : choose line vector x matrix OR matrix x col vector
  * -> this is the matrix x col vector
 */
 Vector3d Matrix4xVector(const Vector3d& vect, const Matrix4& mat)
@@ -376,7 +395,7 @@ Vector3d Matrix4xVector(const Vector3d& vect, const Matrix4& mat)
     float y = vect.getX() * mat[{1, 0}] + vect.getY() * mat[{1, 1}] + vect.getZ() * mat[{1, 2}] + vect.getW() * mat[{1, 3}];
     float z = vect.getX() * mat[{2, 0}] + vect.getY() * mat[{2, 1}] + vect.getZ() * mat[{2, 2}] + vect.getW() * mat[{2, 3}];
 
-    float w = vect.getX() * mat[{3, 0}] + vect.getY() * mat[{3, 1}] + vect.getZ() * mat[{3, 2}] + vect.getW() * mat[{3, 3}];
+    /*float w = vect.getX() * mat[{3, 0}] + vect.getY() * mat[{3, 1}] + vect.getZ() * mat[{3, 2}] + vect.getW() * mat[{3, 3}];
 
     if (w != 0.0f)
     {
@@ -384,12 +403,12 @@ Vector3d Matrix4xVector(const Vector3d& vect, const Matrix4& mat)
         y /= w;
         z /= w;
         w /= w;
-    }
+    }*/
 
     resu.setX(x);
     resu.setY(y);
     resu.setZ(z);
-    resu.setW(w);
+    //resu.setW(w);
 
     return resu;
 }

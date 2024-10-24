@@ -171,7 +171,7 @@ Matrix3 Matrix3::inv()
 {
     float det = this->det();
 
-    if (det == 0)
+    if (det == 0.0f)
     {
         throw std::invalid_argument("Det value is 0.0");
     }
@@ -218,7 +218,7 @@ Matrix3 operator/(const Matrix3& m, float f)
 }
 
 /**
- * TODO : chosse line vector x matrix OR matrix x col vector
+ * TODO : choose line vector x matrix OR matrix x col vector
  * -> this is the line vector x matrix
 */
 Vector3d VectorXmatrix3(const Vector3d& vect, const Matrix3& mat)
@@ -248,16 +248,6 @@ Vector3d Matrix3xVector(const Vector3d& vect, const Matrix3& mat)
     float x = vect.getX() * mat[{0, 0}] + vect.getY() * mat[{0, 1}] + vect.getZ() * mat[{0, 2}];
     float y = vect.getX() * mat[{1, 0}] + vect.getY() * mat[{1, 1}] + vect.getZ() * mat[{1, 2}];
     float z = vect.getX() * mat[{2, 0}] + vect.getY() * mat[{2, 1}] + vect.getZ() * mat[{2, 2}];
-
-    float w = vect.getX() * mat[{3, 0}] + vect.getY() * mat[{3, 1}] + vect.getZ() * mat[{3, 2}];
-
-    if (w != 0.0f)
-    {
-        x /= w;
-        y /= w;
-        z /= w;
-        w /= w;
-    }
 
     resu.setX(x);
     resu.setY(y);
