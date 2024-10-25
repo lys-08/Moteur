@@ -27,24 +27,24 @@ public:
     const float& operator[](std::pair<int, int> index) const;
 
     // Operator overloading
-    Matrix4 operator+=(const Matrix4& m); 
+    Matrix4 operator+=(const Matrix4& m); // TODO : gestion de la dernière ligne ?
     Matrix4 operator*=(const Matrix4& m);
-    Matrix4& operator*=(float f);
-    Matrix4& operator/=(float f);
+    Matrix4& operator*=(float f); // TODO : gestion de la dernière ligne ?
+    Matrix4& operator/=(float f); // TODO : gestion de la dernière ligne ?
 
     // Other methods
     float det();
     Matrix4 t();
     Matrix4 inv();
-    void initMatProj(int w, int h);
-    void initMatRotX(float theta);
-    void initMatRotY(float theta);
-    void initMatRotZ(float theta);
+    void initMatProj(int w, int h); // TODO : keep ?
+    void initMatRotX(float theta);  // TODO : keep ?
+    void initMatRotY(float theta);  // TODO : keep ?
+    void initMatRotZ(float theta);  // TODO : keep ?
 };
 
 Matrix4 operator+(const Matrix4& m1, const Matrix4& m2);
 Matrix4 operator*(const Matrix4& m1, const Matrix4& m2);
 Matrix4 operator*(const Matrix4& m, float f);
 Matrix4 operator/(const Matrix4& m, float f);
-Vector3d VectorXmatrix4(const Vector3d& vect, const Matrix4& mat);
-Vector3d Matrix4xVector(const Vector3d& vect, const Matrix4& mat);
+Vector3d VectorXmatrix4(const Vector3d& vect, const Matrix4& mat); // TODO : choisir vecteur colonne 
+Vector3d Matrix4xVector(const Vector3d& vect, const Matrix4& mat); // ou vecteur ligne

@@ -73,6 +73,19 @@ const float& Matrix3::operator[](std::pair<int, int> index) const
 // Operator overloading =======================================================
 // ============================================================================
 
+Matrix3 Matrix3::operator+=(const Matrix3& m)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            mat_[i][j] += m[{i, j}];
+        }
+    }
+
+    return *this;
+}
+
 Matrix3 Matrix3::operator*=(const Matrix3& m)
 {
     Matrix3 resu;
@@ -198,6 +211,12 @@ Matrix3 Matrix3::inv()
 // ============================================================================
 // External operators =========================================================
 // ============================================================================
+
+Matrix3 operator+(const Matrix3& m1, const Matrix3& m2)
+{
+    Matrix3 resu = m1;
+    return resu += m2;
+}
 
 Matrix3 operator*(const Matrix3& m1, const Matrix3& m2)
 {

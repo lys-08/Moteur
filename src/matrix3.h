@@ -27,6 +27,7 @@ public:
     const float& operator[](std::pair<int, int> index) const;
 
     // Operator overloading
+    Matrix3 operator+=(const Matrix3& m);
     Matrix3 operator*=(const Matrix3& m);
     Matrix3& operator*=(float f);
     Matrix3& operator/=(float f);
@@ -37,6 +38,7 @@ public:
     Matrix3 inv();
 };
 
+Matrix3 operator+(const Matrix3& m1, const Matrix3& m2);
 Matrix3 operator*(const Matrix3& m1, const Matrix3& m2);
 Matrix3 operator*(const Matrix3& m, float f);
 Matrix3 operator/(const Matrix3& m, float f);

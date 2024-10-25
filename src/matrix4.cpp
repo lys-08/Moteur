@@ -86,6 +86,7 @@ const float& Matrix4::operator[](std::pair<int, int> index) const
 // Operator overloading =======================================================
 // ============================================================================
 
+// TODO : gestion de la dernière ligne ?
 Matrix4 Matrix4::operator+=(const Matrix4& m)
 {
     for (int i = 0; i < 4; i++)
@@ -117,6 +118,7 @@ Matrix4 Matrix4::operator*=(const Matrix4& m)
     return resu;
 }
 
+// TODO : gestion de la dernière ligne ?
 Matrix4& Matrix4::operator*=(float f)
 {
     for (int i = 0; i < 4; i++)
@@ -130,6 +132,7 @@ Matrix4& Matrix4::operator*=(float f)
     return *this;
 }
 
+// TODO : gestion de la dernière ligne ?
 Matrix4& Matrix4::operator/=(float f)
 {
     if (f == 0)

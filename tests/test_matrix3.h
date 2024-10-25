@@ -9,6 +9,7 @@ public:
 	void tests_contructor();
 	void tests_gettersAndSetters();
 
+    void tests_operatorPlusEquals();
     void tests_operatorTimesEquals();
     void tests_operatorTimesEquals_();
     void tests_operatorDividedEquals();
@@ -17,9 +18,10 @@ public:
     void tests_t();
     void tests_inv();
 
+    void tests_operatorPlus();
     void tests_operatorTimes();
     void tests_operatorTimes_();
     void tests_operatorDivided();
-    void tests_vectorXmatrix3();
-    void tests_matrix3xVector();
+    void tests_vectorXmatrix3(); // TODO : choisir vecteur colonne 
+    void tests_matrix3xVector(); // ou vecteur ligne
 };

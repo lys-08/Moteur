@@ -99,6 +99,24 @@ void Test_matrix3::tests_gettersAndSetters()
  * ====================================================================
 */
 
+void Test_matrix3::tests_operatorPlusEquals()
+{
+	Matrix3 m1(
+		1, 2, 3,
+		4, 5, 6,
+		7, 8, 9);
+
+	Matrix3 m2(
+		1, 5, 3,
+		2, 4, 7,
+		4, 6, 2);
+
+	m1 += m2;
+	assert(m1[0][0] == 2);  assert(m1[0][1] == 7);  assert(m1[0][2] == 6);
+	assert(m1[1][0] == 6);  assert(m1[1][1] == 9);  assert(m1[1][2] == 13);
+	assert(m1[2][0] == 12); assert(m1[2][1] == 14); assert(m1[2][2] == 11);
+}
+
 void Test_matrix3::tests_operatorTimesEquals()
 {
 	Matrix3 m1(
@@ -200,6 +218,24 @@ void Test_matrix3::tests_inv()
  * ====================================================================
  * ====================================================================
 */
+
+void Test_matrix3::tests_operatorPlus()
+{
+	Matrix3 m1(
+		1, 2, 3,
+		4, 5, 6,
+		7, 8, 9);
+
+	Matrix3 m2(
+		1, 5, 3,
+		2, 4, 7,
+		4, 6, 2);
+
+	Matrix3 m3 = m1 + m2;
+	assert(m3[0][0] == 2);  assert(m3[0][1] == 7);  assert(m3[0][2] == 6);
+	assert(m3[1][0] == 6);  assert(m3[1][1] == 9);  assert(m3[1][2] == 13);
+	assert(m3[2][0] == 12); assert(m3[2][1] == 14); assert(m3[2][2] == 11);
+}
 
 void Test_matrix3::tests_operatorTimes()
 {
