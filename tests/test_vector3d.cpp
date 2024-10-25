@@ -143,7 +143,7 @@ void Test_vector3d::tests_operatorDividedEquals()
 	}
 	catch (const std::invalid_argument& e) 
 	{
-		std::cerr << "Error : " << e.what() << std::endl;
+		std::cerr << "\033[31mError : " << e.what() << "\033[0m" << std::endl;
 	}
 }
 
@@ -317,10 +317,10 @@ void Test_vector3d::tests_operatorDivided()
 	std::cout << "[operator/]" << std::endl;
 	std::cout << "An error must be printed after this message (division by zero)" << std::endl;
 	try {
-		v1 /= 0;
+		v2 = v1 / 0;
 	}
 	catch (const std::invalid_argument& e)
 	{
-		std::cerr << "Error : " << e.what() << std::endl;
+		std::cerr << "\033[31mError : " << e.what() << "\033[0m" << std::endl;
 	}
 }
