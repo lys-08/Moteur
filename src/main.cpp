@@ -5,6 +5,7 @@
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
 #include "../tests/test_matrix4.h"
+#include "../tests/test_quaternion.h"
 
 //========================================================================
 int main( ){
@@ -24,6 +25,9 @@ int main( ){
 
 	Test_matrix4 test_matrix4;
 	test_matrix4.tests_all();
+
+	Test_quaternion test_quaternion;
+	test_quaternion.tests_all();
 
 	ofRunApp(window, make_shared<ofApp2>());
 	ofRunMainLoop();
