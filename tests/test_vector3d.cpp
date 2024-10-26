@@ -193,7 +193,7 @@ void Test_vector3d::tests_operatorDifferent()
 
 void Test_vector3d::tests_norm()
 {
-	float epsilon = 0.00001f;
+	float epsilon = 0.000001f;
 	Vector3d v(1, 2, 3);
 
 	assert(std::fabs(v.norm() - 3.7416574) < epsilon);
@@ -209,7 +209,7 @@ void Test_vector3d::tests_norm2()
 
 void Test_vector3d::tests_normalise()
 {
-	float epsilon = 0.00001f;
+	float epsilon = 0.000001f;
 	Vector3d v(1, 2, 3);
 
 	v.normalise();

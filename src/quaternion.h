@@ -35,6 +35,7 @@ public:
 
     // Operator overloading
     Quaternion& operator+=(const Quaternion& other);
+    Quaternion& operator-=(const Quaternion& other);
     Quaternion& operator*=(const Quaternion& other);
     Quaternion& operator*=(float f);
     Quaternion& operator/=(float f);
@@ -53,6 +54,7 @@ public:
 };
 
 Quaternion operator+(const Quaternion& q1, const Quaternion& q2);
+Quaternion operator-(const Quaternion& q1, const Quaternion& q2);
 Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 Quaternion operator*(const Quaternion& q, float f);
 Quaternion operator*(float f, const Quaternion& q);

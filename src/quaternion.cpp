@@ -93,12 +93,22 @@ Quaternion& Quaternion::operator+=(const Quaternion& other)
     return *this;
 }
 
+Quaternion& Quaternion::operator-=(const Quaternion& other)
+{
+    w_ -= other.w_;
+    i_ -= other.i_;
+    j_ -= other.j_;
+    k_ -= other.k_;
+
+    return *this;
+}
+
 Quaternion& Quaternion::operator*=(const Quaternion& other)
 {
     w_ = w_ * other.w_ - i_ * other.i_ - j_ * other.j_ - k_ * other.k_;
-    i_ = w_ * other.w_ + i_ * other.i_ + j_ * other.j_ - k_ * other.k_;
-    j_ = w_ * other.w_ - i_ * other.i_ + j_ * other.j_ + k_ * other.k_;
-    k_ = w_ * other.w_ + i_ * other.i_ - j_ * other.j_ + k_ * other.k_;
+    i_ = w_ * other.i_ + i_ * other.w_ + j_ * other.k_ - k_ * other.j_;
+    j_ = w_ * other.j_ - i_ * other.k_ + j_ * other.w_ + k_ * other.i_;
+    k_ = w_ * other.k_ + i_ * other.j_ - j_ * other.i_ + k_ * other.w_;
 
     return *this;
 }
@@ -245,6 +255,12 @@ Quaternion operator+(const Quaternion& v1, const Quaternion& v2)
 {
     Quaternion resu = Quaternion(v1);
     return resu += v2;
+}
+
+Quaternion operator-(const Quaternion& v1, const Quaternion& v2)
+{
+    Quaternion resu = Quaternion(v1);
+    return resu -= v2;
 }
 
 Quaternion operator*(const Quaternion& v1, const Quaternion& v2)
