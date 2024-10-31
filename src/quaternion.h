@@ -48,7 +48,7 @@ public:
     Quaternion inv();
     float dotProduct(const Quaternion& other) const;
     Quaternion& normalise();
-    // TODO : exponentiation
+    Quaternion& exponentiation(int t); // TODO : comment
 
     Matrix3 toMatrix();
 };

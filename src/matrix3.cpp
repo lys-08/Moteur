@@ -236,31 +236,16 @@ Matrix3 operator/(const Matrix3& m, float f)
     return resu /= f;
 }
 
-/**
- * TODO : choose line vector x matrix OR matrix x col vector
- * -> this is the line vector x matrix
-*/
-Vector3d VectorXmatrix3(const Vector3d& vect, const Matrix3& mat)
-{
-    Vector3d resu;
-
-    float x = vect.getX() * mat[{0, 0}] + vect.getY() * mat[{1, 0}] + vect.getZ() * mat[{2, 0}];
-    float y = vect.getX() * mat[{0, 1}] + vect.getY() * mat[{1, 1}] + vect.getZ() * mat[{2, 1}];
-    float z = vect.getX() * mat[{0, 2}] + vect.getY() * mat[{1, 2}] + vect.getZ() * mat[{2, 2}];
-
-    resu.setX(x);
-    resu.setY(y);
-    resu.setZ(z);
-
-    return resu;
-}
-
 
 /**
- * TODO : choose line vector x matrix OR matrix x col vector
+ * @brief Return the result vector of the multiplication of a matrix and a vector
  * -> this is the matrix x col vector
+ *
+ * @param mat the matrix to multiply
+ * @param vect the column vector to multiply
+ * @return the result vector
 */
-Vector3d Matrix3xVector(const Vector3d& vect, const Matrix3& mat)
+Vector3d Matrix3xVector(const Matrix3& mat, const Vector3d& vect)
 {
     Vector3d resu;
 

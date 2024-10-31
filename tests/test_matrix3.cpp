@@ -19,7 +19,6 @@ void Test_matrix3::tests_all()
 	tests_operatorTimes();
 	tests_operatorTimes_();
 	tests_operatorDivided();
-	tests_vectorXmatrix3();
 	tests_matrix3xVector();
 
 	std::cout << "\033[32mAll tests of the Matrix3 class have passed !\033[0m\n" << std::endl;
@@ -34,7 +33,8 @@ void Test_matrix3::tests_contructor()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			assert(default[i][j] == 0);
+			// assert(default[i][j] == 0);
+			assert(default[std::make_pair(i, j)] == 0);
 		}
 	}
 
@@ -48,7 +48,8 @@ void Test_matrix3::tests_contructor()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			assert(evaluated[i][j] == index);
+			// assert(evaluated[i][j] == index);
+			assert(evaluated[std::make_pair(i, j)] == index);
 			index++;
 		}
 	}
@@ -67,7 +68,8 @@ void Test_matrix3::tests_gettersAndSetters()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			assert(m[i][j] == index);
+			assert(m[std::make_pair(i, j)] == index);
+			// assert(m[i][j] == index);
 			index++;
 		}
 	}
@@ -86,7 +88,8 @@ void Test_matrix3::tests_gettersAndSetters()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			assert(m[i][j] == index * 2);
+			assert(m[std::make_pair(i, j)] == index * 2);
+			// assert(m[i][j] == index * 2);
 			index++;
 		}
 	}
@@ -290,20 +293,6 @@ void Test_matrix3::tests_operatorDivided()
 	}
 }
 
-void Test_matrix3::tests_vectorXmatrix3()
-{
-	Matrix3 m(
-		1, 2, 3,
-		4, 5, 6,
-		7, 8, 9);
-	Vector3d v(2, 4, 6);
-
-	Vector3d mXv = VectorXmatrix3(v, m);
-	assert(mXv.getX() == 14);
-	assert(mXv.getY() == 22);
-	assert(mXv.getZ() == 40);
-}
-
 void Test_matrix3::tests_matrix3xVector()
 {
 	Matrix3 m(
@@ -312,7 +301,7 @@ void Test_matrix3::tests_matrix3xVector()
 		7, 8, 9);
 	Vector3d v(2, 4, 6);
 
-	Vector3d vXm = Matrix3xVector(v, m);
+	Vector3d vXm = Matrix3xVector(m, v);
 	assert(vXm.getX() == 60);
 	assert(vXm.getY() == 72);
 	assert(vXm.getZ() == 84);

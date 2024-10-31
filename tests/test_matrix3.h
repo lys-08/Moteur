@@ -22,6 +22,5 @@ public:
     void tests_operatorTimes();
     void tests_operatorTimes_();
     void tests_operatorDivided();
-    void tests_vectorXmatrix3(); // TODO : choisir vecteur colonne 
-    void tests_matrix3xVector(); // ou vecteur ligne
+    void tests_matrix3xVector();
 };

@@ -245,6 +245,21 @@ Matrix3 Quaternion::toMatrix()
     );
 }
 
+// TODO
+/**
+ * @brief Determine the fraction t of displacement
+ *
+ * @param t the exponent
+ * @return the result quaternion
+*/
+Quaternion& Quaternion::exponentiation(int t)
+{
+    float alpha = acos(w_);
+    float w = cos(t * alpha) * sin(t * alpha) / sin(alpha);
+
+    return Quaternion(w, i_, j_, k_);
+}
+
 
 
 // ============================================================================
