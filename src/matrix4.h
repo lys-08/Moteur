@@ -33,9 +33,6 @@ public:
     Matrix4& operator/=(float f);
 
     // Other methods
-    float det(); // TODO
-    Matrix4 t(); // TODO
-    Matrix4 inv(); // TODO
     void initMatProj(int w, int h); // TODO : keep ?
     void initMatRotX(float theta);  // TODO : keep ?
     void initMatRotY(float theta);  // TODO : keep ?

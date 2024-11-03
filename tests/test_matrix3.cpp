@@ -33,7 +33,7 @@ void Test_matrix3::tests_contructor()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			// assert(default[i][j] == 0);
+			//assert(default[i][j] == 0);
 			assert(default[std::make_pair(i, j)] == 0);
 		}
 	}
@@ -115,9 +115,9 @@ void Test_matrix3::tests_operatorPlusEquals()
 		4, 6, 2);
 
 	m1 += m2;
-	assert(m1[0][0] == 2);  assert(m1[0][1] == 7);  assert(m1[0][2] == 6);
-	assert(m1[1][0] == 6);  assert(m1[1][1] == 9);  assert(m1[1][2] == 13);
-	assert(m1[2][0] == 12); assert(m1[2][1] == 14); assert(m1[2][2] == 11);
+	assert(m1[std::make_pair(0, 0)] == 2);  assert(m1[std::make_pair(0, 1)] == 7);  assert(m1[std::make_pair(0, 2)] == 6);
+	assert(m1[std::make_pair(1, 0)] == 6);  assert(m1[std::make_pair(1, 1)] == 9);  assert(m1[std::make_pair(1, 2)] == 13);
+	assert(m1[std::make_pair(2, 0)] == 12); assert(m1[std::make_pair(2, 1)] == 14); assert(m1[std::make_pair(2, 2)] == 11);
 }
 
 void Test_matrix3::tests_operatorTimesEquals()
@@ -132,9 +132,9 @@ void Test_matrix3::tests_operatorTimesEquals()
 		1, 2, 3);
 
 	m1 *= m2;
-	assert(m1[0][0] == 6);  assert(m1[0][1] == 15); assert(m1[0][2] == 24);
-	assert(m1[1][0] == 12); assert(m1[1][1] == 30); assert(m1[1][2] == 48);
-	assert(m1[2][0] == 18); assert(m1[2][1] == 45); assert(m1[2][2] == 72);
+	assert(m1[std::make_pair(0, 0)] == 6);  assert(m1[std::make_pair(0, 1)] == 12); assert(m1[std::make_pair(0, 2)] == 18);
+	assert(m1[std::make_pair(1, 0)] == 15); assert(m1[std::make_pair(1, 1)] == 30); assert(m1[std::make_pair(1, 2)] == 45);
+	assert(m1[std::make_pair(2, 0)] == 24); assert(m1[std::make_pair(2, 1)] == 48); assert(m1[std::make_pair(2, 2)] == 72);
 }
 
 void Test_matrix3::tests_operatorTimesEquals_()
@@ -145,9 +145,9 @@ void Test_matrix3::tests_operatorTimesEquals_()
 		7, 8, 9);
 
 	m *= 2;
-	assert(m[0][0] == 2);  assert(m[0][1] == 4);  assert(m[0][2] == 6);
-	assert(m[1][0] == 8);  assert(m[1][1] == 10); assert(m[1][2] == 12);
-	assert(m[2][0] == 14); assert(m[2][1] == 16); assert(m[2][2] == 18);
+	assert(m[std::make_pair(0, 0)] == 2);  assert(m[std::make_pair(0, 1)] == 4);  assert(m[std::make_pair(0, 2)] == 6);
+	assert(m[std::make_pair(1, 0)] == 8);  assert(m[std::make_pair(1, 1)] == 10); assert(m[std::make_pair(1, 2)] == 12);
+	assert(m[std::make_pair(2, 0)] == 14); assert(m[std::make_pair(2, 1)] == 16); assert(m[std::make_pair(2, 2)] == 18);
 }
 
 void Test_matrix3::tests_operatorDividedEquals()
@@ -158,9 +158,9 @@ void Test_matrix3::tests_operatorDividedEquals()
 		14, 16, 18);
 
 	m /= 2;
-	assert(m[0][0] == 1); assert(m[0][1] == 2); assert(m[0][2] == 3);
-	assert(m[1][0] == 4); assert(m[1][1] == 5); assert(m[1][2] == 6);
-	assert(m[2][0] == 7); assert(m[2][1] == 8); assert(m[2][2] == 9);
+	assert(m[std::make_pair(0, 0)] == 1); assert(m[std::make_pair(0, 1)] == 2); assert(m[std::make_pair(0, 2)] == 3);
+	assert(m[std::make_pair(1, 0)] == 4); assert(m[std::make_pair(1, 1)] == 5); assert(m[std::make_pair(1, 2)] == 6);
+	assert(m[std::make_pair(2, 0)] == 7); assert(m[std::make_pair(2, 1)] == 8); assert(m[std::make_pair(2, 2)] == 9);
 
 	std::cout << "[operator/=]" << std::endl;
 	std::cout << "An error must be printed after this message (division by zero)" << std::endl;
@@ -196,9 +196,9 @@ void Test_matrix3::tests_t()
 		4, 6, 2);
 	Matrix3 tm = m.t();
 
-	assert(tm[0][0] == 1); assert(tm[0][1] == 2); assert(tm[0][2] == 4);
-	assert(tm[1][0] == 5); assert(tm[1][1] == 4); assert(tm[1][2] == 6);
-	assert(tm[2][0] == 3); assert(tm[2][1] == 7); assert(tm[2][2] == 2);
+	assert(tm[std::make_pair(0, 0)] == 1); assert(tm[std::make_pair(0, 1)] == 2); assert(tm[std::make_pair(0, 2)] == 4);
+	assert(tm[std::make_pair(1, 0)] == 5); assert(tm[std::make_pair(1, 1)] == 4); assert(tm[std::make_pair(1, 2)] == 6);
+	assert(tm[std::make_pair(2, 0)] == 3); assert(tm[std::make_pair(2, 1)] == 7); assert(tm[std::make_pair(2, 2)] == 2);
 }
 
 void Test_matrix3::tests_inv()
@@ -210,9 +210,9 @@ void Test_matrix3::tests_inv()
 
 	Matrix3 inv = m.inv();
 
-	assert(inv[0][0] == -24); assert(inv[0][1] == 18);  assert(inv[0][2] == 5);
-	assert(inv[1][0] == 20);  assert(inv[1][1] == -15); assert(inv[1][2] == -4);
-	assert(inv[2][0] == -5);  assert(inv[2][1] == 4);   assert(inv[2][2] == 1);
+	assert(inv[std::make_pair(0, 0)] == -24); assert(inv[std::make_pair(0, 1)] == 18);  assert(inv[std::make_pair(0, 2)] == 5);
+	assert(inv[std::make_pair(1, 0)] == 20);  assert(inv[std::make_pair(1, 1)] == -15); assert(inv[std::make_pair(1, 2)] == -4);
+	assert(inv[std::make_pair(2, 0)] == -5);  assert(inv[std::make_pair(2, 1)] == 4);   assert(inv[std::make_pair(2, 2)] == 1);
 }
 
 
@@ -235,9 +235,9 @@ void Test_matrix3::tests_operatorPlus()
 		4, 6, 2);
 
 	Matrix3 m3 = m1 + m2;
-	assert(m3[0][0] == 2);  assert(m3[0][1] == 7);  assert(m3[0][2] == 6);
-	assert(m3[1][0] == 6);  assert(m3[1][1] == 9);  assert(m3[1][2] == 13);
-	assert(m3[2][0] == 12); assert(m3[2][1] == 14); assert(m3[2][2] == 11);
+	assert(m3[std::make_pair(0, 0)] == 2);  assert(m3[std::make_pair(0, 1)] == 7);  assert(m3[std::make_pair(0, 2)] == 6);
+	assert(m3[std::make_pair(1, 0)] == 6);  assert(m3[std::make_pair(1, 1)] == 9);  assert(m3[std::make_pair(1, 2)] == 13);
+	assert(m3[std::make_pair(2, 0)] == 12); assert(m3[std::make_pair(2, 1)] == 14); assert(m3[std::make_pair(2, 2)] == 11);
 }
 
 void Test_matrix3::tests_operatorTimes()
@@ -252,9 +252,9 @@ void Test_matrix3::tests_operatorTimes()
 		1, 2, 3);
 
 	Matrix3 m3 = m1 * m2;
-	assert(m3[0][0] == 6);  assert(m3[0][1] == 15); assert(m3[0][2] == 24);
-	assert(m3[1][0] == 12); assert(m3[1][1] == 30); assert(m3[1][2] == 48);
-	assert(m3[2][0] == 18); assert(m3[2][1] == 45); assert(m3[2][2] == 72);
+	assert(m3[std::make_pair(0, 0)] == 6);  assert(m3[std::make_pair(0, 1)] == 12); assert(m3[std::make_pair(0, 2)] == 18);
+	assert(m3[std::make_pair(1, 0)] == 15); assert(m3[std::make_pair(1, 1)] == 30); assert(m3[std::make_pair(1, 2)] == 45);
+	assert(m3[std::make_pair(2, 0)] == 24); assert(m3[std::make_pair(2, 1)] == 48); assert(m3[std::make_pair(2, 2)] == 72);
 }
 
 void Test_matrix3::tests_operatorTimes_()
@@ -265,9 +265,9 @@ void Test_matrix3::tests_operatorTimes_()
 		7, 8, 9);
 
 	Matrix3 m2 = m1 * 2;
-	assert(m2[0][0] == 2);  assert(m2[0][1] == 4);  assert(m2[0][2] == 6);
-	assert(m2[1][0] == 8);  assert(m2[1][1] == 10); assert(m2[1][2] == 12);
-	assert(m2[2][0] == 14); assert(m2[2][1] == 16); assert(m2[2][2] == 18);
+	assert(m2[std::make_pair(0, 0)] == 2);  assert(m2[std::make_pair(0, 1)] == 4);  assert(m2[std::make_pair(0, 2)] == 6);
+	assert(m2[std::make_pair(1, 0)] == 8);  assert(m2[std::make_pair(1, 1)] == 10); assert(m2[std::make_pair(1, 2)] == 12);
+	assert(m2[std::make_pair(2, 0)] == 14); assert(m2[std::make_pair(2, 1)] == 16); assert(m2[std::make_pair(2, 2)] == 18);
 }
 
 void Test_matrix3::tests_operatorDivided()
@@ -278,9 +278,9 @@ void Test_matrix3::tests_operatorDivided()
 		14, 16, 18);
 
 	Matrix3 m2 = m1 / 2;
-	assert(m2[0][0] == 1); assert(m2[0][1] == 2); assert(m2[0][2] == 3);
-	assert(m2[1][0] == 4); assert(m2[1][1] == 5); assert(m2[1][2] == 6);
-	assert(mm22][0] == 7); assert(m2[2][1] == 8); assert(m2[2][2] == 9);
+	assert(m2[std::make_pair(0, 0)] == 1); assert(m2[std::make_pair(0, 1)] == 2); assert(m2[std::make_pair(0, 2)] == 3);
+	assert(m2[std::make_pair(1, 0)] == 4); assert(m2[std::make_pair(1, 1)] == 5); assert(m2[std::make_pair(1, 2)] == 6);
+	assert(m2[std::make_pair(2, 0)] == 7); assert(m2[std::make_pair(2, 1)] == 8); assert(m2[std::make_pair(2, 2)] == 9);
 
 	std::cout << "[operator/=]" << std::endl;
 	std::cout << "An error must be printed after this message (division by zero)" << std::endl;
@@ -302,7 +302,7 @@ void Test_matrix3::tests_matrix3xVector()
 	Vector3d v(2, 4, 6);
 
 	Vector3d vXm = Matrix3xVector(m, v);
-	assert(vXm.getX() == 60);
-	assert(vXm.getY() == 72);
-	assert(vXm.getZ() == 84);
+	assert(vXm.getX() == 28);
+	assert(vXm.getY() == 64);
+	assert(vXm.getZ() == 100);
 }

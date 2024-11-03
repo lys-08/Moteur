@@ -217,9 +217,9 @@ void Test_quaternion::tests_toMatrix()
 	Quaternion q(1, 2, 3, 4);
 	Matrix3 quaternionMat = q.toMatrix();
 
-	assert(quaternionMat[0][0] == -49); assert(quaternionMat[0][1] == 4);   assert(quaternionMat[0][2] == 10);
-	assert(quaternionMat[1][0] == 4);   assert(quaternionMat[1][1] == -39); assert(quaternionMat[1][2] == 20);
-	assert(quaternionMat[2][0] == 22);  assert(quaternionMat[2][1] == 20);  assert(quaternionMat[2][2] == -25);
+	assert(quaternionMat[std::make_pair(0, 0)] == -49); assert(quaternionMat[std::make_pair(0, 1)] == 4);   assert(quaternionMat[std::make_pair(0, 2)] == 10);
+	assert(quaternionMat[std::make_pair(1, 0)] == 4);   assert(quaternionMat[std::make_pair(1, 1)] == -39); assert(quaternionMat[std::make_pair(1, 2)] == 20);
+	assert(quaternionMat[std::make_pair(2, 0)] == 22);  assert(quaternionMat[std::make_pair(2, 1)] == 20);  assert(quaternionMat[std::make_pair(2, 2)] == -25);
 }
 
 

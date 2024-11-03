@@ -86,7 +86,6 @@ const float& Matrix4::operator[](std::pair<int, int> index) const
 // Operator overloading =======================================================
 // ============================================================================
 
-// TODO : gestion de la dernière ligne ?
 Matrix4 Matrix4::operator+=(const Matrix4& m)
 {
     for (int i = 0; i < 3; i++)
@@ -115,7 +114,8 @@ Matrix4 Matrix4::operator*=(const Matrix4& m)
         }
     }
 
-    return resu;
+    *this = resu;
+    return *this;
 }
 
 Matrix4& Matrix4::operator*=(float f)
@@ -154,114 +154,6 @@ Matrix4& Matrix4::operator/=(float f)
 // ============================================================================
 // Other methods ==============================================================
 // ============================================================================
-
-/**
- * @brief determines the determinant of a matrix
- *
- * @return the determinant of the matrix
-*/
-float Matrix4::det()
-{
-    return mat_[0][0] * mat_[1][1] * mat_[2][2] * mat_[3][3]
-            + mat_[0][1] * mat_[1][2] * mat_[2][3] * mat_[3][0]
-            + mat_[0][2] * mat_[1][3] * mat_[2][0] * mat_[3][1]
-            + mat_[0][3] * mat_[1][0] * mat_[2][1] * mat_[3][3]
-            - mat_[0][0] * mat_[1][3] * mat_[2][2] * mat_[3][1]
-            - mat_[0][1] * mat_[1][0] * mat_[2][3] * mat_[3][2]
-            - mat_[0][2] * mat_[1][1] * mat_[2][0] * mat_[3][3]
-            - mat_[0][3] * mat_[1][2] * mat_[2][1] * mat_[3][0];
-    // TODO : compte la dernière ligne ?
-}
-
-/**
- * @brief determines the transposed matrix
- *
- * @return the transposed matrix
-*/
-Matrix4 Matrix4::t()
-{
-    Matrix4 resu;
-
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            resu[{i, j}] = mat_[j][i];
-        }
-    }
-    return resu;
-} // TODO : on fait comment ?
-
-/**
- * @brief Inverts the matrix
- * 
- * @return the matrix inverse
-*/
-Matrix4 Matrix4::inv()
-{
-    float det = this->det();
-
-    if (det == 0)
-    {
-        throw std::invalid_argument("Det value is 0.0");
-    }
-
-    Matrix4 resu;
-
-    resu[{0, 0}] = Matrix3(mat_[1][1], mat_[1][2], mat_[1][3], 
-        mat_[2][1], mat_[2][2], mat_[2][3], 
-        mat_[3][1], mat_[3][2], mat_[3][3]).det();
-    resu[{0, 1}] = - Matrix3(mat_[1][0], mat_[1][2], mat_[1][3],
-        mat_[2][0], mat_[2][2], mat_[2][3],
-        mat_[3][0], mat_[3][2], mat_[3][3]).det();
-    resu[{0, 2}] = Matrix3(mat_[1][0], mat_[1][1], mat_[1][3],
-        mat_[2][0], mat_[2][1], mat_[2][3],
-        mat_[3][0], mat_[3][1], mat_[3][3]).det();
-    resu[{0, 3}] = - Matrix3(mat_[1][0], mat_[1][1], mat_[1][2],
-        mat_[2][0], mat_[2][1], mat_[2][2],
-        mat_[3][0], mat_[3][1], mat_[3][2]).det();
-
-    resu[{1, 0}] = - Matrix3(mat_[0][1], mat_[0][2], mat_[0][3],
-        mat_[2][1], mat_[2][2], mat_[2][3],
-        mat_[3][1], mat_[3][2], mat_[3][3]).det();
-    resu[{1, 1}] = Matrix3(mat_[0][0], mat_[0][2], mat_[0][3],
-        mat_[2][0], mat_[2][2], mat_[2][3],
-        mat_[3][0], mat_[3][2], mat_[3][3]).det();
-    resu[{1, 2}] = -Matrix3(mat_[0][0], mat_[0][1], mat_[0][3],
-        mat_[2][0], mat_[2][1], mat_[2][3],
-        mat_[3][0], mat_[3][1], mat_[3][3]).det();
-    resu[{1, 3}] = Matrix3(mat_[0][0], mat_[0][1], mat_[0][2],
-        mat_[2][0], mat_[2][1], mat_[2][2],
-        mat_[3][0], mat_[3][1], mat_[3][2]).det();
-
-    resu[{2, 0}] = Matrix3(mat_[0][1], mat_[0][2], mat_[0][3],
-        mat_[1][1], mat_[1][2], mat_[1][3],
-        mat_[3][1], mat_[3][2], mat_[3][3]).det();
-    resu[{2, 1}] = -Matrix3(mat_[0][0], mat_[0][2], mat_[0][3],
-        mat_[1][0], mat_[1][2], mat_[1][3],
-        mat_[3][0], mat_[3][2], mat_[3][3]).det();
-    resu[{2, 2}] = Matrix3(mat_[0][0], mat_[0][1], mat_[0][3],
-        mat_[1][0], mat_[1][1], mat_[1][3],
-        mat_[3][0], mat_[3][1], mat_[3][3]).det();
-    resu[{2, 3}] = -Matrix3(mat_[0][0], mat_[0][1], mat_[0][2],
-        mat_[1][0], mat_[1][1], mat_[1][2],
-        mat_[3][0], mat_[3][1], mat_[3][2]).det();
-
-    /* resu[{3, 0}] = -Matrix3(mat_[0][1], mat_[0][2], mat_[0][3],
-        mat_[1][1], mat_[1][2], mat_[1][3],
-        mat_[2][1], mat_[2][2], mat_[2][3]).det();
-    resu[{3, 1}] = Matrix3(mat_[0][0], mat_[0][2], mat_[0][3],
-        mat_[1][0], mat_[1][2], mat_[1][3],
-        mat_[2][0], mat_[2][2], mat_[2][3]).det();
-    resu[{3, 2}] = -Matrix3(mat_[0][0], mat_[0][1], mat_[0][3],
-        mat_[1][0], mat_[1][1], mat_[1][3],
-        mat_[2][0], mat_[2][1], mat_[2][3]).det();
-    resu[{3, 3}] = Matrix3(mat_[0][0], mat_[0][1], mat_[0][2],
-        mat_[1][0], mat_[1][1], mat_[1][2],
-        mat_[2][0], mat_[2][1], mat_[2][2]).det(); */
-
-    return resu.t() /= det;
-}
 
 
 /**
@@ -369,8 +261,7 @@ Vector3d Matrix4xVector(const Matrix4& mat, const Vector3d& vect)
     float x = vect.getX() * mat[{0, 0}] + vect.getY() * mat[{0, 1}] + vect.getZ() * mat[{0, 2}] + vect.getW() * mat[{0, 3}];
     float y = vect.getX() * mat[{1, 0}] + vect.getY() * mat[{1, 1}] + vect.getZ() * mat[{1, 2}] + vect.getW() * mat[{1, 3}];
     float z = vect.getX() * mat[{2, 0}] + vect.getY() * mat[{2, 1}] + vect.getZ() * mat[{2, 2}] + vect.getW() * mat[{2, 3}];
-
-    /*float w = vect.getX() * mat[{3, 0}] + vect.getY() * mat[{3, 1}] + vect.getZ() * mat[{3, 2}] + vect.getW() * mat[{3, 3}];
+    float w = vect.getX() * mat[{3, 0}] + vect.getY() * mat[{3, 1}] + vect.getZ() * mat[{3, 2}] + vect.getW() * mat[{3, 3}];
 
     if (w != 0.0f)
     {
@@ -378,12 +269,12 @@ Vector3d Matrix4xVector(const Matrix4& mat, const Vector3d& vect)
         y /= w;
         z /= w;
         w /= w;
-    }*/
+    }
 
     resu.setX(x);
     resu.setY(y);
     resu.setZ(z);
-    //resu.setW(w);
+    resu.setW(w);
 
     return resu;
 }

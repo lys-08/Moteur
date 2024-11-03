@@ -100,7 +100,8 @@ Matrix3 Matrix3::operator*=(const Matrix3& m)
         }
     }
 
-    return resu;
+    *this = resu;
+    return *this;
 }
 
 Matrix3& Matrix3::operator*=(float f)
@@ -192,15 +193,15 @@ Matrix3 Matrix3::inv()
     Matrix3 resu;
 
     resu[{0, 0}] = mat_[1][1] * mat_[2][2] - mat_[2][1] * mat_[1][2];
-    resu[{0, 1}] = - mat_[1][0] * mat_[2][2] - mat_[2][0] * mat_[1][2];
+    resu[{0, 1}] = - (mat_[1][0] * mat_[2][2] - mat_[2][0] * mat_[1][2]);
     resu[{0, 2}] = mat_[1][0] * mat_[2][1] - mat_[2][0] * mat_[1][1];
 
-    resu[{1, 0}] = - mat_[0][1] * mat_[2][2] - mat_[2][1] * mat_[0][2];
+    resu[{1, 0}] = - (mat_[0][1] * mat_[2][2] - mat_[2][1] * mat_[0][2]);
     resu[{1, 1}] = mat_[0][0] * mat_[2][2] - mat_[2][0] * mat_[0][2];
-    resu[{1, 2}] = - mat_[0][0] * mat_[2][1] - mat_[2][0] * mat_[0][1];
+    resu[{1, 2}] = - (mat_[0][0] * mat_[2][1] - mat_[2][0] * mat_[0][1]);
 
     resu[{2, 0}] = mat_[0][1] * mat_[1][2] - mat_[1][1] * mat_[0][2];
-    resu[{2, 1}] = - mat_[0][0] * mat_[1][2] - mat_[1][0] * mat_[0][2];
+    resu[{2, 1}] = - (mat_[0][0] * mat_[1][2] - mat_[1][0] * mat_[0][2]);
     resu[{2, 2}] = mat_[0][0] * mat_[1][1] - mat_[1][0] * mat_[0][1];
 
     return resu.t() /= det;

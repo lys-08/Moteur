@@ -14,10 +14,6 @@ public:
     void tests_operatorTimesEquals_();
     void tests_operatorDividedEquals();
 
-    void tests_det();
-    void tests_t(); // TODO
-    void tests_inv(); // TODO
-
     void tests_operatorPlus(); 
     void tests_operatorTimes();
     void tests_operatorTimes_();
