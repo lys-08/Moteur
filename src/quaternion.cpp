@@ -83,37 +83,20 @@ void Quaternion::setK(float k)
 // Operator overloading =======================================================
 // ============================================================================
 
-Quaternion& Quaternion::operator+=(const Quaternion& other)
+Quaternion Quaternion::operator*=(const Quaternion& other)
 {
-    w_ += other.w_;
-    i_ += other.i_;
-    j_ += other.j_;
-    k_ += other.k_;
+    Quaternion resu;
 
+    resu.w_ = w_ * other.w_ - i_ * other.i_ - j_ * other.j_ - k_ * other.k_;
+    resu.i_ = w_ * other.i_ + i_ * other.w_ + j_ * other.k_ - k_ * other.j_;
+    resu.j_ = w_ * other.j_ - i_ * other.k_ + j_ * other.w_ + k_ * other.i_;
+    resu.k_ = w_ * other.k_ + i_ * other.j_ - j_ * other.i_ + k_ * other.w_;
+
+    *this = resu;
     return *this;
 }
 
-Quaternion& Quaternion::operator-=(const Quaternion& other)
-{
-    w_ -= other.w_;
-    i_ -= other.i_;
-    j_ -= other.j_;
-    k_ -= other.k_;
-
-    return *this;
-}
-
-Quaternion& Quaternion::operator*=(const Quaternion& other)
-{
-    w_ = w_ * other.w_ - i_ * other.i_ - j_ * other.j_ - k_ * other.k_;
-    i_ = w_ * other.i_ + i_ * other.w_ + j_ * other.k_ - k_ * other.j_;
-    j_ = w_ * other.j_ - i_ * other.k_ + j_ * other.w_ + k_ * other.i_;
-    k_ = w_ * other.k_ + i_ * other.j_ - j_ * other.i_ + k_ * other.w_;
-
-    return *this;
-}
-
-Quaternion& Quaternion::operator*=(float f)
+Quaternion Quaternion::operator*=(float f)
 {
     w_ *= f;
     i_ *= f;
@@ -123,7 +106,7 @@ Quaternion& Quaternion::operator*=(float f)
     return *this;
 }
 
-Quaternion& Quaternion::operator/=(float f)
+Quaternion Quaternion::operator/=(float f)
 {
     if (f == 0.0)
     {
@@ -161,7 +144,7 @@ Quaternion Quaternion::identity()
 */
 float Quaternion::norm()
 {
-    return sqrt(w_ * w_ + i_ * i_ + j_ * j_ + k_ + k_);
+    return sqrt(w_ * w_ + i_ * i_ + j_ * j_ + k_ * k_);
 }
 
 /**
@@ -202,24 +185,35 @@ float Quaternion::dotProduct(const Quaternion& other) const
     return w_ * other.w_ + i_ * other.i_ + j_ * other.j_ + k_ * other.k_;
 }
 
+// TODO
 /**
- * @brief Normalise the current quaternion
+ * @brief Determine the fraction t of displacement
  *
- * @return the normalise quaternion
+ * @param t the exponent
+ * @return the result quaternion
 */
-Quaternion& Quaternion::normalise()
+Quaternion Quaternion::exponentiation(int t)
 {
-    float length = norm();
-
-    if (length != 0)
+    float alpha = acos(w_);
+    if (alpha == 0.0)
     {
-        w_ /= length;
-        i_ /= length;
-        j_ /= length;
-        k_ /= length;
+        throw std::invalid_argument("Division by zero"); // sin(0) = 0
     }
 
-    return *this;
+    float w = cos(t * alpha) * sin(t * alpha) / sin(alpha);
+
+    return Quaternion(w, i_, j_, k_);
+}
+
+/**
+ * @brief Determine the angular movement between two quaternion
+ *
+ * @param other the other quaternion
+ * @return the angular movement between the current quaternion and the one passed as parameter
+*/
+Quaternion Quaternion::angularMovement(const Quaternion& other)
+{
+    return other * this->conjugate();
 }
 
 /**
@@ -245,38 +239,11 @@ Matrix3 Quaternion::toMatrix()
     );
 }
 
-// TODO
-/**
- * @brief Determine the fraction t of displacement
- *
- * @param t the exponent
- * @return the result quaternion
-*/
-Quaternion& Quaternion::exponentiation(int t)
-{
-    float alpha = acos(w_);
-    float w = cos(t * alpha) * sin(t * alpha) / sin(alpha);
-
-    return Quaternion(w, i_, j_, k_);
-}
-
 
 
 // ============================================================================
 // External operators =========================================================
 // ============================================================================
-
-Quaternion operator+(const Quaternion& v1, const Quaternion& v2)
-{
-    Quaternion resu = Quaternion(v1);
-    return resu += v2;
-}
-
-Quaternion operator-(const Quaternion& v1, const Quaternion& v2)
-{
-    Quaternion resu = Quaternion(v1);
-    return resu -= v2;
-}
 
 Quaternion operator*(const Quaternion& v1, const Quaternion& v2)
 {

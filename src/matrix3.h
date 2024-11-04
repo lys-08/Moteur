@@ -29,8 +29,8 @@ public:
     // Operator overloading
     Matrix3 operator+=(const Matrix3& m);
     Matrix3 operator*=(const Matrix3& m);
-    Matrix3& operator*=(float f);
-    Matrix3& operator/=(float f);
+    Matrix3 operator*=(float f);
+    Matrix3 operator/=(float f);
 
     // Other methods
     float det();

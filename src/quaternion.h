@@ -34,12 +34,9 @@ public:
     void setK(float k);
 
     // Operator overloading
-    Quaternion& operator+=(const Quaternion& other);
-    Quaternion& operator-=(const Quaternion& other);
-    Quaternion& operator*=(const Quaternion& other);
-    Quaternion& operator*=(float f);
-    Quaternion& operator/=(float f);
-    // TODO : différence ??
+    Quaternion operator*=(const Quaternion& other);
+    Quaternion operator*=(float f);
+    Quaternion operator/=(float f);
 
     // Other methods
     Quaternion identity();
@@ -47,14 +44,13 @@ public:
     Quaternion conjugate();
     Quaternion inv();
     float dotProduct(const Quaternion& other) const;
-    Quaternion& normalise();
-    Quaternion& exponentiation(int t); // TODO : comment
+    Quaternion normalise();
+    Quaternion exponentiation(int t); // TODO : comment + fix
+    Quaternion angularMovement(const Quaternion& other);
 
     Matrix3 toMatrix();
 };
 
-Quaternion operator+(const Quaternion& q1, const Quaternion& q2);
-Quaternion operator-(const Quaternion& q1, const Quaternion& q2);
 Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 Quaternion operator*(const Quaternion& q, float f);
 Quaternion operator*(float f, const Quaternion& q);

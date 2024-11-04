@@ -118,7 +118,7 @@ Matrix4 Matrix4::operator*=(const Matrix4& m)
     return *this;
 }
 
-Matrix4& Matrix4::operator*=(float f)
+Matrix4 Matrix4::operator*=(float f)
 {
     for (int i = 0; i < 3; i++)
     {
@@ -131,7 +131,7 @@ Matrix4& Matrix4::operator*=(float f)
     return *this;
 }
 
-Matrix4& Matrix4::operator/=(float f)
+Matrix4 Matrix4::operator/=(float f)
 {
     if (f == 0)
     {

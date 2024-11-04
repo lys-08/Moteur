@@ -29,8 +29,8 @@ public:
     // Operator overloading
     Matrix4 operator+=(const Matrix4& m);
     Matrix4 operator*=(const Matrix4& m);
-    Matrix4& operator*=(float f);
-    Matrix4& operator/=(float f);
+    Matrix4 operator*=(float f);
+    Matrix4 operator/=(float f);
 
     // Other methods
     void initMatProj(int w, int h); // TODO : keep ?

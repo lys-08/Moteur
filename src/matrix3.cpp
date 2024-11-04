@@ -104,7 +104,7 @@ Matrix3 Matrix3::operator*=(const Matrix3& m)
     return *this;
 }
 
-Matrix3& Matrix3::operator*=(float f)
+Matrix3 Matrix3::operator*=(float f)
 {
     for (int i = 0; i < 3; i++)
     {
@@ -117,7 +117,7 @@ Matrix3& Matrix3::operator*=(float f)
     return *this;
 }
 
-Matrix3& Matrix3::operator/=(float f)
+Matrix3 Matrix3::operator/=(float f)
 {
     if (f == 0)
     {
