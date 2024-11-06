@@ -192,18 +192,42 @@ float Quaternion::dotProduct(const Quaternion& other) const
  * @param t the exponent
  * @return the result quaternion
 */
+//Quaternion Quaternion::exponentiation(int t)
+//{
+//    float alpha = acos(w_);
+//    if (alpha == 0.0)
+//    {
+//        throw std::invalid_argument("Division by zero"); // sin(0) = 0
+//    }
+//
+//    float w = cos(t * alpha) * sin(t * alpha) / sin(alpha);
+//
+//    return Quaternion(w, i_, j_, k_);
+//}
+
 Quaternion Quaternion::exponentiation(int t)
 {
     float alpha = acos(w_);
-    if (alpha == 0.0)
+    float sin_alpha = sin(alpha);
+
+    // Gestion du cas spécial où le quaternion est proche d'une rotation nulle
+    if (sin_alpha == 0.0f)
     {
-        throw std::invalid_argument("Division by zero"); // sin(0) = 0
+        // Si alpha est proche de zéro, on retourne l'exponentiation de la partie scalaire
+        return Quaternion(cos(t * alpha), 0.0f, 0.0f, 0.0f);
     }
 
-    float w = cos(t * alpha) * sin(t * alpha) / sin(alpha);
+    // Calcul des nouveaux coefficients
+    float new_w = cos(t * alpha);
+    float scale = sin(t * alpha) / sin_alpha;  // Échelle pour les composants vectoriels
 
-    return Quaternion(w, i_, j_, k_);
+    float new_i = i_ * scale;
+    float new_j = j_ * scale;
+    float new_k = k_ * scale;
+
+    return Quaternion(new_w, new_i, new_j, new_k);
 }
+
 
 /**
  * @brief Determine the angular movement between two quaternion

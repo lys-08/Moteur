@@ -189,11 +189,11 @@ void Test_quaternion::tests_exponentiation()
 
 	float epsilon = 0.000001f;
 	// TODO / Fix
-	/*std::cout << expo.getW() << std::endl;
+	std::cout << expo.getW() << "test" << std::endl;
 	assert(std::fabs(expo.getW() + 0.450459) < epsilon);
-	assert(expo.getI() == 2);
-	assert(expo.getJ() == 3);
-	assert(expo.getK() == 4);*/
+	assert(expo.getI() == 4);
+	assert(expo.getJ() == 9);
+	assert(expo.getK() == 16);
 }
 
 void Test_quaternion::tests_angularMovement()
