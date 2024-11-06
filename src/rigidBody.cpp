@@ -12,7 +12,7 @@
 /**
  * @brief Default and evaluated constructor
  */
-RigidBody::RigidBody(Particle massCenter = Particle(), Quaternion orientation = Quaternion())
+RigidBody::RigidBody(Particle massCenter, Quaternion orientation)
 {
     // TODO
 }
