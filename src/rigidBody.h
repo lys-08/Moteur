@@ -15,10 +15,17 @@ class RigidBody
 private:
     Particle massCenter_; // countain the position
     Quaternion rotation_;
+    Matrix3 rotationMatrix_;
     Vector3d linearVelocity_;
     Vector3d angularVelocity_;
+    Matrix3 invJ_;
 
     Vector3d accumForce_;
+    Vector3d accumTorque_;
+
+    Vector3d h;
+    Vector3d l;
+    Vector3d p;
 
 
 public:
@@ -36,7 +43,10 @@ public:
     void setAngularVelocity(Vector3d angularVelocity);
 
     // Other methods
+    bool isInRigidBody(const Vector3d& point);
     void addForce(const Vector3d& force);
-    void addForceAtPoint(const Vector3d& force, const Vector3d& point); // TODO
+    void addForceAtPoint(const Vector3d& force, const Vector3d& point);
     void clearAccumForce();
+    void clearAccumTorque();
+    void integrate(float temps);
 };
