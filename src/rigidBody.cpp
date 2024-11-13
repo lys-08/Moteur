@@ -23,7 +23,7 @@ RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
 /**
  * @brief Evaluated constructor
  */
-RigidBody::RigidBody(float mass, Vector3d position = Vector3d(0, 0, 0, 1), Quaternion rotation = Quaternion())
+RigidBody::RigidBody(float mass, Vector3d position, Quaternion rotation)
 {
     Vector3d speed = Vector3d();
     massCenter_ = Particle(position, speed, 0, mass); // TODO typeDraw
