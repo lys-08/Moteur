@@ -83,6 +83,16 @@ void Quaternion::setK(float k)
 // Operator overloading =======================================================
 // ============================================================================
 
+Quaternion Quaternion::operator+=(const Quaternion& other)
+{
+    w_ += other.w_;
+    i_ += other.i_;
+    j_ += other.j_;
+    k_ += other.k_;
+
+    return *this;
+}
+
 Quaternion Quaternion::operator*=(const Quaternion& other)
 {
     Quaternion resu;
@@ -268,6 +278,12 @@ Matrix3 Quaternion::toMatrix()
 // ============================================================================
 // External operators =========================================================
 // ============================================================================
+
+Quaternion operator+(const Quaternion& v1, const Quaternion& v2)
+{
+    Quaternion resu = Quaternion(v1);
+    return resu += v2;
+}
 
 Quaternion operator*(const Quaternion& v1, const Quaternion& v2)
 {
