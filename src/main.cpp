@@ -1,6 +1,7 @@
 #include "ofMain.h"
 #include "ofApp.h"
 #include "ofApp2.h"
+#include "ofApp3.h"
 
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
@@ -13,7 +14,7 @@ int main( ){
 	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLWindowSettings settings;
 	settings.setSize(1024, 768);
-	settings.windowMode = OF_FULLSCREEN; //can also be OF_FULLSCREEN
+	settings.windowMode = OF_WINDOW; //can also be OF_FULLSCREEN
 
 	auto window = ofCreateWindow(settings);
 
@@ -29,7 +30,7 @@ int main( ){
 	Test_quaternion test_quaternion;
 	test_quaternion.tests_all();
 
-	ofRunApp(window, make_shared<ofApp2>());
+	ofRunApp(window, make_shared<ofApp3>());
 	ofRunMainLoop();
 
 }

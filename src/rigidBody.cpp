@@ -23,14 +23,15 @@ RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
 /**
  * @brief Evaluated constructor
  */
-RigidBody::RigidBody(float mass, Vector3d position, Quaternion rotation)
+RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion rotation, float height, float width, float depth)
 {
-    Vector3d speed = Vector3d();
-    massCenter_ = Particle(position, speed, 0, mass); // TODO typeDraw
-
+    massCenter_ = Particle(position, speed, 1, mass); // TODO typeDraw
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
+    h = Vector3d(position.getX() + height / 2, position.getY(), position.getZ(), 1) - position;
+    l = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
+    d = Vector3d(position.getX(), position.getY(), position.getZ() + depth / 2, 1) - position;
 }
 
 
@@ -85,7 +86,7 @@ bool RigidBody::isInRigidBody(const Vector3d& point)
     int x = massCenter_.getPos().getX();
     int y = massCenter_.getPos().getY();
     int z = massCenter_.getPos().getZ();
-    return (point.getX() <= x + l.norm() || point.getX() >= x - l.norm()) && (point.getY() <= y + h.norm() || point.getY() >= y - h.norm()) && (point.getZ() <= z + p.norm() || point.getZ() >= z - p.norm());
+    return (point.getX() <= x + l.norm() || point.getX() >= x - l.norm()) && (point.getY() <= y + h.norm() || point.getY() >= y - h.norm()) && (point.getZ() <= z + d.norm() || point.getZ() >= z - d.norm());
 }
 
 /**
@@ -109,7 +110,7 @@ void RigidBody::addForce(const Vector3d& force)
 void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 {
     if (!isInRigidBody(point)) return;
-    if (h.crossProduct(point).norm() == 0 || l.crossProduct(point).norm() == 0 || p.crossProduct(point).norm() == 0)
+    if (h.crossProduct(point).norm() == 0 || l.crossProduct(point).norm() == 0 || d.crossProduct(point).norm() == 0)
     {
         massCenter_.addForce(force);
     }
