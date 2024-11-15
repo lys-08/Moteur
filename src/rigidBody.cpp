@@ -160,6 +160,7 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 */
 void RigidBody::clearAccumForce()
 {
+    massCenter_.clearAccumForce();
     accumForce_ = Vector3d(0, 0, 0, 0);
 }
 

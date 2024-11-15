@@ -178,7 +178,7 @@ void Particle::draw()
 		ofSetColor(0, 255, 0);
 	}
 
-	ofDrawIcoSphere(pos_.v3(), 20);
+	ofDrawIcoSphere(pos_.v3(), 100);
 
 
 	//else if (type == 2) // Basket Ball
