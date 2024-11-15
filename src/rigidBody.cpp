@@ -20,7 +20,7 @@ RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
     angularVelocity_ = Vector3d();
 
     // By default : cube with side 2
-    l_ = Vector3d(1, 0, 0, 0);
+    w_ = Vector3d(1, 0, 0, 0);
     h_ = Vector3d(0, 1, 0, 0);
     d_ = Vector3d(0, 0, 1, 0);
 
@@ -43,8 +43,8 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
 
+    w_ = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
     h_ = Vector3d(position.getX() + height / 2, position.getY(), position.getZ(), 1) - position;
-    l_ = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
     d_ = Vector3d(position.getX(), position.getY(), position.getZ() + depth / 2, 1) - position;
 
     // rectangular cuboid
@@ -54,12 +54,12 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
         0,
 
         0, 
-        (1. / 12)* massCenter_.getMass() * (pow(l_.norm(), 2) + pow(h_.norm(), 2)),
+        (1. / 12)* massCenter_.getMass() * (pow(w_.norm(), 2) + pow(h_.norm(), 2)),
         0,
 
         0, 
         0, 
-        (1. / 12)* massCenter_.getMass() * (pow(l_.norm(), 2) + pow(d_.norm(), 2))
+        (1. / 12)* massCenter_.getMass() * (pow(w_.norm(), 2) + pow(d_.norm(), 2))
     );
 }
 
@@ -115,7 +115,7 @@ bool RigidBody::isInRigidBody(const Vector3d& point)
     int x = massCenter_.getPos().getX();
     int y = massCenter_.getPos().getY();
     int z = massCenter_.getPos().getZ();
-    return (point.getX() <= x + l_.norm() || point.getX() >= x - l_.norm()) 
+    return (point.getX() <= x + w_.norm() || point.getX() >= x - w_.norm()) 
         && (point.getY() <= y + h_.norm() || point.getY() >= y - h_.norm()) 
         && (point.getZ() <= z + d_.norm() || point.getZ() >= z - d_.norm());
 }
@@ -142,7 +142,7 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 {
     if (!isInRigidBody(point)) return;
 
-    if (h_.crossProduct(point).norm() == 0 || l_.crossProduct(point).norm() == 0 || d_.crossProduct(point).norm() == 0)
+    if (h_.crossProduct(point).norm() == 0 || w_.crossProduct(point).norm() == 0 || d_.crossProduct(point).norm() == 0)
     {
         massCenter_.addForce(force);
     }

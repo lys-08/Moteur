@@ -39,6 +39,7 @@ public:
     // Getters and Setters
     Vector3d getPos() const;
     Vector3d getSpeed() const;
+    double getMass() const; 
     double getInvertMass() const;
 	Vector3d getForceAccum() const;
     double getRadius() const;
