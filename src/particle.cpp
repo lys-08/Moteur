@@ -66,6 +66,11 @@ Vector3d Particle::getSpeed() const
 	return speed_;
 }
 
+double Particle::getMass() const
+{
+	return mass_;
+}
+
 double Particle::getInvertMass() const
 {
 	return invertMass_;

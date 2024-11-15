@@ -18,6 +18,19 @@ RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
+
+    // By default : cube with side 2
+    l_ = Vector3d(1, 0, 0, 0);
+    h_ = Vector3d(0, 1, 0, 0);
+    d_ = Vector3d(0, 0, 1, 0);
+
+    double val = (1. / 12) * massCenter_.getMass() * 8; // (h^2 + d^2) = (l^2 + h^2) = (l^2 + d^2) = 4 + 4 = 8
+
+    invJ_ = Matrix3(
+        val, 0, 0,
+        0, val, 0,
+        0, 0, val
+    );
 }
 
 /**
@@ -29,9 +42,25 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
+
     h_ = Vector3d(position.getX() + height / 2, position.getY(), position.getZ(), 1) - position;
     l_ = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
     d_ = Vector3d(position.getX(), position.getY(), position.getZ() + depth / 2, 1) - position;
+
+    // rectangular cuboid
+    invJ_ = Matrix3(
+        (1. / 12) * massCenter_.getMass() * (pow(h_.norm(), 2) + pow(d_.norm(), 2)),
+        0, 
+        0,
+
+        0, 
+        (1. / 12)* massCenter_.getMass() * (pow(l_.norm(), 2) + pow(h_.norm(), 2)),
+        0,
+
+        0, 
+        0, 
+        (1. / 12)* massCenter_.getMass() * (pow(l_.norm(), 2) + pow(d_.norm(), 2))
+    );
 }
 
 
