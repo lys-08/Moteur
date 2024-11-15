@@ -23,9 +23,9 @@ private:
     Vector3d accumForce_;
     Vector3d accumTorque_;
 
-    Vector3d h;
-    Vector3d l;
-    Vector3d d;
+    Vector3d h_;
+    Vector3d l_;
+    Vector3d d_;
 
 
 public:

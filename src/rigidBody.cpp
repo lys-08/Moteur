@@ -29,9 +29,9 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
-    h = Vector3d(position.getX() + height / 2, position.getY(), position.getZ(), 1) - position;
-    l = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
-    d = Vector3d(position.getX(), position.getY(), position.getZ() + depth / 2, 1) - position;
+    h_ = Vector3d(position.getX() + height / 2, position.getY(), position.getZ(), 1) - position;
+    l_ = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
+    d_ = Vector3d(position.getX(), position.getY(), position.getZ() + depth / 2, 1) - position;
 }
 
 
@@ -86,18 +86,20 @@ bool RigidBody::isInRigidBody(const Vector3d& point)
     int x = massCenter_.getPos().getX();
     int y = massCenter_.getPos().getY();
     int z = massCenter_.getPos().getZ();
-    return (point.getX() <= x + l.norm() || point.getX() >= x - l.norm()) && (point.getY() <= y + h.norm() || point.getY() >= y - h.norm()) && (point.getZ() <= z + d.norm() || point.getZ() >= z - d.norm());
+    return (point.getX() <= x + l_.norm() || point.getX() >= x - l_.norm()) 
+        && (point.getY() <= y + h_.norm() || point.getY() >= y - h_.norm()) 
+        && (point.getZ() <= z + d_.norm() || point.getZ() >= z - d_.norm());
 }
 
 /**
- * @brief add a force (apply to the center of mass) to the accumulator
+ * @brief add a force apply to the center of mass to the accumulator
  *
  * @param force the force to add to accumForce_
  * @return nothing
 */
 void RigidBody::addForce(const Vector3d& force)
 {
-    accumForce_ += force;
+    addForceAtPoint(force, massCenter_.getPos());
 }
 
 /**
@@ -110,7 +112,8 @@ void RigidBody::addForce(const Vector3d& force)
 void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 {
     if (!isInRigidBody(point)) return;
-    if (h.crossProduct(point).norm() == 0 || l.crossProduct(point).norm() == 0 || d.crossProduct(point).norm() == 0)
+
+    if (h_.crossProduct(point).norm() == 0 || l_.crossProduct(point).norm() == 0 || d_.crossProduct(point).norm() == 0)
     {
         massCenter_.addForce(force);
     }
