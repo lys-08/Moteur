@@ -30,10 +30,13 @@ ParticleGravity::ParticleGravity(const Vector3d& g)
 */
 void ParticleGravity::updateForce(Particle* particle, float duration)
 {
+    std::cout << "gravity" << std::endl;
+
     // We check if the particle has a valid mass (finite)
     if (particle->getInvertMass() <= 0.0f) return;
 
     double mass = 1.0 / particle->getInvertMass();
     Vector3d force = gravity_ * mass;
+    std::cout << force << "\n" << std::endl;
     particle->addForce(force);
 }

@@ -248,6 +248,8 @@ void Particle::draw()
 */
 void Particle::integrate(float time)
 {
+	std::cout << "integrate" << std::endl;
+	std::cout << "accum Force : " << accumForce_ << std::endl;
 	speed_ += (accumForce_* time);
 	pos_ += (speed_ * time);
 }
@@ -260,7 +262,9 @@ void Particle::integrate(float time)
 */
 void Particle::addForce(const Vector3d& strength)
 {
+	std::cout << "particule add force" << std::endl;
 	accumForce_ += strength;
+	std::cout << "accumForce : " << accumForce_ << "\n" << std::endl;
 }
 
 /**
@@ -270,5 +274,6 @@ void Particle::addForce(const Vector3d& strength)
 */
 void Particle::clearAccumForce()
 {
+	std::cout << "particule clear accum";
 	accumForce_ = Vector3d(0, 0, 0, 0);
 }
