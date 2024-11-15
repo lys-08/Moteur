@@ -172,9 +172,9 @@ void RigidBody::clearAccumTorque()
 void RigidBody::integrate(float temps)
 {
     massCenter_.integrate(temps);
-    linearVelocity_ += (accumForce_ * temps);
-    angularVelocity_ += (Matrix3xVector(invJ_, accumForce_) * temps);
-    rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
-    rotationMatrix_ = rotation_.toMatrix();
-    invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
+    //linearVelocity_ += (accumForce_ * temps);
+    //angularVelocity_ += (Matrix3xVector(invJ_, accumForce_) * temps);
+    //rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
+    //rotationMatrix_ = rotation_.toMatrix();
+    //invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
 }

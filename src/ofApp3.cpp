@@ -158,7 +158,7 @@ void ofApp3::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp3::SpawnRigidBody(int type)
 {
-	RigidBody newObject(10,Vector3d(500,500,0,1),Vector3d(0,0,0,0),Quaternion(),20,20,20);
-	physics.addRigidBody(&newObject);
+	RigidBody* newObject = new RigidBody(10,Vector3d(500,500,0,1),Vector3d(0,0,0,0),Quaternion(),20,20,20);
+	physics.addRigidBody(newObject);
 	//std::cout << "added rigid body" << std::endl;
 }
