@@ -44,7 +44,7 @@ void ofApp3::draw()
 	// Drawing our particles
 	for (int i = 0; i < physics.objects_.size(); i++)
 	{
-		physics.objects_[i]->getMassCenter().draw();
+		physics.objects_[i]->getMassCenter()->draw();
 	}
 	ofRotateZDeg(-theta_);
 

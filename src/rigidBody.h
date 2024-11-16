@@ -13,7 +13,7 @@
 class RigidBody
 {
 private:
-    Particle massCenter_; // countain the position
+    Particle* massCenter_; // countain the position
     Quaternion rotation_;
     Matrix3 rotationMatrix_;
     Vector3d linearVelocity_;
@@ -30,11 +30,11 @@ private:
 
 public:
     // Constructors
-    RigidBody(Particle massCenter = Particle(), Quaternion rotation = Quaternion());
+    RigidBody(Particle* massCenter = new Particle(), Quaternion rotation = Quaternion());
     RigidBody(float mass, Vector3d position = Vector3d(0, 0, 0, 1), Vector3d speed = Vector3d(0,0,0,0), Quaternion rotation = Quaternion(), float height = 20, float width = 20, float depth = 20);
 
     // Getters and Setters
-    Particle getMassCenter();
+    Particle* getMassCenter();
     Quaternion getRotation();
     Vector3d getLinearVelocity();
     Vector3d getAngularVelocity();

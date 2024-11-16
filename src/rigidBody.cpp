@@ -12,7 +12,7 @@
 /**
  * @brief Default and evaluated constructor
  */
-RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
+RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
 {
     massCenter_ = massCenter;
     rotation_ = rotation;
@@ -24,7 +24,7 @@ RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
     h_ = Vector3d(0, 1, 0, 0);
     d_ = Vector3d(0, 0, 1, 0);
 
-    double val = (1. / 12) * massCenter_.getMass() * 8; // (h^2 + d^2) = (l^2 + h^2) = (l^2 + d^2) = 4 + 4 = 8
+    double val = (1. / 12) * massCenter_->getMass() * 8; // (h^2 + d^2) = (l^2 + h^2) = (l^2 + d^2) = 4 + 4 = 8
 
     invJ_ = Matrix3(
         val, 0, 0,
@@ -38,7 +38,7 @@ RigidBody::RigidBody(Particle massCenter, Quaternion rotation)
  */
 RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion rotation, float height, float width, float depth)
 {
-    massCenter_ = Particle(position, speed, 1, mass); // TODO typeDraw
+    massCenter_ = new Particle(position, speed, 1, mass); // TODO typeDraw
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
@@ -49,17 +49,17 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
 
     // rectangular cuboid
     invJ_ = Matrix3(
-        (1. / 12) * massCenter_.getMass() * (pow(h_.norm(), 2) + pow(d_.norm(), 2)),
+        (1. / 12) * massCenter_->getMass() * (pow(h_.norm(), 2) + pow(d_.norm(), 2)),
         0, 
         0,
 
         0, 
-        (1. / 12)* massCenter_.getMass() * (pow(w_.norm(), 2) + pow(h_.norm(), 2)),
+        (1. / 12)* massCenter_->getMass() * (pow(w_.norm(), 2) + pow(h_.norm(), 2)),
         0,
 
         0, 
         0, 
-        (1. / 12)* massCenter_.getMass() * (pow(w_.norm(), 2) + pow(d_.norm(), 2))
+        (1. / 12)* massCenter_->getMass() * (pow(w_.norm(), 2) + pow(d_.norm(), 2))
     );
 }
 
@@ -69,7 +69,7 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
 // Getters / Setters ==========================================================
 // ============================================================================
 
-Particle RigidBody::getMassCenter()
+Particle* RigidBody::getMassCenter()
 {
     return massCenter_;
 }
@@ -112,9 +112,9 @@ void RigidBody::setAngularVelocity(Vector3d angularVelocity)
 
 bool RigidBody::isInRigidBody(const Vector3d& point)
 {
-    int x = massCenter_.getPos().getX();
-    int y = massCenter_.getPos().getY();
-    int z = massCenter_.getPos().getZ();
+    int x = massCenter_->getPos().getX();
+    int y = massCenter_->getPos().getY();
+    int z = massCenter_->getPos().getZ();
     return (point.getX() <= x + w_.norm() || point.getX() >= x - w_.norm()) 
         && (point.getY() <= y + h_.norm() || point.getY() >= y - h_.norm()) 
         && (point.getZ() <= z + d_.norm() || point.getZ() >= z - d_.norm());
@@ -128,7 +128,7 @@ bool RigidBody::isInRigidBody(const Vector3d& point)
 */
 void RigidBody::addForce(const Vector3d& force)
 {
-    addForceAtPoint(force, massCenter_.getPos());
+    addForceAtPoint(force, massCenter_->getPos());
 }
 
 /**
@@ -144,11 +144,11 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 
     if (h_.crossProduct(point).norm() == 0 || w_.crossProduct(point).norm() == 0 || d_.crossProduct(point).norm() == 0)
     {
-        massCenter_.addForce(force);
+        massCenter_->addForce(force);
     }
     else
     {
-        accumTorque_ += (point.distance(massCenter_.getPos()) * force);
+        accumTorque_ += (point.distance(massCenter_->getPos()) * force);
         accumForce_ += force;
     }
 }
@@ -160,7 +160,7 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 */
 void RigidBody::clearAccumForce()
 {
-    massCenter_.clearAccumForce();
+    massCenter_->clearAccumForce();
     accumForce_ = Vector3d(0, 0, 0, 0);
 }
 
@@ -171,7 +171,7 @@ void RigidBody::clearAccumTorque()
 
 void RigidBody::integrate(float temps)
 {
-    massCenter_.integrate(temps);
+    massCenter_->integrate(temps);
     //linearVelocity_ += (accumForce_ * temps);
     //angularVelocity_ += (Matrix3xVector(invJ_, accumForce_) * temps);
     //rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);

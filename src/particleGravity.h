@@ -14,7 +14,7 @@ class ParticleGravity :
     Vector3d gravity_;
 
 public:
-    ParticleGravity(const Vector3d& g = Vector3d(0.0, 9.81, 0.0, 0.0));
+    ParticleGravity(const Vector3d& g = Vector3d(0.0, -9.81, 0.0, 0.0));
     
     void updateForce(Particle* particle, float duration);
 };

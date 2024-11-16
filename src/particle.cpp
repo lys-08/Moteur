@@ -169,6 +169,7 @@ void Particle::removeSetSpringForce()
 */
 void Particle::draw()
 {
+	ofNoFill();
 	if (particleTypeDraw == 0)
 	{
 		ofSetColor(140, 0, 255);
