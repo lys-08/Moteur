@@ -17,7 +17,6 @@ private:
     Particle* massCenter_; // countain the position
     Quaternion rotation_;
     Matrix3 rotationMatrix_;
-    Vector3d linearVelocity_;
     Vector3d angularVelocity_;
     Matrix3 invJ_;
 
@@ -37,7 +36,6 @@ public:
     // Getters and Setters
     Particle* getMassCenter();
     Quaternion getRotation();
-    Vector3d getLinearVelocity();
     Vector3d getAngularVelocity();
     void setRotation(Quaternion rotation);
     void setLinearVelocity(Vector3d linearVelocity);

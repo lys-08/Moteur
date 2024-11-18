@@ -47,7 +47,6 @@ void ParticleForceRegistry::remove(Particle* particle, ParticleForceGenerator* f
 */
 void ParticleForceRegistry::clear()
 {
-    std::cout << "force registry clear" << std::endl;
     registry_.clear();
 }
 
@@ -59,7 +58,6 @@ void ParticleForceRegistry::clear()
 */
 void ParticleForceRegistry::updateForce(float duration)
 {
-    std::cout << "ParticleForceRegistry update Force" << std::endl;
 	for (const auto& registration : registry_)
     {
         registration.forceGenerator->updateForce(registration.particle, duration);

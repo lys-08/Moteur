@@ -18,7 +18,6 @@ RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
     massCenter_ = massCenter;
     massCenter->setRigidBody(this);
     rotation_ = rotation;
-    linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
 
     // By default : cube with side 2
@@ -42,7 +41,6 @@ RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion r
 {
     massCenter_ = new Particle(position, speed, 1, mass, this); // TODO typeDraw
     rotation_ = rotation;
-    linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
 
     w_ = Vector3d(position.getX(), position.getY() + width / 2, position.getZ(), 1) - position;
@@ -81,11 +79,6 @@ Quaternion RigidBody::getRotation()
     return rotation_;
 }
 
-Vector3d RigidBody::getLinearVelocity()
-{
-    return linearVelocity_;
-}
-
 Vector3d RigidBody::getAngularVelocity()
 {
     return angularVelocity_;
@@ -94,11 +87,6 @@ Vector3d RigidBody::getAngularVelocity()
 void RigidBody::setRotation(Quaternion rotation)
 {
     rotation_ = rotation;
-}
-
-void RigidBody::setLinearVelocity(Vector3d linearVelocity)
-{
-    linearVelocity_ = linearVelocity;
 }
 
 void RigidBody::setAngularVelocity(Vector3d angularVelocity)
@@ -144,21 +132,23 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 {
     if (!isInRigidBody(point)) return;
 
-    //test
-    /*if (h_.crossProduct(point).getY() == 0 || w_.crossProduct(point).getX() == 0 || d_.crossProduct(point).getZ() == 0)
+    Vector3d relativePoint = point - massCenter_->getPos();
+
+    bool alignedWithH = (point - massCenter_->getPos()).crossProduct(h_).norm() < 1e-6;
+    bool alignedWithW = (point - massCenter_->getPos()).crossProduct(w_).norm() < 1e-6;
+    bool alignedWithD = (point - massCenter_->getPos()).crossProduct(d_).norm() < 1e-6;
+
+    if (alignedWithH || alignedWithW || alignedWithD)
     {
-        std::cout << "force at center" << std::endl;
         massCenter_->addForce(force);
-    }*/
+    }
     else
     {
-        std::cout << "force not at center -> torque" << std::endl;
-        accumTorque_ += (point.distance(massCenter_->getPos()) * force);
-        std::cout << accumTorque_ << std::endl;
-        //accumForce_ += force;
+        accumTorque_ += (point - massCenter_->getPos()).crossProduct(force);
         massCenter_->addForce(force);
     }
 }
+
 
 /**
  * @brief Clear accumForce
@@ -179,51 +169,30 @@ void RigidBody::clearAccumTorque()
 void RigidBody::integrate(float temps)
 {
     massCenter_->integrate(temps);
-    //linearVelocity_ += (accumForce_ * temps);
-    angularVelocity_ += (Matrix3xVector(invJ_, accumTorque_) * temps); //c'était accumForce de base
-    angularVelocity_.normalise();
+    angularVelocity_ += (Matrix3xVector(invJ_, accumTorque_) * temps);
     rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
     rotationMatrix_ = rotation_.toMatrix();
     invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
-   /* for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            std::cout << invJ_[{i, j}] << std::endl;
-        }
-
-    }*/
-    std::cout << rotation_.getW() << std::endl;
-    std::cout << rotation_.getI() << std::endl;
-    std::cout << rotation_.getJ() << std::endl;
-    std::cout << rotation_.getK() << std::endl;
 }
 
 void RigidBody::draw()
 {
+    ofNoFill();
     massCenter_->draw();
 
-    // Récupérer la position de la particule
     ofVec3f position = massCenter_->getPos().v3();
-
-    // Convertir votre matrice de rotation en une matrice de transformation d'OpenFrameworks
     ofMatrix4x4 rotationMatrix = ofMatrix4x4(rotationMatrix_.m4());
 
-    // Appliquer les transformations de manière correcte
     ofPushMatrix();
-
-    // D'abord, on translate pour amener la boîte à sa position
     ofTranslate(position);
-
-    // Ensuite, on applique la rotation
     ofMultMatrix(rotationMatrix);
 
-    // Dessiner la boîte avec ses dimensions
+
     float width = w_.norm() * 2;
     float height = h_.norm() * 2;
     float depth = d_.norm() * 2;
-    ofDrawBox(0, 0, 0, width, height, depth); // On dessine autour de l'origine locale (0, 0, 0)
+    ofDrawBox(0, 0, 0, width, height, depth);
 
     ofPopMatrix();
-
+    ofFill();
 }
