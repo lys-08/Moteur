@@ -7,9 +7,11 @@
 #include "vector3d.h"
 #include "particleSpring.h"
 #include "particleSetSpring.h"
+#include "rigidBody.h"
 
 class ParticleSpring;
 class ParticleSetSpring;
+class RigidBody;
 
 class Particle
 {
@@ -20,6 +22,7 @@ private:
     double invertMass_;
     Vector3d accumForce_;
     double radius_;
+    RigidBody* rigidBody;
     
     bool hasSpring = false;
     bool hasSetSpring = false;
@@ -30,7 +33,7 @@ private:
 
 public:
     // Constructors
-    Particle(Vector3d pos = Vector3d(), Vector3d speed = Vector3d(), int typeDraw = 0, double mass = 1.0);
+    Particle(Vector3d pos = Vector3d(), Vector3d speed = Vector3d(), int typeDraw = 0, double mass = 1.0, RigidBody* r = nullptr);
     Particle(const Particle& other);
 
     // Destructor
@@ -47,12 +50,14 @@ public:
     bool getHasSetSpring();
     ParticleSpring getSpring();
     ParticleSetSpring getSetSpring();
+    RigidBody* getRigidBody();
 
     void setSpeed(Vector3d dir);
     void setInvertMass(double mass);
 	void setPos(Vector3d pos);
     void setSpringForce(Particle* other, double k, double l0);
     void setSetSpringForce(Vector3d point, double k, double l0);
+    void setRigidBody(RigidBody* r);
     void removeSpringForce();
     void removeSetSpringForce();
 

@@ -6,9 +6,10 @@
 #pragma once
 
 #include <iostream>
-#include "particle.h"
 #include "quaternion.h"
+#include "particle.h"
 
+class Particle;
 
 class RigidBody
 {
@@ -30,7 +31,7 @@ private:
 
 public:
     // Constructors
-    RigidBody(Particle* massCenter = new Particle(), Quaternion rotation = Quaternion());
+    RigidBody(Particle* massCenter = nullptr, Quaternion rotation = Quaternion());
     RigidBody(float mass, Vector3d position = Vector3d(0, 0, 0, 1), Vector3d speed = Vector3d(0,0,0,0), Quaternion rotation = Quaternion(), float height = 20, float width = 20, float depth = 20);
 
     // Getters and Setters
@@ -49,4 +50,5 @@ public:
     void clearAccumForce();
     void clearAccumTorque();
     void integrate(float temps);
+    void draw();
 };

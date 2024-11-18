@@ -4,7 +4,7 @@
 */
 
 #include "rigidBody.h"
-
+#include <of3dGraphics.h>
 
 
 
@@ -15,6 +15,7 @@
 RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
 {
     massCenter_ = massCenter;
+    massCenter->setRigidBody(this);
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
@@ -38,7 +39,7 @@ RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
  */
 RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion rotation, float height, float width, float depth)
 {
-    massCenter_ = new Particle(position, speed, 1, mass); // TODO typeDraw
+    massCenter_ = new Particle(position, speed, 1, mass, this); // TODO typeDraw
     rotation_ = rotation;
     linearVelocity_ = Vector3d();
     angularVelocity_ = Vector3d();
@@ -144,12 +145,16 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 
     if (h_.crossProduct(point).norm() == 0 || w_.crossProduct(point).norm() == 0 || d_.crossProduct(point).norm() == 0)
     {
+        std::cout << "force at center" << std::endl;
         massCenter_->addForce(force);
     }
     else
     {
+        std::cout << "force not at center -> torque" << std::endl;
         accumTorque_ += (point.distance(massCenter_->getPos()) * force);
-        accumForce_ += force;
+        std::cout << accumTorque_ << std::endl;
+        //accumForce_ += force;
+        massCenter_->addForce(force);
     }
 }
 
@@ -173,8 +178,18 @@ void RigidBody::integrate(float temps)
 {
     massCenter_->integrate(temps);
     //linearVelocity_ += (accumForce_ * temps);
-    //angularVelocity_ += (Matrix3xVector(invJ_, accumForce_) * temps);
-    //rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
-    //rotationMatrix_ = rotation_.toMatrix();
-    //invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
+    angularVelocity_ += (Matrix3xVector(invJ_, accumTorque_) * temps); //c'était accumForce de base
+    rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
+    rotationMatrix_ = rotation_.toMatrix();
+    invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
+}
+
+void RigidBody::draw()
+{
+    massCenter_->draw();
+    float width = w_.norm()*2;
+    float height = h_.norm()*2;
+    float depth = d_.norm()*2;
+    ofDrawBox(massCenter_->getPos().v3(), width, height, depth);
+    std::cout << "\n Width, height, depth: " << width << " " << height << " " << depth << std::endl;
 }

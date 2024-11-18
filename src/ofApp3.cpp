@@ -44,7 +44,7 @@ void ofApp3::draw()
 	// Drawing our particles
 	for (int i = 0; i < physics.objects_.size(); i++)
 	{
-		physics.objects_[i]->getMassCenter()->draw();
+		physics.objects_[i]->draw();
 	}
 	ofRotateZDeg(-theta_);
 
@@ -158,7 +158,7 @@ void ofApp3::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp3::SpawnRigidBody(int type)
 {
-	RigidBody* newObject = new RigidBody(10,Vector3d(500,500,0,1),Vector3d(0,0,0,0),Quaternion(),20,20,20);
+	RigidBody* newObject = new RigidBody(10,Vector3d(500,500,0,1),Vector3d(0,0,0,0),Quaternion(),50,50,50);
 	physics.addRigidBody(newObject);
 	//std::cout << "added rigid body" << std::endl;
 }
