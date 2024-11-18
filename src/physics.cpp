@@ -13,7 +13,7 @@
 Physics::Physics()
 {
 	friction_ = ParticleFriction(0.1, 0.01);
-
+	simpleForce = SimpleForce(Vector3d(10.0, 10.0, 0.0));
 	springForce = new ParticleSpring();
 }
 
@@ -60,9 +60,11 @@ void Physics::addRigidBody(RigidBody* object)
 */
 void Physics::updateForces(double time)
 {
+	std::cout << "updateForces" << std::endl;
 	for (int i = 0; i < objects_.size(); i++)
 	{
 		forcesRegistry_.add(objects_[i]->getMassCenter(), &g_);
+		forcesRegistry_.add(objects_[i]->getMassCenter(), &simpleForce);
 		//forcesRegistry_.add(particles_[i], &friction_);
 	}
 	forcesRegistry_.updateForce(time);

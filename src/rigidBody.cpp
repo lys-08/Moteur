@@ -144,6 +144,10 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
     }
     else
     {
+        std::cout << "force not at center -> torque" << std::endl;
+        accumTorque_ += (point - massCenter_->getPos()).crossProduct(force);
+        std::cout << accumTorque_ << std::endl;
+        //accumForce_ += force;
         accumTorque_ += (point - massCenter_->getPos()).crossProduct(force);
         massCenter_->addForce(force);
     }
@@ -178,6 +182,7 @@ void RigidBody::integrate(float temps)
 
 void RigidBody::draw()
 {
+
     ofNoFill();
     massCenter_->draw();
 
@@ -197,3 +202,4 @@ void RigidBody::draw()
     ofPopMatrix();
     ofFill();
 }
+

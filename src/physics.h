@@ -11,6 +11,7 @@
 #include "particleSetSpring.h"
 #include "particleStraightCable.h"
 #include "particleCable.h"
+#include "SimpleForce.h"
 
 class Physics
 {
@@ -21,6 +22,7 @@ private:
 	ParticleGravity g_;
 	ParticleFriction friction_;
 	ParticleSpring* springForce;
+	SimpleForce simpleForce;
 
 public:
 	std::vector<RigidBody*> objects_;
