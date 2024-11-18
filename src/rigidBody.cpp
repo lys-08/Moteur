@@ -170,6 +170,7 @@ void RigidBody::integrate(float temps)
 {
     massCenter_->integrate(temps);
     angularVelocity_ += (Matrix3xVector(invJ_, accumTorque_) * temps);
+    angularVelocity_.normalise();
     rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
     rotationMatrix_ = rotation_.toMatrix();
     invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
