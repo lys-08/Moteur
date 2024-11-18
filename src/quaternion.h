@@ -45,7 +45,7 @@ public:
     Quaternion conjugate();
     Quaternion inv();
     float dotProduct(const Quaternion& other) const;
-    Quaternion normalise();
+    void normalise();
     Quaternion exponentiation(int t); // TODO : comment + fix
     Quaternion angularMovement(const Quaternion& other);
 

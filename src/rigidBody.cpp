@@ -5,6 +5,7 @@
 
 #include "rigidBody.h"
 #include <of3dGraphics.h>
+#include <ofGraphics.h>
 
 
 
@@ -143,11 +144,12 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 {
     if (!isInRigidBody(point)) return;
 
-    if (h_.crossProduct(point).norm() == 0 || w_.crossProduct(point).norm() == 0 || d_.crossProduct(point).norm() == 0)
+    //test
+    /*if (h_.crossProduct(point).getY() == 0 || w_.crossProduct(point).getX() == 0 || d_.crossProduct(point).getZ() == 0)
     {
         std::cout << "force at center" << std::endl;
         massCenter_->addForce(force);
-    }
+    }*/
     else
     {
         std::cout << "force not at center -> torque" << std::endl;
@@ -179,17 +181,49 @@ void RigidBody::integrate(float temps)
     massCenter_->integrate(temps);
     //linearVelocity_ += (accumForce_ * temps);
     angularVelocity_ += (Matrix3xVector(invJ_, accumTorque_) * temps); //c'était accumForce de base
+    angularVelocity_.normalise();
     rotation_ += (0.5 * Quaternion(0, angularVelocity_.getX(), angularVelocity_.getY(), angularVelocity_.getZ()) * rotation_ * temps);
     rotationMatrix_ = rotation_.toMatrix();
     invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
+   /* for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            std::cout << invJ_[{i, j}] << std::endl;
+        }
+
+    }*/
+    std::cout << rotation_.getW() << std::endl;
+    std::cout << rotation_.getI() << std::endl;
+    std::cout << rotation_.getJ() << std::endl;
+    std::cout << rotation_.getK() << std::endl;
 }
 
 void RigidBody::draw()
 {
     massCenter_->draw();
-    float width = w_.norm()*2;
-    float height = h_.norm()*2;
-    float depth = d_.norm()*2;
-    ofDrawBox(massCenter_->getPos().v3(), width, height, depth);
-    std::cout << "\n Width, height, depth: " << width << " " << height << " " << depth << std::endl;
+
+    // Récupérer la position de la particule
+    ofVec3f position = massCenter_->getPos().v3();
+
+    // Convertir votre matrice de rotation en une matrice de transformation d'OpenFrameworks
+    ofMatrix4x4 rotationMatrix = ofMatrix4x4(rotationMatrix_.m4());
+
+    // Appliquer les transformations de manière correcte
+    ofPushMatrix();
+
+    // D'abord, on translate pour amener la boîte à sa position
+    ofTranslate(position);
+
+    // Ensuite, on applique la rotation
+    ofMultMatrix(rotationMatrix);
+
+    // Dessiner la boîte avec ses dimensions
+    float width = w_.norm() * 2;
+    float height = h_.norm() * 2;
+    float depth = d_.norm() * 2;
+    ofDrawBox(0, 0, 0, width, height, depth); // On dessine autour de l'origine locale (0, 0, 0)
+
+    ofPopMatrix();
+
 }

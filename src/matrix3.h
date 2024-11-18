@@ -36,6 +36,19 @@ public:
     float det();
     Matrix3 t();
     Matrix3 inv();
+
+    /**
+     * @brief Transform the current matrix into a glm matrix 4
+     *
+     * @return a glm matrix 4 with the coordinates of the matrix
+    */
+    glm::mat4 m4() {
+        return glm::mat4(
+            mat_[0][0], mat_[0][1], mat_[0][2], 0,
+            mat_[1][0], mat_[1][1], mat_[1][2], 0,
+            mat_[2][0], mat_[2][1], mat_[2][2], 0,
+            0, 0, 0, 1);
+    };
 };
 
 Matrix3 operator+(const Matrix3& m1, const Matrix3& m2);

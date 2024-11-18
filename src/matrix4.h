@@ -37,6 +37,19 @@ public:
     void initMatRotX(float theta);  // TODO : keep ?
     void initMatRotY(float theta);  // TODO : keep ?
     void initMatRotZ(float theta);  // TODO : keep ?
+
+    /**
+     * @brief Transform the current matrix into a glm matrix
+     *
+     * @return a glm matrix with the coordinates of the matrix
+    */
+    glm::mat4 m4() {
+        return glm::mat4(
+            mat_[0][0], mat_[0][1], mat_[0][2], mat_[0][3],
+            mat_[1][0], mat_[1][1], mat_[1][2], mat_[1][3],
+            mat_[2][0], mat_[2][1], mat_[2][2], mat_[2][3],
+            mat_[3][0], mat_[3][1], mat_[3][2], mat_[3][3]);
+    };
 };
 
 Matrix4 operator+(const Matrix4& m1, const Matrix4& m2);

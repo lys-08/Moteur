@@ -39,6 +39,6 @@ void ParticleGravity::updateForce(Particle* particle, float duration)
     Vector3d force = gravity_ * mass;
     std::cout << force << "\n" << std::endl;
     //particle->addForce(force);
-    Vector3d newPos = Vector3d(particle->getPos().getX() + 2, particle->getPos().getY() + 2, particle->getPos().getZ() + 2);
+    Vector3d newPos = Vector3d(particle->getPos().getX()+20, particle->getPos().getY(), particle->getPos().getZ()+20);
     particle->getRigidBody()->addForceAtPoint(force, newPos);
 }

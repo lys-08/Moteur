@@ -259,6 +259,13 @@ double Vector3d::distance(const Vector3d& v) const
     return sqrt(pow(x_ - v.getX(), 2) + pow(y_ - v.getY(), 2) + pow(z_ - v.getZ(), 2));
 }
 
+void Vector3d::mod(int q)
+{
+    x_ = (int)x_ % q;
+    y_ = (int)y_ % q;
+    z_ = (int)z_ % q;
+}
+
 
 // ============================================================================
 // External operators =========================================================

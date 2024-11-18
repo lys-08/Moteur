@@ -60,6 +60,7 @@ public:
     double dotProduct(const Vector3d& v) const;
     Vector3d crossProduct(const Vector3d& v) const;
     double distance(const Vector3d& v) const;
+    void mod(int q);
 
     /**
      * @brief Transform the current vector into a glm vector

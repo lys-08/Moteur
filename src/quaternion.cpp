@@ -195,6 +195,26 @@ float Quaternion::dotProduct(const Quaternion& other) const
     return w_ * other.w_ + i_ * other.i_ + j_ * other.j_ + k_ * other.k_;
 }
 
+void Quaternion::normalise()
+{
+    
+
+    float magnitude = std::sqrt(w_ * w_ + i_ * i_ + j_ * j_ + k_ * k_);
+
+    // Vérification pour éviter la division par zéro
+    if (magnitude > 0.0f)
+    {
+        w_ /= magnitude;
+        i_ /= magnitude;
+        j_ /= magnitude;
+        k_ /= magnitude;
+    }
+    else
+    {
+        *this = identity();
+    }
+}
+
 // TODO
 /**
  * @brief Determine the fraction t of displacement
