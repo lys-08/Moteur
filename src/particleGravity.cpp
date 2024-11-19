@@ -35,7 +35,5 @@ void ParticleGravity::updateForce(Particle* particle, float duration)
 
     double mass = 1.0 / particle->getInvertMass();
     Vector3d force = gravity_ * mass;
-    //particle->addForce(force);
-    //Vector3d newPos = Vector3d(particle->getPos().getX(), particle->getPos().getY(), particle->getPos().getZ());
-    particle->getRigidBody()->addForceAtPoint(force, particle->getPos());
+    particle->addForce(force);
 }

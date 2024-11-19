@@ -16,7 +16,6 @@
 RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
 {
     massCenter_ = massCenter;
-    massCenter->setRigidBody(this);
     rotation_ = rotation;
     angularVelocity_ = Vector3d();
 }
@@ -26,7 +25,7 @@ RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
  */
 RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion rotation)
 {
-    massCenter_ = new Particle(position, speed, 1, mass, this);
+    massCenter_ = new Particle(position, speed, 1, mass);
     rotation_ = rotation;
     angularVelocity_ = Vector3d();
 }

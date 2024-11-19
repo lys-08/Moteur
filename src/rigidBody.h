@@ -9,8 +9,6 @@
 #include "quaternion.h"
 #include "particle.h"
 
-class Particle;
-
 class RigidBody
 {
 protected:

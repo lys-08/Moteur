@@ -18,7 +18,7 @@
  * @param dir direction of the particle
  * @param speed the speed of the particle
  */
-Particle::Particle(Vector3d pos, Vector3d speed, int typeDraw, double mass, RigidBody* r)
+Particle::Particle(Vector3d pos, Vector3d speed, int typeDraw, double mass)
 {
 	pos_ = pos;
 	speed_ = speed;
@@ -26,7 +26,6 @@ Particle::Particle(Vector3d pos, Vector3d speed, int typeDraw, double mass, Rigi
 	radius_ = 1;
 	setInvertMass(mass_);
 	particleTypeDraw = typeDraw;
-	rigidBody = r;
 }
 
 /**
@@ -113,11 +112,6 @@ ParticleSetSpring Particle::getSetSpring()
 	}
 }
 
-RigidBody* Particle::getRigidBody()
-{
-	return rigidBody;
-}
-
 void Particle::setSpeed(Vector3d speed)
 {
 	speed_ = speed;
@@ -148,11 +142,6 @@ void Particle::setSetSpringForce(Vector3d point, double k, double l0)
 {
 	setSpring = new ParticleSetSpring(point, k, l0);
 	hasSetSpring = true;
-}
-
-void Particle::setRigidBody(RigidBody* r)
-{
-	rigidBody = r;
 }
 
 void Particle::removeSpringForce()
