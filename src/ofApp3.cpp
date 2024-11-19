@@ -1,4 +1,7 @@
 #include "ofApp3.h"
+
+#include "box.h"
+// Tests
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
 #include "../tests/test_matrix4.h"
@@ -171,6 +174,6 @@ void ofApp3::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp3::SpawnRigidBody(int type)
 {
-	RigidBody* newObject = new RigidBody(10,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
+	RigidBody* newObject = new Box(10,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
 	physics.addRigidBody(newObject);
 }
