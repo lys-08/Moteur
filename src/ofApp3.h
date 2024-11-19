@@ -14,7 +14,8 @@ public:
 	float theta_;
 	std::clock_t previousTime_;
 	float deltaTime_;
-	int type_ = 1;
+	int rigidBodyType_ = 1;
+	int simpleForceType_ = 1;
 
 	float mouseX_;
 	float mouseY_;

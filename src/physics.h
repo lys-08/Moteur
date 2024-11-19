@@ -1,28 +1,16 @@
 #pragma once
 
 #include "rigidBody.h"
-#include "particleContactGenerator.h"
-#include "particleSphericalCollisionGenerator.h"
-#include "particleRestCollisionGenerator.h"
-#include "particleStraightCable.h"
-#include "particleForceRegistry.h"
-#include "particleGravity.h"
-#include "particleFriction.h"
-#include "particleSetSpring.h"
-#include "particleStraightCable.h"
-#include "particleCable.h"
+#include "rigidBodyForceRegistry.h"
+#include "rigidBodyGravity.h"
 #include "SimpleForce.h"
 
 class Physics
 {
 private:
-	Plane ground_ = Plane(Vector3d(0, -1, 0, 0), Vector3d(950, 950, 0, 1));
-
-	ParticleForceRegistry forcesRegistry_;
-	ParticleGravity g_;
-	ParticleFriction friction_;
-	ParticleSpring* springForce;
-	SimpleForce simpleForce;
+	RigidBodyForceRegistry forcesRegistry_;
+	RigidBodyGravity g_;
+	std::vector<SimpleForce> simpleForces_;
 
 public:
 	std::vector<RigidBody*> objects_;
@@ -30,7 +18,8 @@ public:
 	Physics();
 	void start(int x, int y);
 	void update(double time);
-	void addRigidBody(RigidBody* particle);
+	void addRigidBody(RigidBody* rigidBody);
+	void addSimpleForce(SimpleForce force);
 	void updateForces(double time);
 	void integrate(double time);
 	void resetAcc();

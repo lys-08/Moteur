@@ -6,14 +6,23 @@
 #include "SimpleForce.h"
 #include "particle.h"
 
-SimpleForce::SimpleForce(const Vector3d& f)
+SimpleForce::SimpleForce(const Vector3d& f, int a)
 {
 	force_ = f;
+	applyPoint_ = a;
 }
 
-void SimpleForce::updateForce(Particle* particle, float duration)
+void SimpleForce::updateForce(RigidBody* rigidBody, float duration)
 {
-    if (particle->getInvertMass() <= 0.0f) return;
-	Vector3d newPos = Vector3d(particle->getPos().getX() +20, particle->getPos().getY(), particle->getPos().getZ()-20);
-	particle->getRigidBody()->addForceAtPoint(force_, newPos);
+	Vector3d newPos;
+	switch (applyPoint_)
+	{
+	case '1':
+		newPos = Vector3d(rigidBody->getMassCenter()->getPos().getX(),
+			rigidBody->getMassCenter()->getPos().getY(),
+			rigidBody->getMassCenter()->getPos().getZ() - 20);
+		break;
+
+	}
+	rigidBody->addForceAtPoint(force_, newPos);
 }

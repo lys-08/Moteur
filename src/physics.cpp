@@ -4,7 +4,7 @@
 */
 
 #include "Physics.h"
-#include "particleGravity.h"
+#include "rigidBodyGravity.h"
 
 
 /**
@@ -12,9 +12,6 @@
  */
 Physics::Physics()
 {
-	friction_ = ParticleFriction(0.1, 0.01);
-	simpleForce = SimpleForce(Vector3d(10.0, 10.0, 0.0));
-	springForce = new ParticleSpring();
 }
 
 
@@ -52,6 +49,11 @@ void Physics::addRigidBody(RigidBody* object)
 	objects_.push_back(object);
 }
 
+void Physics::addSimpleForce(SimpleForce force)
+{
+	simpleForces_.push_back(force);
+}
+
 /**
  * @brief add forces to the registry, apply the forces to the particles and clear the registry
  *
@@ -63,9 +65,13 @@ void Physics::updateForces(double time)
 	std::cout << "updateForces" << std::endl;
 	for (int i = 0; i < objects_.size(); i++)
 	{
-		forcesRegistry_.add(objects_[i]->getMassCenter(), &g_);
-		forcesRegistry_.add(objects_[i]->getMassCenter(), &simpleForce);
-		//forcesRegistry_.add(particles_[i], &friction_);
+		forcesRegistry_.add(objects_[i], &g_);
+
+		//simpleForce.setPoint(Vector3d(objects_[i]->getMassCenter()->getPos().getX() - 20,
+		//	objects_[i]->getMassCenter()->getPos().getY(),
+		//	objects_[i]->getMassCenter()->getPos().getZ() - 20));
+
+		forcesRegistry_.add(objects_[i], &simpleForces_[i]);
 	}
 	forcesRegistry_.updateForce(time);
 	forcesRegistry_.clear();

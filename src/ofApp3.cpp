@@ -1,6 +1,6 @@
 #include "ofApp3.h"
-
 #include "box.h"
+#include "SimpleForce.h"
 // Tests
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
@@ -69,18 +69,6 @@ void ofApp3::keyPressed(int key)
 {
 	switch (key)
 	{
-	case '1':
-		type_ = 1;
-		break;
-	case '2':
-		type_ = 2;
-		break;
-	case '3':
-		type_ = 3;
-		break;
-	case '4':
-		type_ = 4;
-		break;
 	case 't':
 		Test_vector3d testVector3d;
 		testVector3d.tests_all();
@@ -93,6 +81,18 @@ void ofApp3::keyPressed(int key)
 
 		Test_quaternion test_quaternion;
 		test_quaternion.tests_all();
+		break;
+	case 'c':
+		rigidBodyType_ = 1;
+		break;
+	case '1':
+		simpleForceType_ = 1;
+		break;
+	case '2':
+		simpleForceType_ = 2;
+		break;
+	case '3':
+		simpleForceType_ = 3;
 		break;
 	}
 }
@@ -123,7 +123,7 @@ void ofApp3::mousePressed(int x, int y, int button)
 	switch (button)
 	{
 	case 0:
-		SpawnRigidBody(type_);
+		SpawnRigidBody(rigidBodyType_);
 		break;
 	default:
 		break;
@@ -174,6 +174,11 @@ void ofApp3::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp3::SpawnRigidBody(int type)
 {
-	RigidBody* newObject = new Box(10,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
-	physics.addRigidBody(newObject);
+	if (type == 1)
+	{
+		RigidBody* newObject = new Box(10,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
+		SimpleForce newForce = SimpleForce(Vector3d(10, 10, 0), simpleForceType_);
+		physics.addRigidBody(newObject);
+		physics.addSimpleForce(newForce);
+	}
 }
