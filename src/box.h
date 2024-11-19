@@ -34,6 +34,6 @@ public:
 
     // Other methods
     bool isInRigidBody(const Vector3d& point);
-    bool isColinear(const Vector3d& point);
+    bool isColinear(const Vector3d& force, const Vector3d& point);
     void draw();
 };

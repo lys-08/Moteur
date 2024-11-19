@@ -90,17 +90,16 @@ void RigidBody::addForceAtPoint(const Vector3d& force, const Vector3d& point)
 {
     if (!isInRigidBody(point)) return;
 
-    if (this->isColinear(point))
+    if (this->isColinear(force,point))
     {
+        std::cout << "colinear" << std::endl;
         massCenter_->addForce(force);
     }
     else
     {
         std::cout << "force not at center -> torque" << std::endl;
         accumTorque_ += (point - massCenter_->getPos()).crossProduct(force);
-        std::cout << accumTorque_ << std::endl;
-        //accumForce_ += force;
-        accumTorque_ += (point - massCenter_->getPos()).crossProduct(force);
+        //std::cout << accumTorque_ << std::endl;
         massCenter_->addForce(force);
     }
 }

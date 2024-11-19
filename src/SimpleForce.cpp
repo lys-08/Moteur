@@ -14,15 +14,18 @@ SimpleForce::SimpleForce(const Vector3d& f, int a)
 
 void SimpleForce::updateForce(RigidBody* rigidBody, float duration)
 {
-	Vector3d newPos;
-	switch (applyPoint_)
+	if (applyPoint_ == 1)
 	{
-	case '1':
-		newPos = Vector3d(rigidBody->getMassCenter()->getPos().getX(),
+		newPos_ = Vector3d(rigidBody->getMassCenter()->getPos().getX(),
 			rigidBody->getMassCenter()->getPos().getY(),
 			rigidBody->getMassCenter()->getPos().getZ() - 20);
-		break;
-
 	}
-	rigidBody->addForceAtPoint(force_, newPos);
+	else if (applyPoint_ == 2)
+	{
+		newPos_ = Vector3d(rigidBody->getMassCenter()->getPos().getX(),
+			rigidBody->getMassCenter()->getPos().getY()-20,
+			rigidBody->getMassCenter()->getPos().getZ());
+	}
+	std::cout << newPos_ << std::endl;
+	rigidBody->addForceAtPoint(force_, newPos_);
 }

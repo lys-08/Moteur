@@ -1,5 +1,6 @@
 #include "ofApp3.h"
 #include "box.h"
+#include "Cone.h"
 #include "SimpleForce.h"
 // Tests
 #include "../tests/test_vector3d.h"
@@ -82,8 +83,11 @@ void ofApp3::keyPressed(int key)
 		Test_quaternion test_quaternion;
 		test_quaternion.tests_all();
 		break;
-	case 'c':
+	case 'b':
 		rigidBodyType_ = 1;
+		break;
+	case 'c':
+		rigidBodyType_ = 2;
 		break;
 	case '1':
 		simpleForceType_ = 1;
@@ -177,7 +181,14 @@ void ofApp3::SpawnRigidBody(int type)
 	if (type == 1)
 	{
 		RigidBody* newObject = new Box(10,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
-		SimpleForce newForce = SimpleForce(Vector3d(10, 10, 0), simpleForceType_);
+		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0,0), simpleForceType_);
+		physics.addRigidBody(newObject);
+		physics.addSimpleForce(newForce);
+	}
+	else if (type == 2)
+	{
+		RigidBody* newObject = new Cone(10, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 30,50);
+		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
 		physics.addRigidBody(newObject);
 		physics.addSimpleForce(newForce);
 	}

@@ -20,7 +20,7 @@ public:
     // Other methods
     bool isInRigidBody(const Vector3d& point) override;
     void draw() override;
-    bool isColinear(const Vector3d& point);
+    bool isColinear(const Vector3d& force, const Vector3d& point);
 
 
 private:

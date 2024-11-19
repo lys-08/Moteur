@@ -67,10 +67,6 @@ void Physics::updateForces(double time)
 	{
 		forcesRegistry_.add(objects_[i], &g_);
 
-		//simpleForce.setPoint(Vector3d(objects_[i]->getMassCenter()->getPos().getX() - 20,
-		//	objects_[i]->getMassCenter()->getPos().getY(),
-		//	objects_[i]->getMassCenter()->getPos().getZ() - 20));
-
 		forcesRegistry_.add(objects_[i], &simpleForces_[i]);
 	}
 	forcesRegistry_.updateForce(time);

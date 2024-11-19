@@ -74,13 +74,14 @@ bool Cone::isInRigidBody(const Vector3d& point) {
     return distanceFromAxis <= maxRadiusAtHeight && point.getZ() <= massCenter_->getPos().getZ() + height_ && point.getZ() >= massCenter_->getPos().getZ();
 }
 
-bool Cone::isColinear(const Vector3d& point)
+bool Cone::isColinear(const Vector3d& force, const Vector3d& point)
 {
     double eps = 1e-6;
 
     bool alignedWithH = (point - massCenter_->getPos()).crossProduct(height_).norm() < 1e-6;
+    bool fAlignedWithH = (force - massCenter_->getPos()).crossProduct(height_).norm() < 1e-6;
 
-    return alignedWithH;
+    return alignedWithH && fAlignedWithH;
 }
 
 void Cone::draw() {

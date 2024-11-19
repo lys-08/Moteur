@@ -12,6 +12,7 @@ class SimpleForce :
 {
 	Vector3d force_;
 	int applyPoint_;
+	Vector3d newPos_;
 
 public:
 	SimpleForce(const Vector3d& f = Vector3d(0.0, 0.0, 0.0, 0.0),int a = 1);

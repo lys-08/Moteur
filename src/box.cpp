@@ -118,7 +118,7 @@ bool Box::isInRigidBody(const Vector3d& point)
  * @param point the point to test
  * @return true if the point is colinear to one of the axes, false otherwise
 */
-bool Box::isColinear(const Vector3d& point)
+bool Box::isColinear(const Vector3d& force, const Vector3d& point)
 {
     double eps = 1e-6;
 
@@ -126,7 +126,11 @@ bool Box::isColinear(const Vector3d& point)
     bool alignedWithW = (point - massCenter_->getPos()).crossProduct(w_).norm() < 1e-6;
     bool alignedWithD = (point - massCenter_->getPos()).crossProduct(d_).norm() < 1e-6;
 
-    return alignedWithH || alignedWithW || alignedWithD;
+    bool fAlignedWithH = (force - massCenter_->getPos()).crossProduct(h_).norm() < 1e-6;
+    bool fAlignedWithW = (force - massCenter_->getPos()).crossProduct(w_).norm() < 1e-6;
+    bool fAlignedWithD = (force - massCenter_->getPos()).crossProduct(d_).norm() < 1e-6;
+
+    return (alignedWithH && fAlignedWithH) || (alignedWithW && fAlignedWithW) || (alignedWithD && fAlignedWithD);
 }
 
 /**
