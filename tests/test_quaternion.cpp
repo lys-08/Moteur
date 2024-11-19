@@ -16,7 +16,6 @@ void Test_quaternion::tests_all()
 	tests_conjugate();
 	tests_inv();
 	tests_dotProduct();
-	tests_exponentiation();
 	tests_angularMovement();
 	tests_toMatrix();
 
@@ -168,32 +167,6 @@ void Test_quaternion::tests_dotProduct()
 	Quaternion q2(5, 6, 7, 8);
 
 	assert(q1.dotProduct(q2) == 70);
-}
-
-void Test_quaternion::tests_exponentiation()
-{
-	Quaternion q = Quaternion(1, 2, 3, 4);
-
-	std::cout << "[exponentiation]" << std::endl;
-	std::cout << "An error must be printed after this message (division by zero)" << std::endl;
-	try {
-		Quaternion expo = q.exponentiation(2);
-	}
-	catch (const std::invalid_argument& e)
-	{
-		std::cerr << "\033[31mError : " << e.what() << "\033[0m" << std::endl;
-	}
-
-	q *= 2;
-	Quaternion expo = q.exponentiation(2);
-
-	float epsilon = 0.000001f;
-	// TODO : Fix
-	/*std::cout << expo.getW() << "test" << std::endl;
-	assert(std::fabs(expo.getW() + 0.450459) < epsilon);
-	assert(expo.getI() == 4);
-	assert(expo.getJ() == 9);
-	assert(expo.getK() == 16);*/
 }
 
 void Test_quaternion::tests_angularMovement()

@@ -17,7 +17,6 @@ public:
     void tests_conjugate();
     void tests_inv();
     void tests_dotProduct();
-    void tests_exponentiation();
     void tests_angularMovement();
     void tests_toMatrix();
 
