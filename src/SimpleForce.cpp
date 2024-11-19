@@ -23,9 +23,15 @@ void SimpleForce::updateForce(RigidBody* rigidBody, float duration)
 	else if (applyPoint_ == 2)
 	{
 		newPos_ = Vector3d(rigidBody->getMassCenter()->getPos().getX(),
-			rigidBody->getMassCenter()->getPos().getY()-20,
+			rigidBody->getMassCenter()->getPos().getY() - 20,
 			rigidBody->getMassCenter()->getPos().getZ());
 	}
-	std::cout << newPos_ << std::endl;
+	else if (applyPoint_ == 3)
+	{
+		newPos_ = Vector3d(rigidBody->getMassCenter()->getPos().getX() - 20,
+			rigidBody->getMassCenter()->getPos().getY(),
+			rigidBody->getMassCenter()->getPos().getZ());
+	}
+
 	rigidBody->addForceAtPoint(force_, newPos_);
 }

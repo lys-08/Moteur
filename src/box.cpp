@@ -155,6 +155,7 @@ void Box::draw()
     float width = w_.norm() * 2;
     float height = h_.norm() * 2;
     float depth = d_.norm() * 2;
+    ofSetColor(52, 174, 180);
     ofDrawBox(0, 0, 0, width, height, depth);
 
     ofPopMatrix();

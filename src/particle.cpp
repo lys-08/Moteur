@@ -186,7 +186,7 @@ void Particle::draw()
 	}
 	else if (particleTypeDraw == 1)
 	{
-		ofSetColor(0, 255, 0);
+		ofSetColor(37, 126, 200);
 	}
 
 	ofDrawIcoSphere(pos_.v3(), 10);

@@ -34,10 +34,17 @@ void ofApp3::draw()
 
 	std::string deltaTimeText = "Delta Time: " + ofToString(deltaTime_, 5);
 
-	int x = ofGetWidth() - 200;
+	int x = ofGetWidth() - 320;
 	int y = 20;
 
 	ofDrawBitmapString(deltaTimeText, x, y);
+	ofSetColor(255, 0, 0);
+	ofDrawBitmapString("Force: (10,0,0) except for q: (10,10,0)", x, y + 20);
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString("b: Box, c: Cone, p: Pave\nz: Box + depth, q: Box + diverse force", x, y + 40);
+	ofDrawBitmapString("1: Applied at massCenter - 20 (z)\n", x, y + 80);
+	ofDrawBitmapString("2: Applied at massCenter - 20 (y)\n", x, y + 100);
+	ofDrawBitmapString("3: Applied at massCenter - 20 (x)\n", x, y + 120);
 
 	ofSetColor(0, 0, 0);
 	// Save the current transformation matrix
@@ -88,6 +95,15 @@ void ofApp3::keyPressed(int key)
 		break;
 	case 'c':
 		rigidBodyType_ = 2;
+		break;
+	case 'p':
+		rigidBodyType_ = 3;
+		break;
+	case 'z':
+		rigidBodyType_ = 4;
+		break;
+	case 'q':
+		rigidBodyType_ = 5;
 		break;
 	case '1':
 		simpleForceType_ = 1;
@@ -178,17 +194,38 @@ void ofApp3::dragEvent(ofDragInfo dragInfo)
 */
 void ofApp3::SpawnRigidBody(int type)
 {
-	if (type == 1)
+	if (type == 1) //Box
 	{
-		RigidBody* newObject = new Box(10,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
+		RigidBody* newObject = new Box(20,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
 		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0,0), simpleForceType_);
 		physics.addRigidBody(newObject);
 		physics.addSimpleForce(newForce);
 	}
-	else if (type == 2)
+	else if (type == 2) //Cone
 	{
-		RigidBody* newObject = new Cone(10, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 30,50);
+		RigidBody* newObject = new Cone(30, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 30,50);
 		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
+		physics.addRigidBody(newObject);
+		physics.addSimpleForce(newForce);
+	}
+	else if (type == 3) //Pave
+	{
+		RigidBody* newObject = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 100, 50, 50);
+		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
+		physics.addRigidBody(newObject);
+		physics.addSimpleForce(newForce);
+	}
+	else if (type == 4) //Box + Depth
+	{
+		RigidBody* newObject = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, -200, 0), Quaternion().identity(), 50, 50, 50);
+		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
+		physics.addRigidBody(newObject);
+		physics.addSimpleForce(newForce);
+	}
+	else if (type == 5) //Box
+	{
+		RigidBody* newObject = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 50, 50, 50);
+		SimpleForce newForce = SimpleForce(Vector3d(10, 10, 0, 0), simpleForceType_);
 		physics.addRigidBody(newObject);
 		physics.addSimpleForce(newForce);
 	}

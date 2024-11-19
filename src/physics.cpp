@@ -62,7 +62,6 @@ void Physics::addSimpleForce(SimpleForce force)
 */
 void Physics::updateForces(double time)
 {
-	std::cout << "updateForces" << std::endl;
 	for (int i = 0; i < objects_.size(); i++)
 	{
 		forcesRegistry_.add(objects_[i], &g_);

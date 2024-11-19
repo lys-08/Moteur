@@ -96,6 +96,7 @@ void Cone::draw() {
     ofMultMatrix(rotationMatrix);
 
     // Draw the cone
+    ofSetColor(52, 174, 180);
     ofDrawCone(0, 0, 0, radius_ * 2, height_);
 
     ofPopMatrix();
