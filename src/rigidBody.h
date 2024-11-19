@@ -14,7 +14,7 @@ class Particle;
 class RigidBody
 {
 private:
-    Particle* massCenter_; // countain the position
+    Particle* massCenter_; // contain the position
     Quaternion rotation_;
     Matrix3 rotationMatrix_;
     Vector3d angularVelocity_;
@@ -23,9 +23,9 @@ private:
     Vector3d accumForce_;
     Vector3d accumTorque_;
 
-    Vector3d w_; // width ~ x
-    Vector3d h_; // height ~ y
-    Vector3d d_; // depth ~ z
+    Vector3d w_; // width ~ x / 2
+    Vector3d h_; // height ~ y / 2
+    Vector3d d_; // depth ~ z / 2
 
 
 public:
@@ -38,7 +38,6 @@ public:
     Quaternion getRotation();
     Vector3d getAngularVelocity();
     void setRotation(Quaternion rotation);
-    void setLinearVelocity(Vector3d linearVelocity);
     void setAngularVelocity(Vector3d angularVelocity);
 
     // Other methods

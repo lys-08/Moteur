@@ -118,15 +118,6 @@ Vector3d& Vector3d::operator-=(const Vector3d& v)
     return *this;
 }
 
-Vector3d& Vector3d::operator*=(const Vector3d& v)
-{
-    x_ *= v.x_;
-    y_ *= v.y_;
-    z_ *= v.z_;
-
-    return *this;
-}
-
 Vector3d& Vector3d::operator*=(double f)
 {
     x_ *= f;
@@ -288,12 +279,6 @@ Vector3d operator-(const Vector3d& v1, const Vector3d& v2)
 {
     Vector3d resu = Vector3d(v1);
     return resu -= v2;
-}
-
-Vector3d operator*(const Vector3d& v1, const Vector3d& v2)
-{
-    Vector3d resu = Vector3d(v1);
-    return resu *= v2;
 }
 
 Vector3d operator*(const Vector3d& v, double f)

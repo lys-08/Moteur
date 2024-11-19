@@ -204,7 +204,6 @@ void Test_quaternion::tests_angularMovement()
 	Quaternion q = q1.angularMovement(q2);
 
 	assert(q.getW() == 70);
-	std::cout << q.getI() << std::endl;
 	assert(q.getI() == -8);
 	assert(q.getJ() == 0);
 	assert(q.getK() == -16);

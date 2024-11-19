@@ -45,7 +45,6 @@ public:
     // Operator overloading
     Vector3d& operator+=(const Vector3d& v);
     Vector3d& operator-=(const Vector3d& v);
-    Vector3d& operator*=(const Vector3d& v);
     Vector3d& operator*=(double d);
     Vector3d& operator/=(double d);
     void operator=(const Vector3d& v);
@@ -74,7 +73,6 @@ public:
 std::ostream& operator<<(std::ostream& flux, const Vector3d& v);
 Vector3d operator+(const Vector3d& v1, const Vector3d& v2);
 Vector3d operator-(const Vector3d& v1, const Vector3d& v2);
-Vector3d operator*(const Vector3d& v1, const Vector3d& v2);
 Vector3d operator*(const Vector3d& v, double d);
 Vector3d operator*(double d, const Vector3d& v);
 Vector3d operator/(const Vector3d& v, double d);

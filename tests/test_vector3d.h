@@ -12,7 +12,6 @@ public:
 	void tests_operatorPlusEquals();
     void tests_operatorMinusEquals();
     void tests_operatorTimesEquals();
-    void tests_operatorTimesEquals_();
     void tests_operatorDividedEquals();
     void tests_operatorAffectation();
     void tests_operatorEquals();
@@ -29,7 +28,6 @@ public:
     void tests_operatorMinus();
     void tests_operatorTimes();
     void tests_operatorTimes_();
-    void tests_operatorTimes__();
     void tests_operatorDivided();
 };
 

@@ -1,5 +1,9 @@
 #include "ofApp3.h"
 #include "../tests/test_vector3d.h"
+#include "../tests/test_matrix3.h"
+#include "../tests/test_matrix4.h"
+#include "../tests/test_quaternion.h"
+
 
 //--------------------------------------------------------------
 void ofApp3::setup()
@@ -77,6 +81,15 @@ void ofApp3::keyPressed(int key)
 	case 't':
 		Test_vector3d testVector3d;
 		testVector3d.tests_all();
+
+		Test_matrix3 test_matrix3;
+		test_matrix3.tests_all();
+
+		Test_matrix4 test_matrix4;
+		test_matrix4.tests_all();
+
+		Test_quaternion test_quaternion;
+		test_quaternion.tests_all();
 		break;
 	}
 }

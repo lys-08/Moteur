@@ -32,12 +32,6 @@ public:
     Matrix4 operator*=(float f);
     Matrix4 operator/=(float f);
 
-    // Other methods
-    void initMatProj(int w, int h); // TODO : keep ?
-    void initMatRotX(float theta);  // TODO : keep ?
-    void initMatRotY(float theta);  // TODO : keep ?
-    void initMatRotZ(float theta);  // TODO : keep ?
-
     /**
      * @brief Transform the current matrix into a glm matrix
      *

@@ -39,7 +39,7 @@ RigidBody::RigidBody(Particle* massCenter, Quaternion rotation)
  */
 RigidBody::RigidBody(float mass, Vector3d position, Vector3d speed, Quaternion rotation, float height, float width, float depth)
 {
-    massCenter_ = new Particle(position, speed, 1, mass, this); // TODO typeDraw
+    massCenter_ = new Particle(position, speed, 1, mass, this);
     rotation_ = rotation;
     angularVelocity_ = Vector3d();
 
@@ -165,11 +165,22 @@ void RigidBody::clearAccumForce()
     accumForce_ = Vector3d(0, 0, 0, 0);
 }
 
+/**
+ * @brief Clear accumTorque
+ *
+ * @return nothing
+*/
 void RigidBody::clearAccumTorque()
 {
     accumTorque_ = Vector3d(0, 0, 0, 0);
 }
 
+/**
+ * @brief Integrates the position and rotation of the rigid body through time
+ *
+ * @param time
+ * @return nothing
+*/
 void RigidBody::integrate(float temps)
 {
     massCenter_->integrate(temps);
@@ -180,9 +191,13 @@ void RigidBody::integrate(float temps)
     invJ_ = rotationMatrix_ * invJ_ * rotationMatrix_.inv();
 }
 
+/**
+ * @brief Draw the rigidBody in the scene
+ *
+ * @return nothing
+*/
 void RigidBody::draw()
 {
-
     ofNoFill();
     massCenter_->draw();
 

@@ -10,7 +10,7 @@
 class ParticleSphericalCollisionGenerator :
     public ParticleContactGenerator
 {
-    std::vector<Particle*> particles_; // TODO : vector or array ?
+    std::vector<Particle*> particles_;
 
 public:
     // Constructor

@@ -1,3 +1,8 @@
+/**
+* \file SimpleForce.cpp
+* This file contains the implementation of all methods and attributes of the SimpleForce class
+*/
+
 #include "SimpleForce.h"
 #include "particle.h"
 

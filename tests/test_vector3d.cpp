@@ -10,7 +10,6 @@ void Test_vector3d::tests_all()
 	tests_operatorPlusEquals();
 	tests_operatorMinusEquals();
 	tests_operatorTimesEquals();
-	tests_operatorTimesEquals_();
 	tests_operatorDividedEquals();
 	tests_operatorAffectation();
 	tests_operatorEquals();
@@ -27,7 +26,6 @@ void Test_vector3d::tests_all()
 	tests_operatorMinus();
 	tests_operatorTimes();
 	tests_operatorTimes_();
-	tests_operatorTimes__();
 	tests_operatorDivided();
 
 	std::cout << "\033[32mAll tests of the Vector3d class have passed !\033[0m\n" << std::endl;
@@ -107,17 +105,6 @@ void Test_vector3d::tests_operatorMinusEquals()
 }
 
 void Test_vector3d::tests_operatorTimesEquals()
-{
-	Vector3d v1(1, 2, 3);
-	Vector3d v2(4, 5, 6);
-
-	v1 *= v2;
-	assert(v1.getX() == 4);
-	assert(v1.getY() == 10);
-	assert(v1.getZ() == 18);
-}
-
-void Test_vector3d::tests_operatorTimesEquals_()
 {
 	Vector3d v(1, 2, 3);
 
@@ -277,17 +264,6 @@ void Test_vector3d::tests_operatorMinus()
 void Test_vector3d::tests_operatorTimes()
 {
 	Vector3d v1(1, 2, 3);
-	Vector3d v2(4, 5, 6);
-
-	Vector3d v3 = v1 * v2;
-	assert(v3.getX() == 4);
-	assert(v3.getY() == 10);
-	assert(v3.getZ() == 18);
-}
-
-void Test_vector3d::tests_operatorTimes_()
-{
-	Vector3d v1(1, 2, 3);
 
 	Vector3d v2 = v1 * 2;
 	assert(v2.getX() == 2);
@@ -295,7 +271,7 @@ void Test_vector3d::tests_operatorTimes_()
 	assert(v2.getZ() == 6);
 }
 
-void Test_vector3d::tests_operatorTimes__()
+void Test_vector3d::tests_operatorTimes_()
 {
 	Vector3d v1(1, 2, 3);
 

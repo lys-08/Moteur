@@ -23,7 +23,6 @@ ParticleCable::ParticleCable(Particle* particles[2], double maxLength, double el
 // Other methods ==============================================================
 // ============================================================================
 
-// TODO
 /**
  * @brief Add a contact for all particles in contacts
  *

@@ -1,6 +1,6 @@
 /**
 * \file SimpleForce.h
-* This file contains the declaration of all methods and attributes of the SimpleFOrce class
+* This file contains the declaration of all methods and attributes of the SimpleForce class
 */
 
 #include "particleForceGenerator.h"
