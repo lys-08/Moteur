@@ -8,7 +8,7 @@
 
 
 /**
- * Constructor
+ * Dummy Constructor
  */
 Physics::Physics()
 {
