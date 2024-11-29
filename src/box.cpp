@@ -162,3 +162,13 @@ void Box::draw()
     ofFill();
 }
 
+void Box::calculateBoundingRadius()
+{
+    float halfWidth = getW().getX();  
+    float halfHeight = getH().getY(); 
+    float halfDepth = getD().getZ();  
+
+    
+    boundingRadius_ = sqrt(halfWidth * halfWidth + halfHeight * halfHeight + halfDepth * halfDepth);
+}
+

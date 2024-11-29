@@ -22,6 +22,8 @@ public:
     void draw() override;
     bool isColinear(const Vector3d& force, const Vector3d& point);
 
+	// Bounding Volume
+	void calculateBoundingRadius() override;
 
 private:
     float radius_; // Radius of the cone's base

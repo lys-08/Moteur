@@ -84,6 +84,14 @@ bool Cone::isColinear(const Vector3d& force, const Vector3d& point)
     return alignedWithH && fAlignedWithH;
 }
 
+void Cone::calculateBoundingRadius()
+{
+    float radiusBase = getRadius();
+    float height = getHeight();
+
+    boundingRadius_ = sqrt(radiusBase * radiusBase + (height / 2) * (height / 2));
+}
+
 void Cone::draw() {
     ofNoFill();
     massCenter_->draw();

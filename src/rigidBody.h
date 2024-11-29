@@ -21,6 +21,8 @@ protected:
     Vector3d accumForce_;
     Vector3d accumTorque_;
 
+    float boundingRadius_;
+
 
 public:
     // Constructors
@@ -43,4 +45,9 @@ public:
     void clearAccumTorque();
     void integrate(float temps);
     virtual void draw() = 0;
+
+	// Bounding Volume
+    float getBoundingRadius() const { return boundingRadius_; }
+    void setBoundingRadius(float radius) { boundingRadius_ = radius; }
+    virtual void calculateBoundingRadius() = 0;
 };
