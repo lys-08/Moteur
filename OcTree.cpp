@@ -8,7 +8,7 @@
 OcTree::OcTree(ofBoxPrimitive boundary, int capacity)
 {
 
-	initialBoundary_ = boundary;
+	boundary_ = boundary;
 	this->capacity_ = capacity;
 	divided_ = false;
 
@@ -20,7 +20,7 @@ OcTree::OcTree(ofBoxPrimitive boundary, int capacity)
 }
 
 void OcTree::initialize(const std::vector<RigidBody*>& rigidBodies) {
-	buildTree(rigidBodies, initialBoundary_); // We start the recursion with the initial boundary
+	buildTree(rigidBodies, boundary_); // We start the recursion with the initial boundary
 }
 
 bool OcTree::isRigidBodyInBoundary(const RigidBody& body, const ofBoxPrimitive& boundary) {
@@ -91,7 +91,7 @@ void OcTree::subdivide(const ofBoxPrimitive& parentBoundary) {
         children[i] = new OcTree(
             ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth),
             capacity_);
-        children[i]->boundary_ = ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth); // Assigner le boundary
+        children[i]->boundary_ = ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth); // Assign the sub-boundary
     }
 
     divided_ = true;

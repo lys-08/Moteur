@@ -29,7 +29,7 @@ private:
 
 	std::vector<RigidBody> rigidBodies_; // List of rigid bodies in the OcTree
 
-	ofBoxPrimitive initialBoundary_; // Starting boundary of the OcTree
+	ofBoxPrimitive boundary_; // Starting boundary of the OcTree
 
 	int capacity_; // Maximum number of rigid bodies tolerated in a sub-division square of the OcTree
 
