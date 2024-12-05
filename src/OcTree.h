@@ -3,7 +3,7 @@
 * This file contains the implementation of all methods and attributes of the OcTree class
 */
 
-#include "../apps/myApps/Moteur/src/rigidBody.h"
+#include "rigidBody.h"
 #include <vector>
 #include "ofMain.h"
 
