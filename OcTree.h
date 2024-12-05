@@ -24,6 +24,9 @@ public:
 	void buildTree(const std::vector<RigidBody*>& rigidBodies, const ofBoxPrimitive& boundary);
 	void initialize(const std::vector<RigidBody*>& rigidBodies);
 	void subdivide(const ofBoxPrimitive& parentBoundary);
+	void checkCollisions();
+	bool checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2);
+
 
 private:
 

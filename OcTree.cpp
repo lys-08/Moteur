@@ -96,3 +96,35 @@ void OcTree::subdivide(const ofBoxPrimitive& parentBoundary) {
 
     divided_ = true;
 }
+
+void OcTree::checkCollisions() {
+	// If the OcTree is subdivided, we check collisions for the 8 childrens
+    if (divided_) {
+        for (int i = 0; i < 8; ++i) {
+            if (children[i] != nullptr) {
+                children[i]->checkCollisions(); // Appel récursif sur les subdivisions
+            }
+        }
+    }
+    else {
+		// If we're on a leaf, we check collisions between the rigid bodies
+        for (size_t i = 0; i < rigidBodies_.size(); ++i) {
+            for (size_t j = i + 1; j < rigidBodies_.size(); ++j) {
+                if (checkBoundingVolumesOverlap(*rigidBodies_[i], *rigidBodies_[j])) {
+                    // TODO RESOLUTION COLLISION FUNCTION
+                    std::cout << "Collision detected between RigidBody " << i
+                        << " and RigidBody " << j << std::endl;
+                }
+            }
+        }
+    }
+}
+
+bool OcTree::checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2) {
+    Vector3d center1 = body1.getMassCenter()->getPos();
+    Vector3d center2 = body2.getMassCenter()->getPos();
+    float distanceSquared = (center1 - center2).lengthSquared(); // Squared distance
+    float combinedRadius = body1.getBoundingRadius() + body2.getBoundingRadius();
+    return distanceSquared <= (combinedRadius * combinedRadius); // Overlapping if true
+}
+
