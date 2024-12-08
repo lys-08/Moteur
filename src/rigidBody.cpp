@@ -51,6 +51,11 @@ Vector3d RigidBody::getAngularVelocity()
     return angularVelocity_;
 }
 
+Matrix3 RigidBody::getInvJ()
+{
+    return invJ_;
+}
+
 void RigidBody::setRotation(Quaternion rotation)
 {
     rotation_ = rotation;

@@ -32,39 +32,54 @@ RigidBodyContact::RigidBodyContact(RigidBody* rigidBodies[2], float elasticity, 
 */
 void RigidBodyContact::solve()
 {
-	// TODO
-	/*double m_v0 = particles_[0]->getInvertMass();
-	double m0 = 1 / m_v0;
+	double inv_m0 = rigidBodies_[0]->getMassCenter()->getInvertMass();
+	double m0 = 1 / inv_m0;
 
-	if (particles_[1] != nullptr)
+	if (rigidBodies_[1] != nullptr)
 	{
-		Vector3d relativeVelocity = particles_[0]->getSpeed() - particles_[1]->getSpeed();
+		// Relative speed at the point of contact
+		Vector3d relativeVelocity = rigidBodies_[0]->getMassCenter()->getSpeed() - rigidBodies_[1]->getMassCenter()->getSpeed();
 		float relativeVelocityNormal = relativeVelocity.dotProduct(normal_);
 
-		double m_v1 = particles_[1]->getInvertMass();
-		double m1 = 1 / m_v1;
+		double inv_m1 = rigidBodies_[1]->getMassCenter()->getInvertMass();
+		double m1 = 1 / inv_m1;
 
 		if (relativeVelocityNormal > 0)
 		{
-			particles_[0]->setPos(particles_[0]->getPos() + (m1 / (m1 + m0)) * interpenetration_ * normal_);
-			particles_[1]->setPos(particles_[1]->getPos() + (- m0 / (m1 + m0)) * interpenetration_ * normal_);
+			rigidBodies_[0]->getMassCenter()->setPos(rigidBodies_[0]->getMassCenter()->getPos() + (m1 / (m1 + m0)) * interpenetration_ * normal_);
+			rigidBodies_[1]->getMassCenter()->setPos(rigidBodies_[1]->getMassCenter()->getPos() + (-m0 / (m1 + m0)) * interpenetration_ * normal_);
 		}
 		else
 		{
-			particles_[0]->setPos(particles_[0]->getPos()  + (- m1 / (m1 + m0)) * interpenetration_ * normal_);
-			particles_[1]->setPos(particles_[1]->getPos() + (m0 / (m1 + m0)) * interpenetration_ * normal_);
+			rigidBodies_[0]->getMassCenter()->setPos(rigidBodies_[0]->getMassCenter()->getPos() + (-m1 / (m1 + m0)) * interpenetration_ * normal_);
+			rigidBodies_[1]->getMassCenter()->setPos(rigidBodies_[1]->getMassCenter()->getPos() + (m0 / (m1 + m0)) * interpenetration_ * normal_);
 		}
 
+		// Collision pulse calculation
 		float impulse = (1 + elasticity_) * relativeVelocityNormal;
-		impulse /= (m_v0 + m_v1) * normal_.dotProduct(normal_);
+		impulse /= (inv_m0 + inv_m1) * normal_.dotProduct(normal_);
 
-		particles_[0]->setSpeed(particles_[0]->getSpeed() - impulse * m_v0 * normal_);
-		particles_[1]->setSpeed(particles_[1]->getSpeed() + impulse * m_v1 * normal_);
+		// Update linear velocity
+		rigidBodies_[0]->getMassCenter()->setSpeed(rigidBodies_[0]->getMassCenter()->getSpeed() - impulse * inv_m0 * normal_);
+		rigidBodies_[1]->getMassCenter()->setSpeed(rigidBodies_[1]->getMassCenter()->getSpeed() + impulse * inv_m1 * normal_);
+
+		// Update angular velocity
+		Vector3d contactOffset0 = contactPoint_ - rigidBodies_[0]->getMassCenter()->getPos();
+		Vector3d contactOffset1 = contactPoint_ - rigidBodies_[1]->getMassCenter()->getPos();
+
+		Vector3d angularVelocity0 = rigidBodies_[0]->getAngularVelocity() + Matrix3xVector(rigidBodies_[0]->getInvJ(), contactOffset0.crossProduct(impulse * normal_));
+		rigidBodies_[0]->setAngularVelocity(angularVelocity0);
+		Vector3d angularVelocity1 = rigidBodies_[1]->getAngularVelocity() + Matrix3xVector(rigidBodies_[1]->getInvJ(), contactOffset1.crossProduct(impulse * normal_));
+		rigidBodies_[0]->setAngularVelocity(angularVelocity0);
 	}
-	else
+	else // Only one rigidBody
 	{
-		particles_[0]->setPos(particles_[0]->getPos() - interpenetration_ * normal_);
-		double impulse = particles_[0]->getSpeed().dotProduct(normal_) / (m_v0 * normal_.dotProduct(normal_));
-		particles_[0]->setSpeed(particles_[0]->getSpeed() - impulse * m_v0 * normal_);
-	}*/
+		rigidBodies_[0]->getMassCenter()->setPos(rigidBodies_[0]->getMassCenter()->getPos() - interpenetration_ * normal_);
+		double impulse = rigidBodies_[0]->getMassCenter()->getSpeed().dotProduct(normal_) / (inv_m0 * normal_.dotProduct(normal_));
+		rigidBodies_[0]->getMassCenter()->setSpeed(rigidBodies_[0]->getMassCenter()->getSpeed() - impulse * inv_m0 * normal_);
+
+		Vector3d contactOffset = contactPoint_ - rigidBodies_[0]->getMassCenter()->getPos();
+		Vector3d angularVelocity = rigidBodies_[0]->getAngularVelocity() + Matrix3xVector(rigidBodies_[0]->getInvJ(), contactOffset.crossProduct(impulse * normal_));
+		rigidBodies_[0]->setAngularVelocity(angularVelocity);
+	}
 }

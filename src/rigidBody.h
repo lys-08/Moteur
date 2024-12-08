@@ -30,6 +30,7 @@ public:
     Particle* getMassCenter();
     Quaternion getRotation();
     Vector3d getAngularVelocity();
+    Matrix3 getInvJ();
     void setRotation(Quaternion rotation);
     void setAngularVelocity(Vector3d angularVelocity);
 
