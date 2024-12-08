@@ -5,126 +5,79 @@
 
 #include "OcTree.h"
 
-OcTree::OcTree(ofBoxPrimitive boundary, int capacity)
+/**
+ * @brief "Default" and evaluated constructor
+ */
+OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int maxDepth)
 {
+    center_ = center;
+	minCapacity_ = minCapacity;
+	maxDepth_ = maxDepth;
 
-	boundary_ = boundary;
-	this->capacity_ = capacity;
-	divided_ = false;
+	if (w == 0.0f) w_ = 960;
+	else w_ = w / 2.0;
 
-	// Initialize children to nullptr
-	for (int i = 0; i < 8; i++) {
-		children[i] = nullptr;
+	if (h == 0.0f) h_ = 540;
+	else h_ = h / 2.0;
+
+	if (d == 0.0f) d_ = 500;
+	else d_ = d / 2.0;
+}
+
+/**
+ * @brief Insert a rigidBody in the list to add it in the octree
+ */
+void OcTree::insertRigidBody(RigidBody* rigidBody)
+{
+    /* If the number of RigidBody stocked is less than minimum capacity or if the max depth
+	 * of the octree is reached, we directly add the rigidBody to the list of value
+     */
+    if (values_.size() < minCapacity_ || maxDepth_ == 0) {
+        values_.push_back(rigidBody);
+        return;
+    }
+
+
+	// we get the position of the rigidBody to add and the radius of it's bounding box
+	Vector3d rbCenter = rigidBody->getMassCenter()->getPos();
+	Vector3d rbRadius = rigidBody->calculateBoundingRadius();
+
+	/* if the distance between the center of the rigidBody and the half size of the axe (for 
+	 * each one, then the collider is overlaping the octree and we add it directly to the 
+	 * list of rigidBody
+	 */
+	float offsetX, offsetY, offsetZ;
+	offsetX = rbCenter.getX() - center_.getX();
+	if (abs(offsetX) < w_) {
+		values_.push_back(rigidBody);
+		return;
 	}
 
+	offsetY = rbCenter.getY() - center_.getY();
+	if (abs(offsetY) < h_) {
+		values_.push_back(rigidBody);
+		return;
+	}
+
+	offsetZ = rbCenter.getZ() - center_.getZ();
+	if (abs(offsetZ) < d_) {
+		values_.push_back(rigidBody);
+		return;
+	}
+
+
+	// If the rigidBody is entirely in a leaf, we add it to this list
+	// the childIndex depend on the offset value (vary between 0 and 7 => 8 sub octree)
+	int childIndex = 0;
+
+	if (offsetX > 0.f) childIndex += 1;
+	if (offsetY > 0.f) childIndex += 2;
+	if (offsetZ > 0.f) childIndex += 4;
+
+	if (children_[childIndex] == nullptr) // if their is no children, we create it
+	{
+		Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
+		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
+	}
+	children_[childIndex]->insertRigidBody(rigidBody);
 }
-
-void OcTree::initialize(const std::vector<RigidBody*>& rigidBodies) {
-	buildTree(rigidBodies, boundary_); // We start the recursion with the initial boundary
-}
-
-bool OcTree::isRigidBodyInBoundary(const RigidBody& body, const ofBoxPrimitive& boundary) {
-	// We verify if the center of mass of the rigid body is inside the boundary
-    Vector3d centerOfMass = body.getMassCenter()->getPos();
-    if (boundary.inside(centerOfMass.v3())) {
-        return true;
-    }
-
-	// We verify if the bounding sphere of the rigid body intersects the boundary
-    float boundingRadius = body.getBoundingRadius();
-    ofVec3f sphereMin(centerOfMass.getX() - boundingRadius,
-        centerOfMass.getY() - boundingRadius,
-        centerOfMass.getZ() - boundingRadius);
-    ofVec3f sphereMax(centerOfMass.getX() + boundingRadius,
-        centerOfMass.getY() + boundingRadius,
-        centerOfMass.getZ() + boundingRadius);
-    
-    return boundary.intersects(ofBoxPrimitive((sphereMin + sphereMax) / 2,
-        sphereMax.x - sphereMin.x,
-        sphereMax.y - sphereMin.y,
-        sphereMax.z - sphereMin.z));
-}
-
-void OcTree::buildTree(const std::vector<RigidBody*>& rigidBodies, const ofBoxPrimitive& boundary) {
-	// We count the number of rigid bodies in the boundary
-    std::vector<RigidBody*> containedBodies;
-    for (RigidBody* body : rigidBodies) {
-		if (isRigidBodyInBoundary(*body, boundary)) { // We use the current boundary passed as parameter
-            containedBodies.push_back(body);
-        }
-    }
-
-	// We subdivide if the capacity is exceeded
-    if (containedBodies.size() > capacity_) {
-        if (!divided_) { // Passing the current boundary as parameter
-            subdivide(boundary);
-        }
-
-		// We continue the recursion with the childrens
-        for (int i = 0; i < 8; ++i) {
-            if (children[i] != nullptr) {
-                children[i]->buildTree(containedBodies, children[i]->boundary_); // Passe le boundary de l'enfant
-            }
-        }
-    }
-    else {
-        
-        rigidBodies_ = containedBodies;
-        divided_ = false;
-    }
-}
-
-void OcTree::subdivide(const ofBoxPrimitive& parentBoundary) {
-    // We obtain the dimensions of the parrent boundary
-    ofVec3f center = parentBoundary.getPosition();
-    float halfWidth = parentBoundary.getWidth() / 2;
-    float halfHeight = parentBoundary.getHeight() / 2;
-    float halfDepth = parentBoundary.getDepth() / 2;
-
-    // We create the 8 sub-cubes
-    for (int i = 0; i < 8; ++i) {
-        ofVec3f offset(
-            (i & 1 ? 1 : -1) * halfWidth / 2,
-            (i & 2 ? 1 : -1) * halfHeight / 2,
-            (i & 4 ? 1 : -1) * halfDepth / 2);
-
-        children[i] = new OcTree(
-            ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth),
-            capacity_);
-        children[i]->boundary_ = ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth); // Assign the sub-boundary
-    }
-
-    divided_ = true;
-}
-
-void OcTree::checkCollisions() {
-	// If the OcTree is subdivided, we check collisions for the 8 childrens
-    if (divided_) {
-        for (int i = 0; i < 8; ++i) {
-            if (children[i] != nullptr) {
-                children[i]->checkCollisions(); // Appel récursif sur les subdivisions
-            }
-        }
-    }
-    else {
-		// If we're on a leaf, we check collisions between the rigid bodies
-        for (size_t i = 0; i < rigidBodies_.size(); ++i) {
-            for (size_t j = i + 1; j < rigidBodies_.size(); ++j) {
-                if (checkBoundingVolumesOverlap(*rigidBodies_[i], *rigidBodies_[j])) {
-                    // TODO RESOLUTION COLLISION FUNCTION
-                    std::cout << "Collision detected between RigidBody " << i
-                        << " and RigidBody " << j << std::endl;
-                }
-            }
-        }
-    }
-}
-
-bool OcTree::checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2) {
-    Vector3d center1 = body1.getMassCenter()->getPos();
-    Vector3d center2 = body2.getMassCenter()->getPos();
-    float distanceSquared = (center1 - center2).lengthSquared(); // Squared distance
-    float combinedRadius = body1.getBoundingRadius() + body2.getBoundingRadius();
-    return distanceSquared <= (combinedRadius * combinedRadius); // Overlapping if true
-}
-

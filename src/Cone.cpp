@@ -1,3 +1,8 @@
+/**
+* \file cone.cpp
+* This file contains the implementation of all methods and attributes of the Cone class
+*/
+
 #include "cone.h"
 #include <of3dGraphics.h>
 #include <ofGraphics.h>
@@ -44,25 +49,46 @@ Cone::Cone(float mass, Vector3d position, Vector3d speed, Quaternion rotation, f
     );
 }
 
-// Getters / Setters
-float Cone::getRadius() const {
+
+
+// ============================================================================
+// Getters / Setters ==========================================================
+// ============================================================================
+
+float Cone::getRadius() const 
+{
     return radius_;
 }
 
-float Cone::getHeight() const {
+float Cone::getHeight() const 
+{
     return height_;
 }
 
-void Cone::setRadius(float radius) {
+void Cone::setRadius(float radius) 
+{
     radius_ = radius;
 }
 
-void Cone::setHeight(float height) {
+void Cone::setHeight(float height) 
+{
     height_ = height;
 }
 
-// Other methods
-bool Cone::isInRigidBody(const Vector3d& point) {
+
+
+// ============================================================================
+// Other methods ==============================================================
+// ============================================================================
+
+/**
+ * @brief Test if a point is in the Cone
+ *
+ * @param point the point to test
+ * @return true if the point is in the cone, false otherwise
+*/
+bool Cone::isInRigidBody(const Vector3d& point) 
+{
     Vector3d apex = massCenter_->getPos() + Vector3d(0, 0, height_, 1);
 
     // Check if the point lies inside the cone's volume
@@ -74,6 +100,12 @@ bool Cone::isInRigidBody(const Vector3d& point) {
     return distanceFromAxis <= maxRadiusAtHeight && point.getZ() <= massCenter_->getPos().getZ() + height_ && point.getZ() >= massCenter_->getPos().getZ();
 }
 
+/**
+ * @brief Test if a point is colinear with one of the axes of the cone
+ *
+ * @param point the point to test
+ * @return true if the point is colinear to one of the axes, false otherwise
+*/
 bool Cone::isColinear(const Vector3d& force, const Vector3d& point)
 {
     double eps = 1e-6;
@@ -84,15 +116,26 @@ bool Cone::isColinear(const Vector3d& force, const Vector3d& point)
     return alignedWithH && fAlignedWithH;
 }
 
-void Cone::calculateBoundingRadius()
+/**
+ * @brief Calculate the radius of the bounding sphere of the box
+ *
+ * @return the radius of the bounding sphere of the box
+*/
+float Cone::calculateBoundingRadius()
 {
     float radiusBase = getRadius();
     float height = getHeight();
 
-    boundingRadius_ = sqrt(radiusBase * radiusBase + (height / 2) * (height / 2));
+    return sqrt(radiusBase * radiusBase + (height / 2) * (height / 2));
 }
 
-void Cone::draw() {
+/**
+ * @brief Draw the cone in the scene
+ *
+ * @return nothing
+*/
+void Cone::draw() 
+{
     ofNoFill();
     massCenter_->draw();
 

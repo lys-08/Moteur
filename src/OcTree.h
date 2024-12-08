@@ -1,47 +1,34 @@
 /**
 * \file OcTree.cpp
-* This file contains the implementation of all methods and attributes of the OcTree class
+* This file contains the declaration of all methods and attributes of the OcTree class
 */
+#pragma once
 
+#include "vector3d.h"
 #include "rigidBody.h"
 #include <vector>
-#include "ofMain.h"
 
-#pragma once
+
 class OcTree
 {
+	OcTree* children_[8]; // leaf
+	std::vector<RigidBody*> values_; // TODO : rigidBody or collider ?
+	int minCapacity_;
+	int maxDepth_;
+
+	// Position of the Octree
+	Vector3d center_;
+	float w_; // width ~ x / 2
+	float h_; // height ~ y / 2
+	float d_; // depth ~ z / 2
+
 
 public:
 	// constructor
-	OcTree(ofBoxPrimitive boundary, int capacity);
+	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity, int maxDepth); // TODO : default values
 
 	// Methods
-	
-	void subdivide();
-	std::vector<RigidBody*> query(const ofBoxPrimitive& range);
-	void draw();
-	bool isRigidBodyInBoundary(const RigidBody& body, const ofBoxPrimitive& boundary);
-	void buildTree(const std::vector<RigidBody*>& rigidBodies, const ofBoxPrimitive& boundary);
-	void initialize(const std::vector<RigidBody*>& rigidBodies);
-	void subdivide(const ofBoxPrimitive& parentBoundary);
-	void checkCollisions();
-	bool checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2);
-
-
-private:
-
-	std::vector<RigidBody> rigidBodies_; // List of rigid bodies in the OcTree
-
-	ofBoxPrimitive boundary_; // Starting boundary of the OcTree
-
-	int capacity_; // Maximum number of rigid bodies tolerated in a sub-division square of the OcTree
-
-	bool divided_; // Indicate if the 3D cell is sub-divised or not
-
-	OcTree* children[8];// 8 children of the OcTree (dividing a cube in 3D gives 8 sub-cubes)
-
-
-
-
+	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
+	// void checkCollisions(std::vector<RigidbodyContact>& contacts);
+	// void checkBodyCollision(const PrimitiveCollider* value, std::vector<RigidbodyContact>& contacts);
 };
-

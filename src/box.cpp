@@ -134,6 +134,22 @@ bool Box::isColinear(const Vector3d& force, const Vector3d& point)
 }
 
 /**
+ * @brief Calculate the radius of the bounding sphere of the box
+ *
+ * @return the radius of the bounding sphere of the box
+*/
+float Box::calculateBoundingRadius()
+{
+    float halfWidth = getW().getX();
+    float halfHeight = getH().getY();
+    float halfDepth = getD().getZ();
+
+
+    return sqrt(halfWidth * halfWidth + halfHeight * halfHeight + halfDepth * halfDepth);
+}
+
+
+/**
  * @brief Draw the box in the scene
  *
  * @return nothing
@@ -161,14 +177,3 @@ void Box::draw()
     ofPopMatrix();
     ofFill();
 }
-
-void Box::calculateBoundingRadius()
-{
-    float halfWidth = getW().getX();  
-    float halfHeight = getH().getY(); 
-    float halfDepth = getD().getZ();  
-
-    
-    boundingRadius_ = sqrt(halfWidth * halfWidth + halfHeight * halfHeight + halfDepth * halfDepth);
-}
-
