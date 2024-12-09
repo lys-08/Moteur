@@ -16,16 +16,16 @@ public:
 	OcTree(ofBoxPrimitive boundary, int capacity);
 
 	// Methods
-	
-	void subdivide();
-	std::vector<RigidBody*> query(const ofBoxPrimitive& range);
+
 	void draw();
-	bool isRigidBodyInBoundary(const RigidBody& body, const ofBoxPrimitive& boundary);
+	bool isRigidBodyInBoundary(RigidBody& body, const ofBoxPrimitive& boundary);
 	void buildTree(const std::vector<RigidBody*>& rigidBodies, const ofBoxPrimitive& boundary);
 	void initialize(const std::vector<RigidBody*>& rigidBodies);
 	void subdivide(const ofBoxPrimitive& parentBoundary);
 	void checkCollisions();
-	bool checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2);
+	bool checkBoundingVolumesOverlap(RigidBody& body1, RigidBody& body2);
+	bool isPointInsideBox(const glm::vec3& point, const ofBoxPrimitive& box);
+	bool doesSphereIntersectBox(const glm::vec3& center, float radius, const ofBoxPrimitive& box);
 
 
 private:

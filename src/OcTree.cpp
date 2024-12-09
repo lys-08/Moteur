@@ -20,56 +20,56 @@ OcTree::OcTree(ofBoxPrimitive boundary, int capacity)
 }
 
 void OcTree::initialize(const std::vector<RigidBody*>& rigidBodies) {
-	buildTree(rigidBodies, boundary_); // We start the recursion with the initial boundary
+    buildTree(rigidBodies, boundary_); // We start the recursion with the initial boundary
 }
 
-bool OcTree::isRigidBodyInBoundary(const RigidBody& body, const ofBoxPrimitive& boundary) {
-	// We verify if the center of mass of the rigid body is inside the boundary
-    Vector3d centerOfMass = body.getMassCenter()->getPos();
-    if (boundary.inside(centerOfMass.v3())) {
+bool OcTree::isRigidBodyInBoundary(RigidBody& body, const ofBoxPrimitive& boundary) {
+	// We check if the center of mass of the rigid body is inside the boundary
+    glm::vec3 centerOfMass = body.getMassCenter()->getPos().v3();
+    if (isPointInsideBox(centerOfMass, boundary)) {
         return true;
     }
 
-	// We verify if the bounding sphere of the rigid body intersects the boundary
+	// We check if the bounding sphere of the rigid body intersects the boundary
     float boundingRadius = body.getBoundingRadius();
-    ofVec3f sphereMin(centerOfMass.getX() - boundingRadius,
-        centerOfMass.getY() - boundingRadius,
-        centerOfMass.getZ() - boundingRadius);
-    ofVec3f sphereMax(centerOfMass.getX() + boundingRadius,
-        centerOfMass.getY() + boundingRadius,
-        centerOfMass.getZ() + boundingRadius);
-    
-    return boundary.intersects(ofBoxPrimitive((sphereMin + sphereMax) / 2,
-        sphereMax.x - sphereMin.x,
-        sphereMax.y - sphereMin.y,
-        sphereMax.z - sphereMin.z));
+    return doesSphereIntersectBox(centerOfMass, boundingRadius, boundary);
 }
 
 void OcTree::buildTree(const std::vector<RigidBody*>& rigidBodies, const ofBoxPrimitive& boundary) {
-	// We count the number of rigid bodies in the boundary
+    // Create a vector to hold rigid bodies that are within the current boundary
     std::vector<RigidBody*> containedBodies;
+
+    // Iterate through all rigid bodies and check if they are inside the current boundary
     for (RigidBody* body : rigidBodies) {
-		if (isRigidBodyInBoundary(*body, boundary)) { // We use the current boundary passed as parameter
-            containedBodies.push_back(body);
+        if (isRigidBodyInBoundary(*body, boundary)) {
+            containedBodies.push_back(body); // Add rigid body to the contained list
         }
     }
 
-	// We subdivide if the capacity is exceeded
+    // Check if the number of contained rigid bodies exceeds the capacity
     if (containedBodies.size() > capacity_) {
-        if (!divided_) { // Passing the current boundary as parameter
-            subdivide(boundary);
+        // If the OcTree node is not yet divided, subdivide it
+        if (!divided_) {
+            subdivide(boundary); // Split the current boundary into smaller regions
         }
 
-		// We continue the recursion with the childrens
+        // Recursively build the tree for each child node
         for (int i = 0; i < 8; ++i) {
             if (children[i] != nullptr) {
-                children[i]->buildTree(containedBodies, children[i]->boundary_); // Passe le boundary de l'enfant
+                children[i]->buildTree(containedBodies, children[i]->boundary_); // Pass the child's boundary
             }
         }
     }
     else {
-        
-        rigidBodies_ = containedBodies;
+        // If the number of rigid bodies is within capacity, store them in the current node
+        rigidBodies_.clear(); // Clear the current list to avoid duplicates
+        for (RigidBody* body : containedBodies) {
+            if (body) { // Ensure the pointer is not null
+                rigidBodies_.push_back(*body); // Copy the object from the pointer
+            }
+        }
+
+        // Mark this node as a leaf (not divided)
         divided_ = false;
     }
 }
@@ -89,9 +89,9 @@ void OcTree::subdivide(const ofBoxPrimitive& parentBoundary) {
             (i & 4 ? 1 : -1) * halfDepth / 2);
 
         children[i] = new OcTree(
-            ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth),
+            ofBoxPrimitive(halfWidth, halfHeight, halfDepth),
             capacity_);
-        children[i]->boundary_ = ofBoxPrimitive(center + offset, halfWidth, halfHeight, halfDepth); // Assign the sub-boundary
+        children[i]->boundary_ = ofBoxPrimitive(halfWidth, halfHeight, halfDepth); // Assign the sub-boundary
     }
 
     divided_ = true;
@@ -110,7 +110,7 @@ void OcTree::checkCollisions() {
 		// If we're on a leaf, we check collisions between the rigid bodies
         for (size_t i = 0; i < rigidBodies_.size(); ++i) {
             for (size_t j = i + 1; j < rigidBodies_.size(); ++j) {
-                if (checkBoundingVolumesOverlap(*rigidBodies_[i], *rigidBodies_[j])) {
+                if (checkBoundingVolumesOverlap(rigidBodies_[i], rigidBodies_[j])) {
                     // TODO RESOLUTION COLLISION FUNCTION
                     std::cout << "Collision detected between RigidBody " << i
                         << " and RigidBody " << j << std::endl;
@@ -120,11 +120,51 @@ void OcTree::checkCollisions() {
     }
 }
 
-bool OcTree::checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2) {
+bool OcTree::checkBoundingVolumesOverlap(RigidBody& body1, RigidBody& body2) {
     Vector3d center1 = body1.getMassCenter()->getPos();
     Vector3d center2 = body2.getMassCenter()->getPos();
-    float distanceSquared = (center1 - center2).lengthSquared(); // Squared distance
+
+    float dx = center1.getX() - center2.getX();
+    float dy = center1.getY() - center2.getY();
+    float dz = center1.getZ() - center2.getZ();
+
+    float distanceSquared = dx * dx + dy * dy + dz * dz;
+
+	// We calculate the combined radius of the two bounding spheres
     float combinedRadius = body1.getBoundingRadius() + body2.getBoundingRadius();
-    return distanceSquared <= (combinedRadius * combinedRadius); // Overlapping if true
+
+	// If the distance between the two centers is less than the sum of the radius, the bounding spheres intersect
+    return distanceSquared <= (combinedRadius * combinedRadius);
 }
+
+bool OcTree::isPointInsideBox(const glm::vec3& point, const ofBoxPrimitive& box)
+{
+	// We get the boundaries of the box
+    glm::vec3 min = box.getPosition() - glm::vec3(box.getWidth() / 2, box.getHeight() / 2, box.getDepth() / 2);
+    glm::vec3 max = box.getPosition() + glm::vec3(box.getWidth() / 2, box.getHeight() / 2, box.getDepth() / 2);
+
+	// We verify if the point is inside the box by checking the x, y and z coordinates of the point
+    return (point.x >= min.x && point.x <= max.x &&
+        point.y >= min.y && point.y <= max.y &&
+        point.z >= min.z && point.z <= max.z);
+}
+
+bool OcTree::doesSphereIntersectBox(const glm::vec3& center, float radius, const ofBoxPrimitive& box) {
+	// We get the boundaries of the box
+    glm::vec3 min = box.getPosition() - glm::vec3(box.getWidth() / 2, box.getHeight() / 2, box.getDepth() / 2);
+    glm::vec3 max = box.getPosition() + glm::vec3(box.getWidth() / 2, box.getHeight() / 2, box.getDepth() / 2);
+
+	// We calculate the closest point to the sphere
+    glm::vec3 closestPoint(
+        glm::clamp(center.x, min.x, max.x), 
+        glm::clamp(center.y, min.y, max.y),
+        glm::clamp(center.z, min.z, max.z));
+
+	// We calculate the distance between the center of the sphere and the closest point
+    float distanceSquared = glm::distance2(center, closestPoint);
+
+	// We check if the distance is less than the radius of the sphere
+    return distanceSquared <= radius * radius;
+}
+
 
