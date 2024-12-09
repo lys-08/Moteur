@@ -2,6 +2,7 @@
 #include "box.h"
 #include "Cone.h"
 #include "SimpleForce.h"
+#include "../solve.h"
 // Tests
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
@@ -13,6 +14,33 @@
 void ofApp3::setup()
 {
 	previousTime_ = std::clock();
+
+	std::vector<Vector3d> object1 = {
+		{0, 0, 0},
+		{1, 4, 0},
+		{4, 1, 0},
+		{1.5, 1.5, 1.5}
+	};
+
+	std::vector<Vector3d> object2 = {
+		{1, 0, 0},
+		{4, 3, 0},
+		{5, -1, 0},
+		{3.5, 1, 1.5}
+	};
+
+	// Appeler la fonction pour vérifier s'il existe un plan séparateur
+	bool result = FourierMotzkin::has_separating_plane(object1, object1);
+
+	if (result)
+	{
+		std::cout << "Il existe un plan séparateur entre les deux objets." << std::endl;
+	}
+	else
+	{
+		std::cout << "Les deux objets sont en collision." << std::endl;
+	}
+
 }
 
 //--------------------------------------------------------------

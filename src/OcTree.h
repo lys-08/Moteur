@@ -25,7 +25,7 @@ class OcTree
 
 public:
 	// constructor
-	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity, int maxDepth); // TODO : default values
+	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity=0, int maxDepth=0); // TODO : default values
 
 	// Methods
 	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
