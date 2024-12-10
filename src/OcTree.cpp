@@ -84,12 +84,34 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	children_[childIndex]->insertRigidBody(rigidBody);
 }
 
+bool OcTree::checkBoundingVolumesOverlap()
+{
+	size_t n = values_.size();
+
+	for (size_t i = 0; i < n; ++i) {
+		for (size_t j = i + 1; j < n; ++j) {
+			RigidBody* body1 = values_[i];
+			RigidBody* body2 = values_[j];
+
+			Vector3d center1 = body1->getMassCenter()->getPos();
+			Vector3d center2 = body2->getMassCenter()->getPos();
+
+			double radius1 = body1->calculateBoundingRadius();
+			double radius2 = body2->calculateBoundingRadius();
+
+			double distance = center1.distance(center2);
+
+			return distance <= (radius1 + radius2);
+		}
+	}
+}
+
 /**
  * @brief: check if two rigid bodies in a single leaf are in collision. Their bounding volume are already in collision TODO
  */
 void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
 {
-	if (values_.size() != 2) return;
+	if (children_ != nullptr) return;
 
 	//TODO allocation à chaque appel ?
 	Vector3d xAxis(1, 0, 0);

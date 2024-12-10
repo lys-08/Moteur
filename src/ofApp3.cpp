@@ -15,6 +15,8 @@ void ofApp3::setup()
 {
 	previousTime_ = std::clock();
 
+	physics.start(ofGetWidth(),ofGetHeight());
+
 	std::vector<Vector3d> object1 = {
 		{0, 0, 0},
 		{1, 4, 0},

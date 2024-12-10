@@ -4,6 +4,7 @@
 #include "rigidBodyForceRegistry.h"
 #include "rigidBodyGravity.h"
 #include "SimpleForce.h"
+#include "OcTree.h"
 
 class Physics
 {
@@ -14,6 +15,7 @@ private:
 
 public:
 	std::vector<RigidBody*> objects_;
+	OcTree octree;
 
 	Physics();
 	void start(int x, int y);

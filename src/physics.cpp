@@ -28,7 +28,7 @@ Physics::Physics()
 */
 void Physics::start(int x, int y)
 {
-
+	octree = OcTree(); //TODO coordonnées du milieu ?
 }
 
 /**

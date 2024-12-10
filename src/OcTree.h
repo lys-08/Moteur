@@ -26,11 +26,11 @@ class OcTree
 
 public:
 	// constructor
-	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity=0, int maxDepth=0); // TODO : default values
+	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity = 2, int maxDepth = 10); // TODO : default values
 
 	// Methods
 	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
-	//bool OcTree::checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2);
+	bool checkBoundingVolumesOverlap();
 	void checkCollisions(std::vector<RigidBodyContact>& contacts);
 	// void checkBodyCollision(const PrimitiveCollider* value, std::vector<RigidbodyContact>& contacts);
 	void draw();
