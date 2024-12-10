@@ -16,7 +16,6 @@ class OcTree
 	std::vector<RigidBody*> values_; // TODO : rigidBody or collider ?
 	int minCapacity_;
 	int maxDepth_;
-	bool leaf_;
 
 	// Position of the Octree
 	Vector3d center_;
@@ -27,7 +26,7 @@ class OcTree
 
 public:
 	// constructor
-	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity = 2, int maxDepth = 10, bool leaf = false); // TODO : default values
+	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity = 2, int maxDepth = 10); // TODO : default values
 
 	// Methods
 	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?

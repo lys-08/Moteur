@@ -11,12 +11,11 @@
 /**
  * @brief "Default" and evaluated constructor
  */
-OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int maxDepth, bool leaf)
+OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int maxDepth)
 {
     center_ = center;
 	minCapacity_ = minCapacity;
 	maxDepth_ = maxDepth;
-	leaf_ = leaf;
 	for (int i = 0; i < 8; ++i) 
 	{
 		children_[i] = nullptr;
@@ -43,10 +42,10 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
     /* If the number of RigidBody stocked is less than minimum capacity or if the max depth
 	 * of the octree is reached, we directly add the rigidBody to the list of value
      */
-    /*if (values_.size() < minCapacity_ || maxDepth_ == 0) {
+    if (values_.size() < minCapacity_ || maxDepth_ == 0) {
         values_.push_back(rigidBody);
         return;
-    }*/
+    }
 
 
 	// we get the position of the rigidBody to add and the radius of it's bounding box
@@ -59,22 +58,22 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	 */
 	float offsetX, offsetY, offsetZ;
 	offsetX = rbCenter.getX() - center_.getX();
-	/*if (abs(offsetX) < w_) {
+	if (abs(offsetX) < w_) {
 		values_.push_back(rigidBody);
 		return;
-	}*/
+	}
 
 	offsetY = rbCenter.getY() - center_.getY();
-	/*if (abs(offsetY) < h_) {
+	if (abs(offsetY) < h_) {
 		values_.push_back(rigidBody);
 		return;
-	}*/
+	}
 
 	offsetZ = rbCenter.getZ() - center_.getZ();
-	/*if (abs(offsetZ) < d_) {
+	if (abs(offsetZ) < d_) {
 		values_.push_back(rigidBody);
 		return;
-	}*/
+	}
 
 
 	// If the rigidBody is entirely in a leaf, we add it to this list
@@ -88,7 +87,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	if (children_[childIndex] == nullptr) // if their is no children, we create it
 	{
 		Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
-		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1, true);
+		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 	}
 	children_[childIndex]->insertRigidBody(rigidBody);
 
@@ -109,13 +108,10 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		if (children_[childIndex] == nullptr) // if their is no children, we create it
 		{
 			Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
-			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1, true);
+			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 		}
 		children_[childIndex]->insertRigidBody(values_[i]);
 	}
-
-	leaf_ = false;
-	values_.clear();
 }
 
 void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
