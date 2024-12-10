@@ -122,10 +122,16 @@ void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
 			(*children_)[i].checkCollisionsInTree(contacts);
 		}
 	}
-
-	if (checkBoundingVolumesOverlap())
+	
+	std::vector<OcTree*> c = { children_[0],children_[1],children_[2],children_[3],children_[4],children_[5],children_[6],children_[7] };
+	if (std::all_of(c.begin(), c.end(), [](OcTree* child) { return child == nullptr; }))
 	{
-		checkCollisionsInChild(values_[0], values_[1], contacts);
+		auto p = checkBoundingVolumesOverlap();
+		if (p.first)
+		{
+			std::cout << p.first << std::endl;
+			checkCollisionsInChild(p.second.first, p.second.second, contacts);
+		}
 	}
 }
 
@@ -134,9 +140,9 @@ void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
  * 
  * @return true if the volumes overlap the bounding box, otherwise false
  */
-bool OcTree::checkBoundingVolumesOverlap()
+std::pair<bool,std::pair<RigidBody*,RigidBody*>> OcTree::checkBoundingVolumesOverlap()
 {
-	if (values_.empty()) return false;
+	if (values_.empty()) return std::pair(false,std::pair(nullptr,nullptr));
 	size_t n = values_.size();
 
 	for (size_t i = 0; i < n-1; ++i) {
@@ -152,10 +158,10 @@ bool OcTree::checkBoundingVolumesOverlap()
 
 			double distance = center1.distance(center2);
 
-			return distance <= (radius1 + radius2);
+			return std::pair((distance <= (radius1 + radius2)), std::pair(body1, body2));
 		}
 	}
-	return false;
+	return std::pair(false, std::pair(nullptr, nullptr));
 }
 
 /**
@@ -171,27 +177,54 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 	Vector3d xAxis(1, 0, 0);
 	//Vector3d yAxis(0, 1, 0);
 	//Vector3d zAxis(0, 0, 1);
+	std::cout << "hey" << std::endl;
 	if (r1->getMassCenter()->getPos().getX() != r2->getMassCenter()->getPos().getX())
 	{
 		if (r1->getMassCenter()->getPos().dotProduct(xAxis) < r2->getMassCenter()->getPos().dotProduct(xAxis))
 		{
 			//values 0 est � gauche, donc on peut appeler has separating planes
-			if (FourierMotzkin::has_separating_plane(r1->getVertex(), r2->getVertex()))
+			if (!FourierMotzkin::has_separating_plane(r1->getVertex(), r2->getVertex()))
 			{
+				std::cout << "contact" << std::endl;
 				RigidBody* rigidBodies[2];
 				rigidBodies[0] = r1;
 				rigidBodies[1] = r2;
 
-				//float interpenetration = distance - sumRadius;
-				Vector3d normal = (r1->getMassCenter()->getPos() - r2->getMassCenter()->getPos()).normalise2();
+				Vector3d center1 = r1->getMassCenter()->getPos();
+				Vector3d center2 = r2->getMassCenter()->getPos();
 
-				RigidBodyContact contact = RigidBodyContact(rigidBodies, 0, 1, Vector3d(),Vector3d());
+				// Extraction des sommets pour calculer les demi-longueurs
+				auto vertices1 = r1->getVertex();
+				auto vertices2 = r2->getVertex();
+
+				Vector3d extents1 = (vertices1[7] - vertices1[0]) * 0.5; // Supposant un cube aligné
+				Vector3d extents2 = (vertices2[7] - vertices2[0]) * 0.5; // Supposant un cube aligné
+
+				Vector3d diff = center2 - center1;
+
+				// Normalisation de la direction pour obtenir la normale
+				Vector3d normal = diff.normalise2();
+
+				// Calcul du point de contact
+				Vector3d contactPoint1 = center1 + normal * extents1.dotProduct(normal);
+				Vector3d contactPoint2 = center2 - normal * extents2.dotProduct(normal);
+
+				Vector3d contactPoint = (contactPoint1 + contactPoint2) * 0.5; // Moyenne des points sur les surfaces
+
+				// Calcul de l'interpénétration
+				double distance = diff.norm();
+				double radius1 = r1->calculateBoundingRadius();
+				double radius2 = r2->calculateBoundingRadius();
+				double interpenetration = distance - (radius1 + radius2);
+
+				// Création du contact
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, interpenetration, 1, contactPoint, normal);
 				contacts.push_back(contact);
 			}
 		}
 		else
 		{
-			if (FourierMotzkin::has_separating_plane(r2->getVertex(), r1->getVertex()))
+			if (!FourierMotzkin::has_separating_plane(r2->getVertex(), r1->getVertex()))
 			{
 				RigidBody* rigidBodies[2];
 				rigidBodies[0] = r2;
@@ -240,14 +273,14 @@ void OcTree::draw()
 {
 
 	Vector3d vertices[8] = {
-		center_ - w_ - w_ - w_,
-		center_ + w_ - w_ - w_,
-		center_ + w_ + w_ - w_,
-		center_ - w_ + w_ - w_,
-		center_ - w_ - w_ + w_,
-		center_ + w_ - w_ + w_,
-		center_ + w_ + w_ + w_,
-		center_ - w_ + w_ + w_ 
+		center_ - w_ - h_ - d_,
+		center_ + w_ - h_ - d_,
+		center_ + w_ + h_ - d_,
+		center_ - w_ + h_ - d_,
+		center_ - w_ - h_ + d_,
+		center_ + w_ - h_ + d_,
+		center_ + w_ + h_ + d_,
+		center_ - w_ + h_ + d_ 
 	};
 
 	const int edges[12][2] = {

@@ -119,7 +119,6 @@ void InequalitySystem::print() const
 
 bool InequalitySystem::is_valid() const
 {
-    std::cout << ineqs_.size() << std::endl;
 
     // Vérification de contradictions évidentes
     for (const auto& inequality : ineqs_)

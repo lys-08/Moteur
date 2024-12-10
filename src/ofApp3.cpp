@@ -203,7 +203,7 @@ void ofApp3::SpawnRigidBody(int type)
 		RigidBody* newObject = new Box(20,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
 		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0,0), simpleForceType_);
 		physics.addRigidBody(newObject);
-		physics.addSimpleForce(newForce);
+		//physics.addSimpleForce(newForce);
 	}
 	else if (type == 2) //Cone
 	{

@@ -10,10 +10,11 @@
 class Physics
 {
 private:
+	double width_;
+	double height_;
 	RigidBodyForceRegistry forcesRegistry_;
 	RigidBodyGravity g_;
 	std::vector<SimpleForce> simpleForces_;
-
 	std::vector<RigidBodyContact> contacts_;
 
 public:
@@ -22,6 +23,7 @@ public:
 
 	Physics();
 	void start(int x, int y);
+	void deleteOutOfBounds();
 	void fillTree();
 	void update(double time);
 	void addRigidBody(RigidBody* rigidBody);

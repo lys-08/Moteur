@@ -28,7 +28,26 @@ Physics::Physics()
 */
 void Physics::start(int x, int y)
 {
-	octree = OcTree(Vector3d(x/2,y/2,0),x,y,500,2,8);
+	width_ = x;
+	height_ = y;
+	octree = OcTree(Vector3d(x/2.0,y/2.0,0.0),x,y,500,10,8);
+}
+
+void Physics::deleteOutOfBounds()
+{
+	std::vector<RigidBody*> newObject;
+	for (int i = 0; i < objects_.size(); i++)
+	{
+		if (objects_[i]->getMassCenter()->getPos().getX() > width_ || objects_[i]->getMassCenter()->getPos().getX() < 0 ||
+			objects_[i]->getMassCenter()->getPos().getY() > height_ || objects_[i]->getMassCenter()->getPos().getY() < 0 ||
+			objects_[i]->getMassCenter()->getPos().getZ() > 250 || objects_[i]->getMassCenter()->getPos().getZ() < -250)
+		{
+			continue;
+		}
+		newObject.push_back(objects_[i]);
+	}
+
+	objects_ = newObject;
 }
 
 /**
@@ -53,6 +72,8 @@ void Physics::fillTree()
 */
 void Physics::update(double time)
 {
+	deleteOutOfBounds();
+	std::cout << objects_.size() << std::endl;
 	fillTree();
 	updateForces(time);
 	integrate(time);
@@ -83,7 +104,7 @@ void Physics::updateForces(double time)
 	{
 		forcesRegistry_.add(objects_[i], &g_);
 
-		forcesRegistry_.add(objects_[i], &simpleForces_[i]);
+		//forcesRegistry_.add(objects_[i], &simpleForces_[i]);
 	}
 	forcesRegistry_.updateForce(time);
 	forcesRegistry_.clear();

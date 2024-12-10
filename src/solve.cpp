@@ -69,7 +69,6 @@ namespace FourierMotzkin
         InequalitySystem system = build_inequality_system(left, right);
 
         if (!system.is_valid()) {
-            std::cout << "Le système est invalide dès le départ." << std::endl;
             return false;  // Le système est déjà invalide, retournez false
         }
 
@@ -81,10 +80,8 @@ namespace FourierMotzkin
 
         for (size_t i = 0; i < steps.size(); ++i)
         {
-            std::cout << "Étape " << i << " : \n";
-            steps[i].print();  // Imprimez chaque étape du système pour vérifier son état
             if (!steps[i].is_valid()) {
-                std::cout << "Inégalités invalides à l'étape " << i << std::endl;
+                return false;
             }
         }
 
@@ -92,7 +89,6 @@ namespace FourierMotzkin
         // If the system is infeasible, return false (collision exists)
         if (steps.back().is_valid())
         {
-            std::cout << "ntm" << std::endl;
             return true;
         }
         return false;
