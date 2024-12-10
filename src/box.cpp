@@ -153,12 +153,7 @@ std::vector<Vector3d> Box::getVertex()
 */
 float Box::calculateBoundingRadius()
 {
-    float halfWidth = getW().getX();
-    float halfHeight = getH().getY();
-    float halfDepth = getD().getZ();
-
-
-    return sqrt(halfWidth * halfWidth + halfHeight * halfHeight + halfDepth * halfDepth);
+    return getH().norm() * 1.73;
 }
 
 
@@ -186,6 +181,7 @@ void Box::draw()
     float depth = d_.norm() * 2;
     ofSetColor(52, 174, 180);
     ofDrawBox(0, 0, 0, width, height, depth);
+    //ofDrawSphere(calculateBoundingRadius());
 
     ofPopMatrix();
     ofFill();

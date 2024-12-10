@@ -16,33 +16,6 @@ void ofApp3::setup()
 	previousTime_ = std::clock();
 
 	physics.start(ofGetWidth(),ofGetHeight());
-
-	std::vector<Vector3d> object1 = {
-		{0, 0, 0},
-		{1, 4, 0},
-		{4, 1, 0},
-		{1.5, 1.5, 1.5}
-	};
-
-	std::vector<Vector3d> object2 = {
-		{1, 0, 0},
-		{4, 3, 0},
-		{5, -1, 0},
-		{3.5, 1, 1.5}
-	};
-
-	// Appeler la fonction pour vérifier s'il existe un plan séparateur
-	bool result = FourierMotzkin::has_separating_plane(object1, object2);
-
-	if (result)
-	{
-		std::cout << "Il existe un plan séparateur entre les deux objets." << std::endl;
-	}
-	else
-	{
-		std::cout << "Les deux objets sont en collision." << std::endl;
-	}
-
 }
 
 //--------------------------------------------------------------
@@ -91,6 +64,7 @@ void ofApp3::draw()
 	{
 		physics.objects_[i]->draw();
 	}
+	physics.octree.draw();
 	ofRotateZDeg(-theta_);
 
 	// Canon

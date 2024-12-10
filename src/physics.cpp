@@ -28,7 +28,21 @@ Physics::Physics()
 */
 void Physics::start(int x, int y)
 {
-	octree = OcTree(); //TODO coordonnées du milieu ?
+	octree = OcTree(Vector3d(x/2,y/2,0),x,y,500,2,8);
+}
+
+/**
+ * @brief fill the octree with existing rigidbodies
+ *
+ * @return nothing
+*/
+void Physics::fillTree()
+{
+	octree.clearOctree();
+	for (int i = 0; i < objects_.size(); i++)
+	{
+		octree.insertRigidBody(objects_[i]);
+	}
 }
 
 /**
@@ -39,6 +53,7 @@ void Physics::start(int x, int y)
 */
 void Physics::update(double time)
 {
+	fillTree();
 	updateForces(time);
 	integrate(time);
 	generateContacts();
@@ -90,7 +105,7 @@ void Physics::integrate(double time)
 
 void Physics::generateContacts()
 {
-	//octree
+	octree.checkCollisionsInTree(contacts_);
 }
 
 /**

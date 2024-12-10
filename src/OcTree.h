@@ -30,9 +30,9 @@ public:
 
 	// Methods
 	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
+	void checkCollisionsInTree(std::vector<RigidBodyContact>& contacts);
 	bool checkBoundingVolumesOverlap();
-	void checkCollisions(std::vector<RigidBodyContact>& contacts);
-	// void checkBodyCollision(const PrimitiveCollider* value, std::vector<RigidbodyContact>& contacts);
+	void checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<RigidBodyContact>& contacts);
 	void clearOctree();
 	void draw();
 };

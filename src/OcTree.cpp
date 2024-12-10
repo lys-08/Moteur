@@ -4,6 +4,7 @@
 */
 
 #include "OcTree.h"
+#include "solve.h"
 #include <of3dGraphics.h>
 #include <ofGraphics.h>
 
@@ -113,6 +114,21 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	}
 }
 
+void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		if (children_[i] != nullptr) {
+			(*children_)[i].checkCollisionsInTree(contacts);
+		}
+	}
+
+	if (checkBoundingVolumesOverlap())
+	{
+		checkCollisionsInChild(values_[0], values_[1], contacts);
+	}
+}
+
 /**
  * @brief TODO
  * 
@@ -120,9 +136,10 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
  */
 bool OcTree::checkBoundingVolumesOverlap()
 {
+	if (values_.empty()) return false;
 	size_t n = values_.size();
 
-	for (size_t i = 0; i < n; ++i) {
+	for (size_t i = 0; i < n-1; ++i) {
 		for (size_t j = i + 1; j < n; ++j) {
 			RigidBody* body1 = values_[i];
 			RigidBody* body2 = values_[j];
@@ -138,6 +155,7 @@ bool OcTree::checkBoundingVolumesOverlap()
 			return distance <= (radius1 + radius2);
 		}
 	}
+	return false;
 }
 
 /**
@@ -145,23 +163,46 @@ bool OcTree::checkBoundingVolumesOverlap()
  * 
  * @return nothing
  */
-void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
+void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<RigidBodyContact>& contacts)
 {
-	if (children_ != nullptr) return;
+	//if (children_ != nullptr) return;
 
-	//TODO allocation à chaque appel ?
+	//TODO allocation ï¿½ chaque appel ?
 	Vector3d xAxis(1, 0, 0);
 	//Vector3d yAxis(0, 1, 0);
 	//Vector3d zAxis(0, 0, 1);
-	if (values_[0]->getMassCenter()->getPos().getX() != values_[1]->getMassCenter()->getPos().getX())
+	if (r1->getMassCenter()->getPos().getX() != r2->getMassCenter()->getPos().getX())
 	{
-		if (values_[0]->getMassCenter()->getPos().dotProduct(xAxis) < values_[1]->getMassCenter()->getPos().dotProduct(xAxis))
+		if (r1->getMassCenter()->getPos().dotProduct(xAxis) < r2->getMassCenter()->getPos().dotProduct(xAxis))
 		{
-			//values 0 est à gauche, donc on peut appeler has separating planes
+			//values 0 est ï¿½ gauche, donc on peut appeler has separating planes
+			if (FourierMotzkin::has_separating_plane(r1->getVertex(), r2->getVertex()))
+			{
+				RigidBody* rigidBodies[2];
+				rigidBodies[0] = r1;
+				rigidBodies[1] = r2;
+
+				//float interpenetration = distance - sumRadius;
+				Vector3d normal = (r1->getMassCenter()->getPos() - r2->getMassCenter()->getPos()).normalise2();
+
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, 0, 1, Vector3d(),Vector3d());
+				contacts.push_back(contact);
+			}
 		}
 		else
 		{
-			//values 1 est à gauche
+			if (FourierMotzkin::has_separating_plane(r2->getVertex(), r1->getVertex()))
+			{
+				RigidBody* rigidBodies[2];
+				rigidBodies[0] = r2;
+				rigidBodies[1] = r1;
+
+				//float interpenetration = distance - sumRadius;
+				//Vector3d normal = (particles_[i]->getPos() - particles_[j]->getPos()).normalise2();
+
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, 0, 1, Vector3d(), Vector3d());
+				contacts.push_back(contact);
+			}
 		}
 	}
 }
