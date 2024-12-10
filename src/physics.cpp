@@ -41,6 +41,8 @@ void Physics::update(double time)
 {
 	updateForces(time);
 	integrate(time);
+	generateContacts();
+	solveContacts(time);
 	resetAcc();
 }
 
@@ -84,6 +86,26 @@ void Physics::integrate(double time)
 	{
 		objects_[i]->integrate(time);
 	}
+}
+
+void Physics::generateContacts()
+{
+	//octree
+}
+
+/**
+ * @brief solve contacts using the impulse method
+ *
+ * @param duration
+ * @return nothing
+*/
+void Physics::solveContacts(double duration)
+{
+	for (int i = 0; i < contacts_.size(); i++)
+	{
+		contacts_[i].solve();
+	}
+	contacts_.clear();
 }
 
 /**
