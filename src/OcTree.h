@@ -30,6 +30,7 @@ public:
 
 	// Methods
 	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
+	//bool OcTree::checkBoundingVolumesOverlap(const RigidBody& body1, const RigidBody& body2);
 	void checkCollisions(std::vector<RigidBodyContact>& contacts);
 	// void checkBodyCollision(const PrimitiveCollider* value, std::vector<RigidbodyContact>& contacts);
 	void draw();

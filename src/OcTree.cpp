@@ -85,7 +85,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 }
 
 /**
- * @brief: check if two rigid bodies in a single leaf are in collision
+ * @brief: check if two rigid bodies in a single leaf are in collision. Their bounding volume are already in collision TODO
  */
 void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
 {
