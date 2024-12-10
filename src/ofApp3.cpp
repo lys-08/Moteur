@@ -2,7 +2,7 @@
 #include "box.h"
 #include "Cone.h"
 #include "SimpleForce.h"
-#include "../solve.h"
+#include "solve.h"
 // Tests
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
@@ -30,7 +30,7 @@ void ofApp3::setup()
 	};
 
 	// Appeler la fonction pour vérifier s'il existe un plan séparateur
-	bool result = FourierMotzkin::has_separating_plane(object1, object1);
+	bool result = FourierMotzkin::has_separating_plane(object1, object2);
 
 	if (result)
 	{

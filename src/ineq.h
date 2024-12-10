@@ -4,13 +4,6 @@
 #include <vector>
 #include <iostream>
 
-// Vector3D structure
-struct Vector3D
-{
-    double x, y, z;
-};
-
-// Inequality system structure
 class InequalitySystem
 {
 public:

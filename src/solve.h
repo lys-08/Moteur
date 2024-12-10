@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "ineq.h"
-#include "src/vector3d.h"
+#include "vector3d.h"
 
 namespace FourierMotzkin
 {
