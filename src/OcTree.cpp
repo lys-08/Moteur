@@ -88,7 +88,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	if (children_[childIndex] == nullptr) // if their is no children, we create it
 	{
 		Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
-		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
+		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1, true);
 	}
 	children_[childIndex]->insertRigidBody(rigidBody);
 
@@ -109,10 +109,13 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		if (children_[childIndex] == nullptr) // if their is no children, we create it
 		{
 			Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
-			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
+			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1, true);
 		}
 		children_[childIndex]->insertRigidBody(values_[i]);
 	}
+
+	leaf_ = false;
+	values_.clear();
 }
 
 void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
