@@ -11,11 +11,12 @@
 /**
  * @brief "Default" and evaluated constructor
  */
-OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int maxDepth)
+OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int maxDepth, bool leaf)
 {
     center_ = center;
 	minCapacity_ = minCapacity;
 	maxDepth_ = maxDepth;
+	leaf_ = leaf;
 	for (int i = 0; i < 8; ++i) 
 	{
 		children_[i] = nullptr;
