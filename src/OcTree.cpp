@@ -147,10 +147,19 @@ void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
  */
 void OcTree::clearOctree()
 {
+	// if their is no children, we clear the value and return
+	if (children_ == nullptr)
+	{
+		values_.clear();
+		return;
+	}
+
+	// Otherwise, we call this method for each child that is not null
 	for (int i = 0; i < 8; ++i) 
 	{
 		if (children_[i] != nullptr) (*children_)[i].clearOctree();
 	}
+	// We set the children to nullptr and clear the values
 	*children_ = nullptr;
 	values_.clear();
 }
