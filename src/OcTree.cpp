@@ -110,7 +110,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 			Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
 			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 		}
-		children_[childIndex]->insertRigidBody(rigidBody);
+		children_[childIndex]->insertRigidBody(values_[i]);
 	}
 }
 
