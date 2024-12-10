@@ -90,7 +90,6 @@ namespace FourierMotzkin
 
         //std::cout << "before is valid" << std::endl;
         // If the system is infeasible, return false (collision exists)
-        std::cout << steps.size() << std::endl;
         if (steps.back().is_valid())
         {
             std::cout << "ntm" << std::endl;

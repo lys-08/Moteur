@@ -118,7 +118,7 @@ bool Cone::isColinear(const Vector3d& force, const Vector3d& point)
 
 std::vector<Vector3d> Cone::getVertex()
 {
-    //todo ?
+    //TODO
     return std::vector<Vector3d>();
 }
 

@@ -6,6 +6,7 @@
 
 #include "vector3d.h"
 #include "rigidBody.h"
+#include "rigidbodyContact.h"
 #include <vector>
 
 
@@ -29,6 +30,7 @@ public:
 
 	// Methods
 	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
-	// void checkCollisions(std::vector<RigidbodyContact>& contacts);
+	void checkCollisions(std::vector<RigidBodyContact>& contacts);
 	// void checkBodyCollision(const PrimitiveCollider* value, std::vector<RigidbodyContact>& contacts);
+	void draw();
 };

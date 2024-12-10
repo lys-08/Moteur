@@ -4,6 +4,8 @@
 */
 
 #include "OcTree.h"
+#include <of3dGraphics.h>
+#include <ofGraphics.h>
 
 /**
  * @brief "Default" and evaluated constructor
@@ -80,4 +82,61 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 	}
 	children_[childIndex]->insertRigidBody(rigidBody);
+}
+
+/**
+ * @brief: check if two rigid bodies in a single leaf are in collision
+ */
+void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
+{
+	if (values_.size() != 2) return;
+
+	//TODO allocation à chaque appel ?
+	Vector3d xAxis(1, 0, 0);
+	//Vector3d yAxis(0, 1, 0);
+	//Vector3d zAxis(0, 0, 1);
+	if (values_[0]->getMassCenter()->getPos().getX() != values_[1]->getMassCenter()->getPos().getX())
+	{
+		if (values_[0]->getMassCenter()->getPos().dotProduct(xAxis) < values_[1]->getMassCenter()->getPos().dotProduct(xAxis))
+		{
+			//values 0 est à gauche, donc on peut appeler has separating planes
+		}
+		else
+		{
+			//values 1 est à gauche
+		}
+	}
+}
+
+void OcTree::draw()
+{
+
+	Vector3d vertices[8] = {
+		center_ - w_ - w_ - w_,
+		center_ + w_ - w_ - w_,
+		center_ + w_ + w_ - w_,
+		center_ - w_ + w_ - w_,
+		center_ - w_ - w_ + w_,
+		center_ + w_ - w_ + w_,
+		center_ + w_ + w_ + w_,
+		center_ - w_ + w_ + w_ 
+	};
+
+	const int edges[12][2] = {
+		{0, 1}, {1, 2}, {2, 3}, {3, 0},
+		{4, 5}, {5, 6}, {6, 7}, {7, 4},
+		{0, 4}, {1, 5}, {2, 6}, {3, 7}
+	};
+
+	for (const auto& edge : edges) {
+		const Vector3d& start = vertices[edge[0]];
+		const Vector3d& end = vertices[edge[1]];
+		ofDrawLine(start.getX(), start.getY(), start.getZ(), end.getX(), end.getY(), end.getZ());
+	}
+
+	for (OcTree* child : children_) {
+		if (child != nullptr) {
+			child->draw();
+		}
+	}
 }
