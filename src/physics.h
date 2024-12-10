@@ -22,6 +22,7 @@ public:
 
 	Physics();
 	void start(int x, int y);
+	void fillTree();
 	void update(double time);
 	void addRigidBody(RigidBody* rigidBody);
 	void addSimpleForce(SimpleForce force);
