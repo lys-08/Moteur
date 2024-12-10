@@ -27,6 +27,7 @@ public:
     // Other methods
     bool isInRigidBody(const Vector3d& point) override;
     bool isColinear(const Vector3d& force, const Vector3d& point);
+    std::vector<Vector3d> getVertex();
 	float calculateBoundingRadius() override; // Bounding Volume
     void draw() override;
 };

@@ -37,6 +37,7 @@ public:
     // Other methods
     virtual bool isInRigidBody(const Vector3d& point) = 0;
     virtual bool isColinear(const Vector3d& force, const Vector3d& point) = 0;
+    virtual std::vector<Vector3d> getVertex() = 0;
     void addForce(const Vector3d& force);
     void addForceAtPoint(const Vector3d& force, const Vector3d& point);
     void clearAccumForce();

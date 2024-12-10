@@ -133,6 +133,19 @@ bool Box::isColinear(const Vector3d& force, const Vector3d& point)
     return (alignedWithH && fAlignedWithH) || (alignedWithW && fAlignedWithW) || (alignedWithD && fAlignedWithD);
 }
 
+std::vector<Vector3d> Box::getVertex()
+{
+    Vector3d v1 = Vector3d(w_ + h_ + d_);
+    Vector3d v2 = Vector3d(w_ + h_ - d_);
+    Vector3d v3 = Vector3d(w_ + d_ - h_);
+    Vector3d v4 = Vector3d(w_ - d_ - h_);
+    Vector3d v5 = Vector3d(h_ + d_ - w_);
+    Vector3d v6 = Vector3d(h_ - d_ - w_);
+    Vector3d v7 = Vector3d(d_ - h_ - w_);
+    Vector3d v8 = Vector3d(-1 * d_ - h_ - w_);
+    return std::vector<Vector3d>({ v1,v2,v3,v4,v5,v6,v7,v8 });
+}
+
 /**
  * @brief Calculate the radius of the bounding sphere of the box
  *

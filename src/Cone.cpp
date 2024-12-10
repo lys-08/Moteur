@@ -116,6 +116,12 @@ bool Cone::isColinear(const Vector3d& force, const Vector3d& point)
     return alignedWithH && fAlignedWithH;
 }
 
+std::vector<Vector3d> Cone::getVertex()
+{
+    //todo ?
+    return std::vector<Vector3d>();
+}
+
 /**
  * @brief Calculate the radius of the bounding sphere of the box
  *
