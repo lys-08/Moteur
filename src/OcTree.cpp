@@ -15,6 +15,9 @@ OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int 
     center_ = center;
 	minCapacity_ = minCapacity;
 	maxDepth_ = maxDepth;
+	for (int i = 0; i < 8; ++i) {
+		children_[i] = nullptr;
+	}
 
 	if (w == 0.0f) w_ = 960;
 	else w_ = w / 2.0;
