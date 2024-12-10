@@ -28,6 +28,9 @@ OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int 
 
 /**
  * @brief Insert a rigidBody in the list to add it in the octree
+ * 
+ * @param rigidBody the rigidBody to insert
+ * @return nothing
  */
 void OcTree::insertRigidBody(RigidBody* rigidBody)
 {
@@ -84,6 +87,11 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	children_[childIndex]->insertRigidBody(rigidBody);
 }
 
+/**
+ * @brief TODO
+ * 
+ * @return true if the volumes overlap the bounding box, otherwise false
+ */
 bool OcTree::checkBoundingVolumesOverlap()
 {
 	size_t n = values_.size();
@@ -107,7 +115,9 @@ bool OcTree::checkBoundingVolumesOverlap()
 }
 
 /**
- * @brief: check if two rigid bodies in a single leaf are in collision. Their bounding volume are already in collision TODO
+ * @brief check if two rigid bodies in a single leaf are in collision. Their bounding volume are already in collision TODO
+ * 
+ * @return nothing
  */
 void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
 {
@@ -130,6 +140,26 @@ void OcTree::checkCollisions(std::vector<RigidBodyContact>& contacts)
 	}
 }
 
+/**
+ * @brief Clear the octree
+ *
+ * @return nothing
+ */
+void OcTree::clearOctree()
+{
+	for (int i = 0; i < 8; ++i) 
+	{
+		if (children_[i] != nullptr) (*children_)[i].clearOctree();
+	}
+	*children_ = nullptr;
+	values_.clear();
+}
+
+/**
+ * @brief Draw the octree
+ *
+ * @return nothing
+ */
 void OcTree::draw()
 {
 

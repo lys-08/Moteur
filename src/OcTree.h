@@ -33,5 +33,6 @@ public:
 	bool checkBoundingVolumesOverlap();
 	void checkCollisions(std::vector<RigidBodyContact>& contacts);
 	// void checkBodyCollision(const PrimitiveCollider* value, std::vector<RigidbodyContact>& contacts);
+	void clearOctree();
 	void draw();
 };
