@@ -21,9 +21,6 @@ protected:
     Vector3d accumForce_;
     Vector3d accumTorque_;
 
-    float boundingRadius_;
-
-
 public:
     // Constructors
     RigidBody(Particle* massCenter = nullptr, Quaternion rotation = Quaternion());
@@ -33,12 +30,14 @@ public:
     Particle* getMassCenter();
     Quaternion getRotation();
     Vector3d getAngularVelocity();
+    Matrix3 getInvJ() const;
     void setRotation(Quaternion rotation);
     void setAngularVelocity(Vector3d angularVelocity);
 
     // Other methods
     virtual bool isInRigidBody(const Vector3d& point) = 0;
     virtual bool isColinear(const Vector3d& force, const Vector3d& point) = 0;
+    virtual std::vector<Vector3d> getVertex() = 0;
     void addForce(const Vector3d& force);
     void addForceAtPoint(const Vector3d& force, const Vector3d& point);
     void clearAccumForce();
@@ -47,7 +46,5 @@ public:
     virtual void draw() = 0;
 
 	// Bounding Volume
-    float getBoundingRadius() const { return boundingRadius_; }
-    void setBoundingRadius(float radius) { boundingRadius_ = radius; }
-    virtual void calculateBoundingRadius() = 0;
+    virtual float calculateBoundingRadius() = 0;
 };

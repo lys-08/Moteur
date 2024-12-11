@@ -2,6 +2,7 @@
 #include "box.h"
 #include "Cone.h"
 #include "SimpleForce.h"
+#include "solve.h"
 // Tests
 #include "../tests/test_vector3d.h"
 #include "../tests/test_matrix3.h"
@@ -13,6 +14,8 @@
 void ofApp3::setup()
 {
 	previousTime_ = std::clock();
+
+	physics.start(ofGetWidth(),ofGetHeight());
 }
 
 //--------------------------------------------------------------
@@ -39,12 +42,12 @@ void ofApp3::draw()
 
 	ofDrawBitmapString(deltaTimeText, x, y);
 	ofSetColor(255, 0, 0);
-	ofDrawBitmapString("Force: (10,0,0) except for q: (10,10,0)", x, y + 20);
+	//ofDrawBitmapString("Force: (10,0,0)", x, y + 20);
 	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("b: Box, c: Cone, p: Pave\nz: Box + depth, q: Box + diverse force", x, y + 40);
-	ofDrawBitmapString("1: Applied at massCenter - 20 (z)\n", x, y + 80);
-	ofDrawBitmapString("2: Applied at massCenter - 20 (y)\n", x, y + 100);
-	ofDrawBitmapString("3: Applied at massCenter - 20 (x)\n", x, y + 120);
+	ofDrawBitmapString("b: Box\nz: Box + depth", x, y + 40);
+	//ofDrawBitmapString("1: Applied at massCenter - 20 (z)\n", x, y + 80);
+	//ofDrawBitmapString("2: Applied at massCenter - 20 (y)\n", x, y + 100);
+	//ofDrawBitmapString("3: Applied at massCenter - 20 (x)\n", x, y + 120);
 
 	ofSetColor(0, 0, 0);
 	// Save the current transformation matrix
@@ -61,6 +64,7 @@ void ofApp3::draw()
 	{
 		physics.objects_[i]->draw();
 	}
+	physics.octree.draw();
 	ofRotateZDeg(-theta_);
 
 	// Canon
@@ -196,24 +200,14 @@ void ofApp3::SpawnRigidBody(int type)
 {
 	if (type == 1) //Box
 	{
-		RigidBody* newObject = new Box(20,Vector3d(0,0,0,1),Vector3d(mouseX_,mouseY_,0,0),Quaternion().identity(), 50, 50, 50);
-		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0,0), simpleForceType_);
-		physics.addRigidBody(newObject);
-		physics.addSimpleForce(newForce);
-	}
-	else if (type == 2) //Cone
-	{
-		RigidBody* newObject = new Cone(30, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 30,50);
-		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
-		physics.addRigidBody(newObject);
-		physics.addSimpleForce(newForce);
-	}
-	else if (type == 3) //Pave
-	{
-		RigidBody* newObject = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 100, 50, 50);
-		SimpleForce newForce = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
-		physics.addRigidBody(newObject);
-		physics.addSimpleForce(newForce);
+		RigidBody* newObject1 = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 35, 35, 35);
+		physics.addRigidBody(newObject1);
+		RigidBody* newObject2 = new Box(20, Vector3d(ofGetWidth()-10, 0, 0, 1), Vector3d(-400, mouseY_, 0, 0), Quaternion().identity(), 35, 35, 35);
+		physics.addRigidBody(newObject2);
+		/*SimpleForce newForce1 = SimpleForce(Vector3d(0, 10, 0, 0), simpleForceType_);
+		physics.addSimpleForce(newForce1);
+		SimpleForce newForce2 = SimpleForce(Vector3d(10, 0, 0, 0), simpleForceType_);
+		physics.addSimpleForce(newForce2);*/
 	}
 	else if (type == 4) //Box + Depth
 	{
@@ -224,9 +218,9 @@ void ofApp3::SpawnRigidBody(int type)
 	}
 	else if (type == 5) //Box
 	{
-		RigidBody* newObject = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 50, 50, 50);
+		/*RigidBody* newObject = new Box(20, Vector3d(0, 0, 0, 1), Vector3d(mouseX_, mouseY_, 0, 0), Quaternion().identity(), 50, 50, 50);
 		SimpleForce newForce = SimpleForce(Vector3d(10, 10, 0, 0), simpleForceType_);
 		physics.addRigidBody(newObject);
-		physics.addSimpleForce(newForce);
+		physics.addSimpleForce(newForce);*/
 	}
 }
