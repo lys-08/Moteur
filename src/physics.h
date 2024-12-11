@@ -1,3 +1,8 @@
+/**
+* \file physics.h
+* This file contains the declaration of all methods and attributes of the Physics class
+*/
+
 #pragma once
 
 #include "rigidBody.h"

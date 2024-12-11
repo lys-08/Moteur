@@ -1,9 +1,12 @@
+/**
+* \file solve.cpp
+*/
+
 #include "solve.h"
 #include <algorithm>
 
 namespace FourierMotzkin
 {
-
     // Build inequalities for the two sets of points
     InequalitySystem build_inequality_system(const std::vector<Vector3d>& left, const std::vector<Vector3d>& right)
     {
@@ -32,14 +35,16 @@ namespace FourierMotzkin
         steps.push_back(system);
 
         // Continue reducing until we have no more inequalities
-        while (system.num_ineqs() > 0 && system.num_vars() > 1) {
-            InequalitySystem new_system = system.reduce_on(system.num_vars() - 1); // Réduire la dernière variable
+        while (system.num_ineqs() > 0 && system.num_vars() > 1) 
+        {
+            InequalitySystem new_system = system.reduce_on(system.num_vars() - 1); // Reduced the last variable
             steps.push_back(new_system);
             system = std::move(new_system);
         }
 
-        // Ajouter une étape finale avec 0 variables et inégalités
-        if (system.num_ineqs() == 0) {
+        // Final step : 0 variables and inequalities
+        if (system.num_ineqs() == 0) 
+        {
             steps.push_back(system);
         }
 
@@ -54,7 +59,7 @@ namespace FourierMotzkin
 
         for (size_t var = 0; var < num_vars; ++var)
         {
-            // Calcule la valeur de chaque variable en partant du dernier système réduit
+            // Calcul the value of each variable starting with the last reduced system
             solution[var] = steps[var].calc_variable(var, solution);
         }
 
@@ -69,11 +74,8 @@ namespace FourierMotzkin
         InequalitySystem system = build_inequality_system(left, right);
 
         if (!system.is_valid()) {
-            return false;  // Le système est déjà invalide, retournez false
+            return false;  // Invalid system
         }
-
-        //std::cout << "Système initial : \n";
-        //system.print();
 
         // Reduce the system using Fourier-Motzkin elimination
         std::vector<InequalitySystem> steps = reduce_system(std::move(system));
@@ -85,14 +87,12 @@ namespace FourierMotzkin
             }
         }
 
-        //std::cout << "before is valid" << std::endl;
         // If the system is infeasible, return false (collision exists)
         if (steps.back().is_valid())
         {
             return true;
         }
         return false;
-        //std::cout << "after is valid" << std::endl;
         /*// Otherwise, recover the solution
         auto solution = recover_variables(steps);
         

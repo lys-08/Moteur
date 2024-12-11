@@ -1,11 +1,18 @@
-#ifndef INEQ_HPP
-#define INEQ_HPP
+/**
+* \file inequalitySystem.h
+* This file contains the implementation of all methods and attributes of the InequalitySystem class
+*/
+
+#pragma once
 
 #include <vector>
 #include <iostream>
 
 class InequalitySystem
 {
+    std::vector<std::vector<double>> ineqs_;
+    size_t vars_;
+
 public:
     InequalitySystem(size_t vars, size_t rows);
     void add_inequality(const std::vector<double>& inequality);
@@ -18,10 +25,4 @@ public:
     double calc_variable(size_t var_index, const std::vector<double>& known_vars) const;
 
     void print() const;
-
-private:
-    std::vector<std::vector<double>> ineqs_;
-    size_t vars_;
 };
-
-#endif

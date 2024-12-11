@@ -13,7 +13,7 @@
 class OcTree
 {
 	OcTree* children_[8]; // leaf
-	std::vector<RigidBody*> values_; // TODO : rigidBody or collider ?
+	std::vector<RigidBody*> values_;
 	int minCapacity_;
 	int maxDepth_;
 
@@ -26,10 +26,10 @@ class OcTree
 
 public:
 	// constructor
-	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity = 2, int maxDepth = 10); // TODO : default values
+	OcTree(Vector3d center = Vector3d(), float w = 540, float h = 960, float d = 500, int minCapacity = 2, int maxDepth = 10);
 
 	// Methods
-	void insertRigidBody(RigidBody* rigidBody); // TODO : rigidBody or collider ?
+	void insertRigidBody(RigidBody* rigidBody); 
 	void checkCollisionsInTree(std::vector<RigidBodyContact>& contacts);
 	std::pair<bool, std::pair<RigidBody*, RigidBody*>> checkBoundingVolumesOverlap();
 	void checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<RigidBodyContact>& contacts);

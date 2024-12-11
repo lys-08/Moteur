@@ -91,9 +91,9 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	{
 		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 	}
-
 	children_[childIndex]->insertRigidBody(rigidBody);
 
+	// For the values in the curent node
 	for (int i = 0; i < values_.size(); i++)
 	{
 
@@ -132,14 +132,18 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		{
 			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 		}
-
 		children_[childIndex]->insertRigidBody(values_[i]);
 	}
 
 	values_.clear();
-
 }
 
+/**
+ * @brief Check the collision in the octree
+ *
+ * @param contacts the contact to check in the octree
+ * @return nothing
+ */
 void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
 {
 	for (int i = 0; i < 8; ++i)
@@ -160,9 +164,9 @@ void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
 }
 
 /**
- * @brief TODO
+ * @brief Check if the bounding volumes of the rigid bodies in the octree overlap
  * 
- * @return true if the volumes overlap the bounding box, otherwise false
+ * @return a boolean and a pair of rigid bodies. The boolean indicates if the bodies volume overlap
  */
 std::pair<bool,std::pair<RigidBody*,RigidBody*>> OcTree::checkBoundingVolumesOverlap()
 {
@@ -191,6 +195,9 @@ std::pair<bool,std::pair<RigidBody*,RigidBody*>> OcTree::checkBoundingVolumesOve
 /**
  * @brief check if two rigid bodies in a single leaf are in collision. Their bounding volume are already in collision TODO
  * 
+ * @param r1 the first rigidBody
+ * @param r2 the second rigidBody
+ * @param contacts the contacts to test
  * @return nothing
  */
 void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<RigidBodyContact>& contacts)

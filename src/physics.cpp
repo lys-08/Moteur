@@ -33,6 +33,11 @@ void Physics::start(int x, int y)
 	octree = OcTree(Vector3d(x/2.0,y/2.0,0.0),x/2.0,y/2.0,250,2,8);
 }
 
+/**
+ * @brief remove all objects that are not in the main window
+ *
+ * @return nothing
+*/
 void Physics::deleteOutOfBounds()
 {
 	std::vector<RigidBody*> newObject;
@@ -83,11 +88,23 @@ void Physics::update(double time)
 	resetAcc();
 }
 
+/**
+ * @brief Add a rigidBody to the object list
+ *
+ * @param object the object to ass
+ * @return nothing
+*/
 void Physics::addRigidBody(RigidBody* object)
 {
 	objects_.push_back(object);
 }
 
+/**
+ * @brief Add a simple force
+ *
+ * @param force the force to add
+ * @return nothing
+*/
 void Physics::addSimpleForce(SimpleForce force)
 {
 	simpleForces_.push_back(force);
@@ -125,6 +142,11 @@ void Physics::integrate(double time)
 	}
 }
 
+/**
+ * @brief generate contacts if their is collision in the octree
+ *
+ * @return nothing
+*/
 void Physics::generateContacts()
 {
 	octree.checkCollisionsInTree(contacts_);

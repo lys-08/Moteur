@@ -51,7 +51,7 @@ Vector3d RigidBody::getAngularVelocity()
     return angularVelocity_;
 }
 
-Matrix3 RigidBody::getInvJ()
+Matrix3 RigidBody::getInvJ() const
 {
     return invJ_;
 }
