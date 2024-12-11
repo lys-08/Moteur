@@ -72,30 +72,21 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		childIndex += 1;
 		childOffset.setX(w_ / 2.0);
 	}
-	else 
-	{
-		childOffset.setX(-w_ / 2.0);
-	}
+	else childOffset.setX(-w_ / 2.0);
 
 	if (offsetY > 0.f)
 	{
 		childIndex += 2;
 		childOffset.setY(h_ / 2.0);
 	}
-	else
-	{
-		childOffset.setY(-h_ / 2.0);
-	}
+	else childOffset.setY(-h_ / 2.0);
 
 	if (offsetZ > 0.f)
 	{
 		childIndex += 4;
 		childOffset.setZ(d_ / 2.0);
 	}
-	else
-	{
-		childOffset.setZ(-d_ / 2.0);
-	}
+	else childOffset.setZ(-d_ / 2.0);
 	std::cout << "hey2" << std::endl;
 
 	if (children_[childIndex] == nullptr) // if their is no children, we create it
@@ -119,14 +110,32 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		offsetZ = rbCenter.getZ() - center_.getZ();
 
 		childIndex = 0;
-		if (offsetX > 0.f) childIndex += 1;
-		if (offsetY > 0.f) childIndex += 2;
-		if (offsetZ > 0.f) childIndex += 4;
+		Vector3d childOffset = Vector3d();
+
+		if (offsetX > 0.f)
+		{
+			childIndex += 1;
+			childOffset.setX(w_ / 2.0);
+		}
+		else childOffset.setX(-w_ / 2.0);
+
+		if (offsetY > 0.f)
+		{
+			childIndex += 2;
+			childOffset.setY(h_ / 2.0);
+		}
+		else childOffset.setY(-h_ / 2.0);
+
+		if (offsetZ > 0.f)
+		{
+			childIndex += 4;
+			childOffset.setZ(d_ / 2.0);
+		}
+		else childOffset.setZ(-d_ / 2.0);
 		std::cout << "hey6" << std::endl;
 
 		if (children_[childIndex] == nullptr) // if their is no children, we create it
 		{
-			Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
 			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 		}
 		std::cout << "hey7" << std::endl;
