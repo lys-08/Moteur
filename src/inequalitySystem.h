@@ -1,6 +1,8 @@
 /**
 * \file inequalitySystem.h
 * This file contains the implementation of all methods and attributes of the InequalitySystem class
+* 
+* This resolution is based on the code of Nicholas42 : https://github.com/Nicholas42/FourierMotzkin/tree/master
 */
 
 #pragma once

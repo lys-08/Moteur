@@ -1,5 +1,7 @@
 /**
 * \file solve.h
+* 
+* This resolution is based on the code of Nicholas42 : https://github.com/Nicholas42/FourierMotzkin/tree/master
 */
 
 #pragma once
