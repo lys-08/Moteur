@@ -153,7 +153,7 @@ std::vector<Vector3d> Box::getVertex()
 */
 float Box::calculateBoundingRadius()
 {
-    return getH().norm() * 1.73;
+    return getH().norm() * 1.3;
 }
 
 

@@ -8,7 +8,7 @@
 /**
  * @brief Evaluated constructor
  */
-RigidBodyContact::RigidBodyContact(RigidBody* rigidBodies[2], float elasticity, float interpenetration, Vector3d normal)
+RigidBodyContact::RigidBodyContact(RigidBody* rigidBodies[2], float elasticity, float interpenetration, Vector3d contactPoint, Vector3d normal)
 {
 	rigidBodies_[0] = rigidBodies[0];
 	rigidBodies_[1] = rigidBodies[1];
@@ -16,6 +16,7 @@ RigidBodyContact::RigidBodyContact(RigidBody* rigidBodies[2], float elasticity, 
 	elasticity_ = elasticity;
 	interpenetration_ = interpenetration;
 	normal_ = normal;
+	contactPoint_ = contactPoint;
 }
 
 
@@ -63,13 +64,13 @@ void RigidBodyContact::solve()
 		rigidBodies_[1]->getMassCenter()->setSpeed(rigidBodies_[1]->getMassCenter()->getSpeed() + impulse * inv_m1 * normal_);
 
 		// Update angular velocity
-		//Vector3d contactOffset0 = contactPoint_ - rigidBodies_[0]->getMassCenter()->getPos();
-		//Vector3d contactOffset1 = contactPoint_ - rigidBodies_[1]->getMassCenter()->getPos();
+		Vector3d contactOffset0 = contactPoint_ - rigidBodies_[0]->getMassCenter()->getPos();
+		Vector3d contactOffset1 = contactPoint_ - rigidBodies_[1]->getMassCenter()->getPos();
 
-		/*Vector3d angularVelocity0 = rigidBodies_[0]->getAngularVelocity() + Matrix3xVector(rigidBodies_[0]->getInvJ(), contactOffset0.crossProduct(impulse * normal_));
+		Vector3d angularVelocity0 = rigidBodies_[0]->getAngularVelocity() + Matrix3xVector(rigidBodies_[0]->getInvJ(), contactOffset0.crossProduct(impulse * normal_));
 		rigidBodies_[0]->setAngularVelocity(angularVelocity0);
 		Vector3d angularVelocity1 = rigidBodies_[1]->getAngularVelocity() + Matrix3xVector(rigidBodies_[1]->getInvJ(), contactOffset1.crossProduct(impulse * normal_));
-		rigidBodies_[0]->setAngularVelocity(angularVelocity0);*/
+		rigidBodies_[0]->setAngularVelocity(angularVelocity0);
 	}
 	else // Only one rigidBody
 	{
@@ -77,8 +78,8 @@ void RigidBodyContact::solve()
 		double impulse = rigidBodies_[0]->getMassCenter()->getSpeed().dotProduct(normal_) / (inv_m0 * normal_.dotProduct(normal_));
 		rigidBodies_[0]->getMassCenter()->setSpeed(rigidBodies_[0]->getMassCenter()->getSpeed() - impulse * inv_m0 * normal_);
 
-		//Vector3d contactOffset = contactPoint_ - rigidBodies_[0]->getMassCenter()->getPos();
-		/*Vector3d angularVelocity = rigidBodies_[0]->getAngularVelocity() + Matrix3xVector(rigidBodies_[0]->getInvJ(), contactOffset.crossProduct(impulse * normal_));
-		rigidBodies_[0]->setAngularVelocity(angularVelocity);*/
+		Vector3d contactOffset = contactPoint_ - rigidBodies_[0]->getMassCenter()->getPos();
+		Vector3d angularVelocity = rigidBodies_[0]->getAngularVelocity() + Matrix3xVector(rigidBodies_[0]->getInvJ(), contactOffset.crossProduct(impulse * normal_));
+		rigidBodies_[0]->setAngularVelocity(angularVelocity);
 	}
 }

@@ -195,17 +195,13 @@ std::pair<bool,std::pair<RigidBody*,RigidBody*>> OcTree::checkBoundingVolumesOve
  */
 void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<RigidBodyContact>& contacts)
 {
-	//if (children_ != nullptr) return;
 
-	//TODO allocation � chaque appel ?
 	Vector3d xAxis(1, 0, 0);
-	//Vector3d yAxis(0, 1, 0);
-	//Vector3d zAxis(0, 0, 1);
-	if (r1->getMassCenter()->getPos().getX() != r2->getMassCenter()->getPos().getX())
+
+	if (r1->getMassCenter()->getPos() != r2->getMassCenter()->getPos())
 	{
 		if (r1->getMassCenter()->getPos().dotProduct(xAxis) < r2->getMassCenter()->getPos().dotProduct(xAxis))
 		{
-			//values 0 est � gauche, donc on peut appeler has separating planes
 			if (!FourierMotzkin::has_separating_plane(r1->getVertex(), r2->getVertex()))
 			{
 				RigidBody* rigidBodies[2];
@@ -214,6 +210,8 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 
 				Vector3d center1 = r1->getMassCenter()->getPos();
 				Vector3d center2 = r2->getMassCenter()->getPos();
+				Vector3d middle = center2 - center1;
+				middle.setW(1); //is a point 
 
 				double radius1 = r1->calculateBoundingRadius();
 				double radius2 = r2->calculateBoundingRadius();
@@ -223,7 +221,7 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 				double interpenetration = distance - (radius1 + radius2);
 				Vector3d normal = (r1->getMassCenter()->getPos() - r2->getMassCenter()->getPos()).normalise2();
 
-				RigidBodyContact contact = RigidBodyContact(rigidBodies, 1, interpenetration, normal);
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, 1, interpenetration, middle, normal);
 				contacts.push_back(contact);
 			}
 		}
@@ -237,6 +235,8 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 
 				Vector3d center1 = r1->getMassCenter()->getPos();
 				Vector3d center2 = r2->getMassCenter()->getPos();
+				Vector3d middle = center2 - center1;
+				middle.setW(1); //is a point 
 
 				double radius1 = r1->calculateBoundingRadius();
 				double radius2 = r2->calculateBoundingRadius();
@@ -246,7 +246,7 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 				double interpenetration = distance - (radius1 + radius2);
 				Vector3d normal = (r1->getMassCenter()->getPos() - r2->getMassCenter()->getPos()).normalise2();
 
-				RigidBodyContact contact = RigidBodyContact(rigidBodies, 1, interpenetration, normal);
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, 1, interpenetration, middle, normal);
 				contacts.push_back(contact);
 			}
 		}
