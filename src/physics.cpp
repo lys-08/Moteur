@@ -57,7 +57,11 @@ void Physics::deleteOutOfBounds()
 */
 void Physics::fillTree()
 {
+	std::cout << "before tree" << std::endl;
+
 	octree.clearOctree();
+	std::cout << "after tree" << std::endl;
+
 	for (int i = 0; i < objects_.size(); i++)
 	{
 		octree.insertRigidBody(objects_[i]);
@@ -77,9 +81,11 @@ void Physics::update(double time)
 	fillTree();
 	updateForces(time);
 	integrate(time);
-	generateContacts();
-	solveContacts(time);
+	//generateContacts();
+	//solveContacts(time);
 	resetAcc();
+	std::cout << "end update" << std::endl;
+
 }
 
 void Physics::addRigidBody(RigidBody* object)

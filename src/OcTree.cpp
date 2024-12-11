@@ -50,6 +50,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 
 	// we get the position of the rigidBody to add and the radius of it's bounding box
 	Vector3d rbCenter = rigidBody->getMassCenter()->getPos();
+	Vector3d rbRadius = rigidBody->calculateBoundingRadius();
 
 	/* if the distance between the center of the rigidBody and the half size of the axe (for 
 	 * each one, then the collider is overlaping the octree and we add it directly to the 
@@ -60,7 +61,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	offsetY = rbCenter.getY() - center_.getY();
 	offsetZ = rbCenter.getZ() - center_.getZ();
 
-
+	std::cout << "hey1" << std::endl;
 	// If the rigidBody is entirely in a leaf, we add it to this list
 	// the childIndex depend on the offset value (vary between 0 and 7 => 8 sub octree)
 	int childIndex = 0;
@@ -79,11 +80,11 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	if (offsetY > 0.f)
 	{
 		childIndex += 2;
-		childOffset.setY(-h_ / 2.0);
+		childOffset.setY(h_ / 2.0);
 	}
 	else
 	{
-		childOffset.setY(h_ / 2.0);
+		childOffset.setY(-h_ / 2.0);
 	}
 
 	if (offsetZ > 0.f)
@@ -95,15 +96,21 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	{
 		childOffset.setZ(-d_ / 2.0);
 	}
+	std::cout << "hey2" << std::endl;
 
 	if (children_[childIndex] == nullptr) // if their is no children, we create it
 	{
 		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 	}
+	std::cout << "hey3" << std::endl;
+
 	children_[childIndex]->insertRigidBody(rigidBody);
+	std::cout << "hey4" << std::endl;
 
 	for (int i = 0; i < values_.size(); i++)
 	{
+		std::cout << "hey5" << std::endl;
+
 		Vector3d rbCenter = values_[i]->getMassCenter()->getPos();
 		Vector3d rbRadius = values_[i]->calculateBoundingRadius();
 
@@ -115,15 +122,22 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		if (offsetX > 0.f) childIndex += 1;
 		if (offsetY > 0.f) childIndex += 2;
 		if (offsetZ > 0.f) childIndex += 4;
+		std::cout << "hey6" << std::endl;
 
 		if (children_[childIndex] == nullptr) // if their is no children, we create it
 		{
 			Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
 			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 		}
+		std::cout << "hey7" << std::endl;
+
 		children_[childIndex]->insertRigidBody(values_[i]);
 	}
+	std::cout << "hey8" << std::endl;
+
 	values_.clear();
+	std::cout << "hey9" << std::endl;
+
 }
 
 void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
