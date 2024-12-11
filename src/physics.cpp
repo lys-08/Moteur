@@ -30,7 +30,7 @@ void Physics::start(int x, int y)
 {
 	width_ = x;
 	height_ = y;
-	octree = OcTree(Vector3d(x/2.0,y/2.0,0.0),x,y,500,10,8);
+	octree = OcTree(Vector3d(x/2.0,y/2.0,0.0),x/2.0,y/2.0,250,2,8);
 }
 
 void Physics::deleteOutOfBounds()

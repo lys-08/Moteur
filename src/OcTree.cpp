@@ -22,13 +22,13 @@ OcTree::OcTree(Vector3d center, float w, float h, float d, int minCapacity, int 
 	}
 
 	if (w == 0.0f) w_ = 960;
-	else w_ = w / 2.0;
+	else w_ = w;
 
 	if (h == 0.0f) h_ = 540;
-	else h_ = h / 2.0;
+	else h_ = h;
 
 	if (d == 0.0f) d_ = 500;
-	else d_ = d / 2.0;
+	else d_ = d;
 }
 
 /**
@@ -50,7 +50,6 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 
 	// we get the position of the rigidBody to add and the radius of it's bounding box
 	Vector3d rbCenter = rigidBody->getMassCenter()->getPos();
-	Vector3d rbRadius = rigidBody->calculateBoundingRadius();
 
 	/* if the distance between the center of the rigidBody and the half size of the axe (for 
 	 * each one, then the collider is overlaping the octree and we add it directly to the 
@@ -58,35 +57,47 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	 */
 	float offsetX, offsetY, offsetZ;
 	offsetX = rbCenter.getX() - center_.getX();
-	if (abs(offsetX) < w_) {
-		values_.push_back(rigidBody);
-		return;
-	}
-
 	offsetY = rbCenter.getY() - center_.getY();
-	if (abs(offsetY) < h_) {
-		values_.push_back(rigidBody);
-		return;
-	}
-
 	offsetZ = rbCenter.getZ() - center_.getZ();
-	if (abs(offsetZ) < d_) {
-		values_.push_back(rigidBody);
-		return;
-	}
 
 
 	// If the rigidBody is entirely in a leaf, we add it to this list
 	// the childIndex depend on the offset value (vary between 0 and 7 => 8 sub octree)
 	int childIndex = 0;
+	Vector3d childOffset = Vector3d();
 
-	if (offsetX > 0.f) childIndex += 1;
-	if (offsetY > 0.f) childIndex += 2;
-	if (offsetZ > 0.f) childIndex += 4;
+	if (offsetX > 0.f)
+	{
+		childIndex += 1;
+		childOffset.setX(w_ / 2.0);
+	}
+	else 
+	{
+		childOffset.setX(-w_ / 2.0);
+	}
+
+	if (offsetY > 0.f)
+	{
+		childIndex += 2;
+		childOffset.setY(-h_ / 2.0);
+	}
+	else
+	{
+		childOffset.setY(h_ / 2.0);
+	}
+
+	if (offsetZ > 0.f)
+	{
+		childIndex += 4;
+		childOffset.setZ(d_ / 2.0);
+	}
+	else
+	{
+		childOffset.setZ(-d_ / 2.0);
+	}
 
 	if (children_[childIndex] == nullptr) // if their is no children, we create it
 	{
-		Vector3d childOffset(w_ / 2.0f, h_ / 2.0f, d_ / 2.0f);
 		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 	}
 	children_[childIndex]->insertRigidBody(rigidBody);
@@ -112,6 +123,7 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		}
 		children_[childIndex]->insertRigidBody(values_[i]);
 	}
+	values_.clear();
 }
 
 void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
@@ -247,20 +259,14 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
  */
 void OcTree::clearOctree()
 {
-	// if their is no children, we clear the value and return
-	if (children_ == nullptr)
-	{
-		values_.clear();
-		return;
-	}
-
-	// Otherwise, we call this method for each child that is not null
 	for (int i = 0; i < 8; ++i) 
 	{
-		if (children_[i] != nullptr) (*children_)[i].clearOctree();
+		if (children_[i] != nullptr)
+		{
+			delete children_[i];
+			children_[i] = nullptr;
+		}
 	}
-	// We set the children to nullptr and clear the values
-	*children_ = nullptr;
 	values_.clear();
 }
 
@@ -273,14 +279,14 @@ void OcTree::draw()
 {
 
 	Vector3d vertices[8] = {
-		center_ - w_ - h_ - d_,
-		center_ + w_ - h_ - d_,
-		center_ + w_ + h_ - d_,
-		center_ - w_ + h_ - d_,
-		center_ - w_ - h_ + d_,
-		center_ + w_ - h_ + d_,
-		center_ + w_ + h_ + d_,
-		center_ - w_ + h_ + d_ 
+		center_ + Vector3d(-w_, -h_, -d_),
+		center_ + Vector3d( w_, -h_, -d_),
+		center_ + Vector3d( w_,  h_, -d_),
+		center_ + Vector3d(-w_,  h_, -d_),
+		center_ + Vector3d(-w_, -h_,  d_),
+		center_ + Vector3d( w_, -h_,  d_),
+		center_ + Vector3d( w_,  h_,  d_),
+		center_ + Vector3d(-w_,  h_,  d_)
 	};
 
 	const int edges[12][2] = {
