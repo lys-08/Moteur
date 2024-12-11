@@ -61,7 +61,6 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 	offsetY = rbCenter.getY() - center_.getY();
 	offsetZ = rbCenter.getZ() - center_.getZ();
 
-	std::cout << "hey1" << std::endl;
 	// If the rigidBody is entirely in a leaf, we add it to this list
 	// the childIndex depend on the offset value (vary between 0 and 7 => 8 sub octree)
 	int childIndex = 0;
@@ -87,20 +86,16 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 		childOffset.setZ(d_ / 2.0);
 	}
 	else childOffset.setZ(-d_ / 2.0);
-	std::cout << "hey2" << std::endl;
 
 	if (children_[childIndex] == nullptr) // if their is no children, we create it
 	{
 		children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 	}
-	std::cout << "hey3" << std::endl;
 
 	children_[childIndex]->insertRigidBody(rigidBody);
-	std::cout << "hey4" << std::endl;
 
 	for (int i = 0; i < values_.size(); i++)
 	{
-		std::cout << "hey5" << std::endl;
 
 		Vector3d rbCenter = values_[i]->getMassCenter()->getPos();
 		Vector3d rbRadius = values_[i]->calculateBoundingRadius();
@@ -132,20 +127,16 @@ void OcTree::insertRigidBody(RigidBody* rigidBody)
 			childOffset.setZ(d_ / 2.0);
 		}
 		else childOffset.setZ(-d_ / 2.0);
-		std::cout << "hey6" << std::endl;
 
 		if (children_[childIndex] == nullptr) // if their is no children, we create it
 		{
 			children_[childIndex] = new OcTree(center_ + childOffset, w_ / 2.0f, h_ / 2.0f, d_ / 2.0f, minCapacity_, maxDepth_ - 1);
 		}
-		std::cout << "hey7" << std::endl;
 
 		children_[childIndex]->insertRigidBody(values_[i]);
 	}
-	std::cout << "hey8" << std::endl;
 
 	values_.clear();
-	std::cout << "hey9" << std::endl;
 
 }
 
@@ -154,17 +145,15 @@ void OcTree::checkCollisionsInTree(std::vector<RigidBodyContact>& contacts)
 	for (int i = 0; i < 8; ++i)
 	{
 		if (children_[i] != nullptr) {
-			(*children_)[i].checkCollisionsInTree(contacts);
+			children_[i]->checkCollisionsInTree(contacts);
 		}
 	}
-	
 	std::vector<OcTree*> c = { children_[0],children_[1],children_[2],children_[3],children_[4],children_[5],children_[6],children_[7] };
 	if (std::all_of(c.begin(), c.end(), [](OcTree* child) { return child == nullptr; }))
 	{
 		auto p = checkBoundingVolumesOverlap();
 		if (p.first)
 		{
-			std::cout << p.first << std::endl;
 			checkCollisionsInChild(p.second.first, p.second.second, contacts);
 		}
 	}
@@ -212,7 +201,6 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 	Vector3d xAxis(1, 0, 0);
 	//Vector3d yAxis(0, 1, 0);
 	//Vector3d zAxis(0, 0, 1);
-	std::cout << "hey" << std::endl;
 	if (r1->getMassCenter()->getPos().getX() != r2->getMassCenter()->getPos().getX())
 	{
 		if (r1->getMassCenter()->getPos().dotProduct(xAxis) < r2->getMassCenter()->getPos().dotProduct(xAxis))
@@ -220,7 +208,6 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 			//values 0 est � gauche, donc on peut appeler has separating planes
 			if (!FourierMotzkin::has_separating_plane(r1->getVertex(), r2->getVertex()))
 			{
-				std::cout << "contact" << std::endl;
 				RigidBody* rigidBodies[2];
 				rigidBodies[0] = r1;
 				rigidBodies[1] = r2;
@@ -228,32 +215,15 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 				Vector3d center1 = r1->getMassCenter()->getPos();
 				Vector3d center2 = r2->getMassCenter()->getPos();
 
-				// Extraction des sommets pour calculer les demi-longueurs
-				auto vertices1 = r1->getVertex();
-				auto vertices2 = r2->getVertex();
-
-				Vector3d extents1 = (vertices1[7] - vertices1[0]) * 0.5; // Supposant un cube aligné
-				Vector3d extents2 = (vertices2[7] - vertices2[0]) * 0.5; // Supposant un cube aligné
-
-				Vector3d diff = center2 - center1;
-
-				// Normalisation de la direction pour obtenir la normale
-				Vector3d normal = diff.normalise2();
-
-				// Calcul du point de contact
-				Vector3d contactPoint1 = center1 + normal * extents1.dotProduct(normal);
-				Vector3d contactPoint2 = center2 - normal * extents2.dotProduct(normal);
-
-				Vector3d contactPoint = (contactPoint1 + contactPoint2) * 0.5; // Moyenne des points sur les surfaces
-
-				// Calcul de l'interpénétration
-				double distance = diff.norm();
 				double radius1 = r1->calculateBoundingRadius();
 				double radius2 = r2->calculateBoundingRadius();
-				double interpenetration = distance - (radius1 + radius2);
 
-				// Création du contact
-				RigidBodyContact contact = RigidBodyContact(rigidBodies, interpenetration, 1, contactPoint, normal);
+				double distance = center1.distance(center2);
+
+				double interpenetration = distance - (radius1 + radius2);
+				Vector3d normal = (r1->getMassCenter()->getPos() - r2->getMassCenter()->getPos()).normalise2();
+
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, 1, interpenetration, normal);
 				contacts.push_back(contact);
 			}
 		}
@@ -262,13 +232,21 @@ void OcTree::checkCollisionsInChild(RigidBody* r1, RigidBody* r2, std::vector<Ri
 			if (!FourierMotzkin::has_separating_plane(r2->getVertex(), r1->getVertex()))
 			{
 				RigidBody* rigidBodies[2];
-				rigidBodies[0] = r2;
-				rigidBodies[1] = r1;
+				rigidBodies[0] = r1;
+				rigidBodies[1] = r2;
 
-				//float interpenetration = distance - sumRadius;
-				//Vector3d normal = (particles_[i]->getPos() - particles_[j]->getPos()).normalise2();
+				Vector3d center1 = r1->getMassCenter()->getPos();
+				Vector3d center2 = r2->getMassCenter()->getPos();
 
-				RigidBodyContact contact = RigidBodyContact(rigidBodies, 0, 1, Vector3d(), Vector3d());
+				double radius1 = r1->calculateBoundingRadius();
+				double radius2 = r2->calculateBoundingRadius();
+
+				double distance = center1.distance(center2);
+
+				double interpenetration = distance - (radius1 + radius2);
+				Vector3d normal = (r1->getMassCenter()->getPos() - r2->getMassCenter()->getPos()).normalise2();
+
+				RigidBodyContact contact = RigidBodyContact(rigidBodies, 1, interpenetration, normal);
 				contacts.push_back(contact);
 			}
 		}
@@ -286,7 +264,7 @@ void OcTree::clearOctree()
 	{
 		if (children_[i] != nullptr)
 		{
-			delete children_[i];
+			children_[i]->clearOctree();
 			children_[i] = nullptr;
 		}
 	}
